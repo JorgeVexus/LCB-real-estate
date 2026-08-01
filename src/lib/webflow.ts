@@ -92,6 +92,23 @@ export async function listAllItems(collectionId: string): Promise<WebflowItemSum
   return results;
 }
 
+/** Fetches a specific set of items by ID, concurrently — cheaper than a full paginated list when only a few items changed. */
+export async function getItemsByIds(collectionId: string, ids: string[]): Promise<WebflowItemSummary[]> {
+  const wf = getWebflowClient();
+  const { results } = await runWithConcurrency(ids, 8, async (id): Promise<WebflowItemSummary> => {
+    const item = await wf.collections.items.getItem(collectionId, id);
+    return {
+      id: item.id!,
+      isDraft: Boolean(item.isDraft),
+      isArchived: Boolean(item.isArchived),
+      fieldData: (item.fieldData ?? {}) as Record<string, unknown>,
+      createdOn: item.createdOn,
+      lastPublished: item.lastPublished,
+    };
+  });
+  return results.filter((r): r is WebflowItemSummary => Boolean(r));
+}
+
 function chunk<T>(arr: T[], size: number): T[][] {
   const out: T[][] = [];
   for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
@@ -167,7 +184,7 @@ export interface NewItemInput {
 export async function createItemsBatched(
   collectionId: string,
   newItems: NewItemInput[],
-  concurrency = 5
+  concurrency = 8
 ): Promise<{ createdIds: string[]; failures: BatchFailure<NewItemInput>[] }> {
   const wf = getWebflowClient();
   const { results, failures } = await runWithConcurrency(newItems, concurrency, async (item) => {
@@ -196,7 +213,7 @@ export interface UpdateItemInput {
 export async function updateItemsBatched(
   collectionId: string,
   updates: UpdateItemInput[],
-  concurrency = 5
+  concurrency = 8
 ): Promise<{ failures: BatchFailure<UpdateItemInput>[] }> {
   const wf = getWebflowClient();
   const { failures } = await runWithConcurrency(updates, concurrency, async (update) => {

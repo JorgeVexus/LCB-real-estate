@@ -7,6 +7,7 @@ import {
   getCollectionFieldMap,
   buildOptionLookup,
   listAllItems,
+  getItemsByIds,
   createItemsBatched,
   updateItemsBatched,
   publishItemsBatched,
@@ -221,12 +222,20 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
         await deleteAlgoliaRecords(algoliaDeleteIds);
       }
 
-      const touchedIds = new Set([...createdIds, ...toUpdate.map((u) => u.id)]);
-      if (touchedIds.size > 0) {
-        const refreshedItems = await listAllItems(env.propertiesCollectionId);
+      const touchedIds = [...new Set([...createdIds, ...toUpdate.map((u) => u.id)])];
+      if (touchedIds.length > 0) {
+        // Fetching each touched item individually is far cheaper than a full
+        // paginated re-list on a typical day (a handful of changes); only
+        // fall back to a full re-list when most of the collection changed,
+        // where individual per-item calls would end up being the slower path.
+        const refreshedItems =
+          touchedIds.length > existingPropertyItems.length * 0.5
+            ? await listAllItems(env.propertiesCollectionId)
+            : await getItemsByIds(env.propertiesCollectionId, touchedIds);
+        const touchedIdSet = new Set(touchedIds);
         const lookups = buildNameLookups(fieldMap, propertyTypeItems, ubicacionItems);
         const records = refreshedItems
-          .filter((item) => touchedIds.has(item.id))
+          .filter((item) => touchedIdSet.has(item.id))
           .map((item) => buildAlgoliaRecord(item, lookups));
         await upsertAlgoliaRecords(records);
       }

@@ -132,7 +132,7 @@ export async function fetchPropertyDetail(publicId: string): Promise<EasyBrokerP
 /** Runs async detail fetches with bounded concurrency to stay within function time limits. */
 export async function fetchPropertyDetailsConcurrently(
   publicIds: string[],
-  concurrency = 3
+  concurrency = 5
 ): Promise<Map<string, EasyBrokerPropertyDetail>> {
   const results = new Map<string, EasyBrokerPropertyDetail>();
   let index = 0;
