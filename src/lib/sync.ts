@@ -19,6 +19,7 @@ import {
 import { slugify } from "./slugify";
 import { buildAlgoliaRecord, buildNameLookups, upsertAlgoliaRecords, deleteAlgoliaRecords } from "./algolia";
 import { parseDescriptionFields } from "./description-parser";
+import { suggestSimilarProperties } from "./similar-properties";
 
 interface Env {
   propertiesCollectionId: string;
@@ -161,7 +162,24 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
         // free-text description. Formatting varies across listings, so this
         // is approximate — new properties should be spot-checked in Webflow.
         const parsedSpecs = detail.description ? parseDescriptionFields(detail.description) : {};
-        toCreate.push({ publicId, fieldData: { ...fieldData, ...parsedSpecs } });
+
+        // "Propiedades Similares" is an editorial pick EasyBroker has no
+        // concept of, so best-effort suggest same type + city + closest
+        // size, same as the manual curation the team used to do by hand.
+        const similares = suggestSimilarProperties(
+          {
+            id: "", // not yet created; nothing to exclude
+            propertyTypeId: String(fieldData["property-type"] ?? ""),
+            cityId: String(fieldData.city ?? ""),
+            metros: parseFloat(String(fieldData["metros-cuadrados"] ?? "")) || 0,
+          },
+          existingPropertyItems
+        );
+
+        toCreate.push({
+          publicId,
+          fieldData: { ...fieldData, ...parsedSpecs, "propiedades-similares": similares },
+        });
       }
     } catch (err) {
       errors.push({ publicId, message: (err as Error).message });
