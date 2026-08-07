@@ -125,7 +125,7 @@ export interface BatchFailure<T> {
  * retries are exhausted) is recorded and skipped — it never aborts the other
  * in-flight or pending items, since this drives large, long-running bulk syncs.
  */
-async function runWithConcurrency<T, R>(
+export async function runWithConcurrency<T, R>(
   items: T[],
   concurrency: number,
   fn: (item: T) => Promise<R>
@@ -151,7 +151,7 @@ async function runWithConcurrency<T, R>(
 
 const RETRYABLE_STATUSES = new Set([429, 500, 502, 503, 504]);
 
-async function callWithRetry<R>(fn: () => Promise<R>, retries = 6): Promise<R> {
+export async function callWithRetry<R>(fn: () => Promise<R>, retries = 6): Promise<R> {
   try {
     return await fn();
   } catch (err) {

@@ -89,6 +89,11 @@ export function parseDescriptionFields(description: string): Record<string, unkn
       fieldData["precio-de-mantenimiento-2"] = value;
     } else if (label.includes("mensualidad total")) {
       fieldData["mensualidad-total"] = value;
+    } else if (/^(precio|renta|venta) de/.test(label) && !label.includes("mantenimiento")) {
+      // Price-per-m2 isn't its own bullet — it's a "($X/m2)" aside on the
+      // main price/rent/sale line. Truncated to match existing data (e.g. 213.68 -> 213).
+      const m = value.match(/\(\s*\$?\s*([\d,]+(?:\.\d+)?)\s*(?:usd|mxn)?\s*\/\s*m2\s*\)/i);
+      if (m) fieldData["precio-por-m2"] = Math.trunc(parseFloat(m[1].replace(/,/g, "")));
     }
   }
 

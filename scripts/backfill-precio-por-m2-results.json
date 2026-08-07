@@ -1,0 +1,401 @@
+[
+  {
+    "id": "6a6d42244a3793f712b88934",
+    "propertyId": "EB-WO6030",
+    "isNew": false,
+    "value": 130,
+    "status": "found"
+  },
+  {
+    "id": "6a6c25dfe2c52825fab81eb6",
+    "propertyId": "EB-WO9950",
+    "isNew": true,
+    "value": 7,
+    "status": "found"
+  },
+  {
+    "id": "6a6c25dbad82ecc6330de306",
+    "propertyId": "EB-WP0777",
+    "isNew": true,
+    "value": 185,
+    "status": "found"
+  },
+  {
+    "id": "6a6c25db04075f9a96b7b90d",
+    "propertyId": "EB-SF8211",
+    "isNew": true,
+    "value": 120,
+    "status": "found"
+  },
+  {
+    "id": "6a6c25dbb81ff065687f335a",
+    "propertyId": "EB-WP0813",
+    "isNew": true,
+    "value": 185,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb4abc169ca782820b02",
+    "propertyId": "EB-RJ1457",
+    "isNew": true,
+    "value": 120,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb4a1864dae48930c137",
+    "propertyId": "EB-RJ1479",
+    "isNew": true,
+    "value": 120,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb4843aea6d7106fab4f",
+    "propertyId": "EB-WK8869",
+    "isNew": true,
+    "value": 18840,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb48b7af72a0719b15d0",
+    "propertyId": "EB-WO3600",
+    "isNew": true,
+    "value": 210,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb4742c0d904e8aa049c",
+    "propertyId": "EB-WE7351",
+    "isNew": true,
+    "value": 80,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb479aa527c30e2349b9",
+    "propertyId": "EB-WL6911",
+    "isNew": true,
+    "value": 170,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb47f5e2160ec0ee1c98",
+    "propertyId": "EB-WF3877",
+    "isNew": true,
+    "value": 180,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb451761d2ddeb597aff",
+    "propertyId": "EB-WC7206",
+    "isNew": true,
+    "value": 182,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb44f5c75336d4f007b4",
+    "propertyId": "EB-WC7183",
+    "isNew": true,
+    "value": 182,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb44f5e2160ec0ee1bb3",
+    "propertyId": "EB-WH8637",
+    "isNew": true,
+    "value": 12,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb449ca3bf757150a31b",
+    "propertyId": "EB-WF9172",
+    "isNew": true,
+    "value": 180,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb43414319e4827a4cd4",
+    "propertyId": "EB-WH8630",
+    "isNew": true,
+    "value": 12,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb421864dae48930be03",
+    "propertyId": "EB-WL8394",
+    "isNew": true,
+    "value": 139,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb425978b1d93fb3264c",
+    "propertyId": "EB-VB9022",
+    "isNew": true,
+    "value": 135,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb416a227af3b1d5742e",
+    "propertyId": "EB-WN0735",
+    "isNew": true,
+    "value": 180,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb40e24facd8e2783a58",
+    "propertyId": "EB-WK8777",
+    "isNew": true,
+    "value": 115,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb4029957251740653d0",
+    "propertyId": "EB-WL8001",
+    "isNew": true,
+    "value": 185,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb3ead504d59fcd5560e",
+    "propertyId": "EB-WJ5982",
+    "isNew": true,
+    "value": 6,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb3ee45a0f49eff3cf12",
+    "propertyId": "EB-WG6006",
+    "isNew": true,
+    "value": 150,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb3e1864dae48930bb58",
+    "propertyId": "EB-WE6447",
+    "isNew": true,
+    "value": 4,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb3e414319e4827a4b5a",
+    "propertyId": "EB-WE0299",
+    "isNew": true,
+    "value": 7,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb3ce24facd8e278396d",
+    "propertyId": "EB-WG2392",
+    "isNew": true,
+    "value": 9397,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb3b80dd28193f3c36ff",
+    "propertyId": "EB-WE2437",
+    "isNew": true,
+    "value": 131,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb3b5978b1d93fb32501",
+    "propertyId": "EB-WG5728",
+    "isNew": true,
+    "value": 160,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb3b35869b00e1adadfd",
+    "propertyId": "EB-WH6002",
+    "isNew": true,
+    "value": 135,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb3afbadff06b593e2db",
+    "propertyId": "EB-WI2809",
+    "isNew": true,
+    "value": 10,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb386a227af3b1d571b9",
+    "propertyId": "EB-WH3839",
+    "isNew": true,
+    "value": 8,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb3843aea6d7106fa6a5",
+    "propertyId": "EB-WI2453",
+    "isNew": true,
+    "value": 12,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb38e45a0f49eff3cd4a",
+    "propertyId": "EB-WH2148",
+    "isNew": true,
+    "value": 180,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb36dd732383d09c7591",
+    "propertyId": "EB-WH2099",
+    "isNew": true,
+    "value": 180,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb361864dae48930b60a",
+    "propertyId": "EB-WE0366",
+    "isNew": true,
+    "value": 13,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb362ba977fcaf2ade78",
+    "propertyId": "EB-WE7881",
+    "isNew": true,
+    "value": 10,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb34bc169ca782820488",
+    "propertyId": "EB-WI0001",
+    "isNew": true,
+    "value": 12,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb334f4355cd4f85bfb3",
+    "propertyId": "EB-WI2748",
+    "isNew": true,
+    "value": 12,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb329ffb96dabbe96ebd",
+    "propertyId": "EB-TR6272",
+    "isNew": true,
+    "value": 180,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb322ba977fcaf2addc2",
+    "propertyId": "EB-VM5963",
+    "isNew": true,
+    "value": 180,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb3294906dede2b22615",
+    "propertyId": "EB-WH6009",
+    "isNew": true,
+    "value": 225,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb302ba977fcaf2add80",
+    "propertyId": "EB-WF8352",
+    "isNew": true,
+    "value": 120,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb2f5978b1d93fb3214a",
+    "propertyId": "EB-WE6240",
+    "isNew": true,
+    "value": 6,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb2f43aea6d7106fa1ec",
+    "propertyId": "EB-WC2198",
+    "isNew": true,
+    "value": 9,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb2fe45a0f49eff3c9bd",
+    "propertyId": "EB-WC2254",
+    "isNew": true,
+    "value": 9,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb2f9aa527c30e233f01",
+    "propertyId": "EB-WE6225",
+    "isNew": true,
+    "value": 145,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb2d1cd0c74668013f31",
+    "propertyId": "EB-WD2236",
+    "isNew": true,
+    "value": 250,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb2c94906dede2b2240e",
+    "propertyId": "EB-WE0091",
+    "isNew": true,
+    "value": 174,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb2c314293f632d42561",
+    "propertyId": "EB-WC7596",
+    "isNew": true,
+    "value": 190,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb2bc394d715b5b85e24",
+    "propertyId": "EB-WD2100",
+    "isNew": true,
+    "value": 250,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb2bad504d59fcd54d09",
+    "propertyId": "EB-WC9845",
+    "isNew": true,
+    "value": 140,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb2a9ffb96dabbe9680c",
+    "propertyId": "EB-WC7588",
+    "isNew": true,
+    "value": 190,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb2942c0d904e8a9fc0e",
+    "propertyId": "EB-WE0183",
+    "isNew": true,
+    "value": 125,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb28fbadff06b593dc08",
+    "propertyId": "EB-WC7579",
+    "isNew": true,
+    "value": 190,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb28b61b99b0efeedad8",
+    "propertyId": "EB-WC7567",
+    "isNew": true,
+    "value": 190,
+    "status": "found"
+  },
+  {
+    "id": "6a6afb28dd732383d09c70c5",
+    "propertyId": "EB-WC7295",
+    "isNew": true,
+    "value": 190,
+    "status": "found"
+  }
+]

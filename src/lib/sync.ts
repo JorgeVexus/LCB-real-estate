@@ -20,8 +20,10 @@ import { slugify } from "./slugify";
 import { buildAlgoliaRecord, buildNameLookups, upsertAlgoliaRecords, deleteAlgoliaRecords } from "./algolia";
 import { parseDescriptionFields } from "./description-parser";
 import { suggestSimilarProperties } from "./similar-properties";
+import { imageMarker, extractMarker, processImagesBatched } from "./image-processing";
 
 interface Env {
+  siteId: string;
   propertiesCollectionId: string;
   propertyTypesCollectionId: string;
   agentesCollectionId: string;
@@ -29,19 +31,21 @@ interface Env {
 }
 
 function readEnv(): Env {
+  const siteId = process.env.WEBFLOW_SITE_ID;
   const propertiesCollectionId = process.env.WEBFLOW_PROPERTIES_COLLECTION_ID;
   const propertyTypesCollectionId = process.env.WEBFLOW_PROPERTY_TYPES_COLLECTION_ID;
   const agentesCollectionId = process.env.WEBFLOW_AGENTES_COLLECTION_ID;
   const ubicacionesCollectionId = process.env.WEBFLOW_UBICACIONES_COLLECTION_ID;
   if (
+    !siteId ||
     !propertiesCollectionId ||
     !propertyTypesCollectionId ||
     !agentesCollectionId ||
     !ubicacionesCollectionId
   ) {
-    throw new Error("Missing one or more WEBFLOW_*_COLLECTION_ID env vars");
+    throw new Error("Missing one or more WEBFLOW_SITE_ID / WEBFLOW_*_COLLECTION_ID env vars");
   }
-  return { propertiesCollectionId, propertyTypesCollectionId, agentesCollectionId, ubicacionesCollectionId };
+  return { siteId, propertiesCollectionId, propertyTypesCollectionId, agentesCollectionId, ubicacionesCollectionId };
 }
 
 function escapeHtml(input: string): string {
@@ -62,6 +66,26 @@ function mapsLink(lat: number, lng: number): string {
 
 function mapsEmbedHtml(lat: number, lng: number): string {
   return `<figure class="w-richtext-figure-type-video w-richtext-align-center" style="padding-bottom:" data-rt-type="video" data-rt-align="center" data-rt-max-width="" data-rt-max-height="" data-rt-dimensions="" data-page-url=""><div><iframe src="https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed" allowfullscreen=""></iframe></div></figure>`;
+}
+
+/**
+ * Keeps only the fields in `fresh` whose value actually differs from what's
+ * already in Webflow, so a daily sync where EasyBroker hasn't changed a
+ * property sends nothing at all (no update call, no republish) instead of
+ * re-writing/re-publishing all 400+ items every run regardless of change.
+ */
+function diffFieldData(
+  fresh: Record<string, unknown>,
+  existing: Record<string, unknown> | undefined
+): Record<string, unknown> {
+  if (!existing) return fresh;
+  const diff: Record<string, unknown> = {};
+  for (const key of Object.keys(fresh)) {
+    if (JSON.stringify(fresh[key]) !== JSON.stringify(existing[key])) {
+      diff[key] = fresh[key];
+    }
+  }
+  return diff;
 }
 
 /** "Neighborhood, Municipality, State" -> [municipality, state], most specific first. */
@@ -138,6 +162,7 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
     }
 
     try {
+      const existing = wfByPropertyId.get(publicId);
       const fieldData = await buildFieldData(detail, env, {
         propertyTypeItems,
         agenteItems,
@@ -146,16 +171,21 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
         operationTypeLookup,
         createdReferences,
         dryRun,
+        existingFieldData: existing?.fieldData,
       });
 
-      const existing = wfByPropertyId.get(publicId);
       if (existing) {
         // Never touch slug on update — it's the item's live URL. Changing it
         // breaks bookmarks, shared links, and search-indexed pages. Also
         // never re-run the description parser here — it would clobber
         // whatever a human has already corrected in Webflow.
         const { slug: _slug, ...fieldDataWithoutSlug } = fieldData;
-        toUpdate.push({ publicId, id: existing.id, fieldData: fieldDataWithoutSlug });
+        const changedFields = diffFieldData(fieldDataWithoutSlug, existing.fieldData);
+        // Nothing actually changed since the last sync — skip the update
+        // (and the republish that would otherwise follow) entirely.
+        if (Object.keys(changedFields).length > 0) {
+          toUpdate.push({ publicId, id: existing.id, fieldData: changedFields });
+        }
       } else {
         // New property: best-effort fill the spec fields EasyBroker doesn't
         // expose structurally (andenes, tipo de techo, etc.) by parsing its
@@ -285,6 +315,7 @@ async function buildFieldData(
     operationTypeLookup: Map<string, string>;
     createdReferences: SyncResult["createdReferences"];
     dryRun: boolean;
+    existingFieldData?: Record<string, unknown>;
   }
 ): Promise<ItemFieldData> {
   const operation = detail.operations?.[0];
@@ -359,7 +390,6 @@ async function buildFieldData(
   );
 
   const images = detail.property_images ?? [];
-  const featuredImage = images[0] ? { url: images[0].url } : undefined;
 
   const fieldData: ItemFieldData = {
     name: `${detail.public_id} - ${detail.title}`,
@@ -378,9 +408,38 @@ async function buildFieldData(
     parking: Math.trunc(detail.parking_spaces ?? 0),
   };
 
-  if (featuredImage) {
-    fieldData["featured-image"] = featuredImage;
-    fieldData.gallery = images.map((img) => ({ url: img.url }));
+  if (images.length > 0) {
+    // Compare EasyBroker's current photo set against what's already uploaded
+    // (each Webflow image carries the source marker in its alt text). If
+    // nothing changed, skip re-downloading/re-compressing/re-uploading —
+    // otherwise every property would get reprocessed on every daily run.
+    const freshMarkers = images.map((img) => imageMarker(img.url));
+    const existingImages = [
+      ctx.existingFieldData?.["featured-image"],
+      ...(Array.isArray(ctx.existingFieldData?.gallery) ? (ctx.existingFieldData!.gallery as unknown[]) : []),
+    ].filter(Boolean) as Record<string, unknown>[];
+    const existingMarkers = existingImages.map((img) => extractMarker(img?.alt)).filter(Boolean);
+
+    const unchanged =
+      existingMarkers.length > 0 &&
+      existingMarkers.length === freshMarkers.length &&
+      freshMarkers.every((m, i) => m === existingMarkers[i]);
+
+    if (!unchanged && !ctx.dryRun) {
+      const uploaded = await processImagesBatched(
+        env.siteId,
+        images.map((img) => img.url),
+        detail.title
+      );
+      fieldData["featured-image"] = { fileId: uploaded[0].fileId, alt: uploaded[0].alt };
+      fieldData.gallery = uploaded.map((u) => ({ fileId: u.fileId, alt: u.alt }));
+    } else if (!unchanged && ctx.dryRun) {
+      // Dry runs never write to Webflow — report intent without uploading.
+      fieldData["featured-image"] = { url: images[0].url };
+      fieldData.gallery = images.map((img) => ({ url: img.url }));
+    }
+    // else: unchanged — omit featured-image/gallery so the update leaves
+    // the already-compressed Webflow assets untouched.
   }
 
   if (detail.location.latitude != null && detail.location.longitude != null) {

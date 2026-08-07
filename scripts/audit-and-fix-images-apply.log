@@ -1,0 +1,616 @@
+Loading existing Webflow asset library (to reuse already-converted webp files)...
+Failed to validate.
+  - response.assets.[10].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[10].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[11].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[11].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[12].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[12].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[13].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[13].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[14].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[14].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[15].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[15].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[16].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[16].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[18].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[18].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[19].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[19].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[20].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[20].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[21].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[21].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[22].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[22].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[23].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[23].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[24].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[24].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[25].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[25].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[26].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[26].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[27].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[27].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[28].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[28].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[29].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[29].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[30].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[30].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[31].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[31].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[32].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[32].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[33].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[33].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[34].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[34].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[35].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[35].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[36].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[36].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[37].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[37].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[38].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[38].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[39].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[39].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[40].variants.[6].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[40].variants.[6].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[41].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[41].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[42].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[42].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[43].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[43].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[44].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[44].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[45].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[45].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[46].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[46].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[47].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[47].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[48].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[48].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[49].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[49].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[50].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[50].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[51].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[51].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[52].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[52].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[53].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[53].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[54].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[54].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[55].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[55].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[56].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[56].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[57].variants.[3].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[57].variants.[3].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[68].variants.[1].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[68].variants.[1].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[70].variants.[2].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[70].variants.[2].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[71].variants.[2].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[71].variants.[2].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[72].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[72].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[73].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[73].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[74].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[74].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[75].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[75].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[76].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[76].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[77].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[77].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[78].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[78].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[79].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[79].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[80].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[80].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[81].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[81].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[82].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[82].variants.[0].quality: Expected number. Received null.
+Failed to validate.
+  - response.assets.[83].variants.[0].width: Expected number. Received null.
+Failed to validate.
+  - response.assets.[83].variants.[0].quality: Expected number. Received null.
+Loaded 2199 existing webp assets (by marker) from the library.
+Loading Webflow property items...
+Loaded 403 Webflow items.
+EB-WP0777 -> fixed (10 images)
+EB-SF8211 -> fixed (6 images)
+EB-WO9950 -> fixed (16 images)
+EB-WO6030 -> fixed (10 images)
+EB-RJ1457 -> fixed (11 images)
+EB-WP0813 -> fixed (11 images)
+EB-WK8869 -> fixed (16 images)
+EB-WO3600 -> fixed (10 images)
+EB-RJ1479 -> fixed (11 images)
+EB-WE7351 -> fixed (9 images)
+EB-WL6911 -> fixed (12 images)
+EB-WF3877 -> fixed (9 images)
+EB-WC7206 -> fixed (9 images)
+EB-WF9172 -> fixed (9 images)
+EB-WH8637 -> fixed (10 images)
+EB-WC7183 -> fixed (10 images)
+EB-WL8394 -> fixed (8 images)
+EB-VB9022 -> fixed (12 images)
+EB-WH8630 -> fixed (10 images)
+EB-WN0735 -> fixed (9 images)
+EB-WJ5982 -> fixed (9 images)
+EB-WL8001 -> fixed (8 images)
+EB-WE6447 -> fixed (8 images)
+EB-WG6006 -> fixed (11 images)
+EB-WE0299 -> fixed (10 images)
+EB-WG2392 -> fixed (17 images)
+EB-WE2437 -> fixed (17 images)
+EB-WK8777 -> fixed (16 images)
+EB-WG5728 -> fixed (9 images)
+EB-WH6002 -> fixed (12 images)
+EB-WI2809 -> fixed (8 images)
+EB-WI2453 -> fixed (10 images)
+EB-WH2148 -> fixed (13 images)
+EB-WH3839 -> fixed (8 images)
+EB-WE0366 -> fixed (11 images)
+EB-WI0001 -> fixed (8 images)
+EB-WH2099 -> fixed (9 images)
+EB-WE7881 -> fixed (11 images)
+EB-VM5963 -> fixed (8 images)
+EB-WH6009 -> fixed (8 images)
+EB-TR6272 -> fixed (10 images)
+EB-WI2748 -> fixed (13 images)
+EB-WF8352 -> fixed (8 images)
+EB-WC2198 -> fixed (13 images)
+EB-WE6240 -> fixed (14 images)
+EB-WD2236 -> fixed (8 images)
+EB-WE6225 -> fixed (11 images)
+EB-WE0091 -> fixed (8 images)
+EB-WC7596 -> fixed (14 images)
+EB-WC9845 -> fixed (11 images)
+EB-WC2254 -> fixed (13 images)
+EB-WE0183 -> fixed (13 images)
+EB-WD2100 -> fixed (8 images)
+EB-WC7579 -> ERROR: Error occurred during S3 upload: Failed to upload to S3. Status: 503, Response: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>SlowDown</Code><Message>Please reduce your request rate.</Message><RequestId>G6FT6JY2YD17476Y</RequestId><HostId>5Qr7sAeCqEkcWT6x/Pj51GpNvn/22whiCVHe5PqctwLNbmZBD9ykBKLX0B2u5fHMajSebW1Xk0M=</HostId></Error>
+EB-WC7588 -> fixed (13 images)
+EB-WC7295 -> fixed (13 images)
+EB-WC7567 -> fixed (13 images)
+EB-IL2589 -> fixed (8 images)
+EB-VX4799 -> fixed (8 images)
+EB-VB8295 -> fixed (8 images)
+EB-UV4738 -> fixed (12 images)
+EB-VZ9294 -> fixed (9 images)
+EB-VX7578 -> fixed (8 images)
+EB-VX7960 -> fixed (8 images)
+EB-VY6981 -> fixed (12 images)
+EB-VX7513 -> fixed (9 images)
+EB-VX7659 -> fixed (8 images)
+EB-VZ1717 -> fixed (10 images)
+EB-VI5098 -> fixed (13 images)
+EB-VX7598 -> fixed (8 images)
+EB-VD7496 -> fixed (9 images)
+EB-VI8688 -> fixed (21 images)
+EB-UY2411 -> fixed (11 images)
+EB-UZ5962 -> fixed (9 images)
+EB-UY2414 -> fixed (11 images)
+EB-UW3494 -> fixed (9 images)
+EB-UW3441 -> fixed (9 images)
+EB-UW2677 -> fixed (13 images)
+EB-UW3412 -> fixed (12 images)
+EB-UW3559 -> fixed (9 images)
+EB-UW3099 -> fixed (14 images)
+EB-UF6349 -> fixed (8 images)
+EB-UE6160 -> fixed (11 images)
+EB-UW3576 -> fixed (14 images)
+EB-UE1664 -> fixed (12 images)
+EB-UE1323 -> fixed (9 images)
+EB-SI7616 -> fixed (9 images)
+EB-UE5627 -> fixed (11 images)
+EB-SE9757 -> fixed (11 images)
+EB-QX1960 -> fixed (12 images)
+EB-QL0958 -> fixed (10 images)
+EB-QD6613 -> fixed (8 images)
+EB-OL2319 -> fixed (13 images)
+EB-SE7367 -> fixed (16 images)
+EB-VZ2786 -> fixed (8 images)
+EB-NZ2582 -> fixed (8 images)
+EB-VY6928 -> fixed (8 images)
+EB-VY6887 -> fixed (12 images)
+EB-VY4760 -> fixed (11 images)
+EB-VY4720 -> fixed (11 images)
+EB-OL2295 -> fixed (13 images)
+EB-VY4690 -> fixed (11 images)
+EB-VY4361 -> fixed (11 images)
+EB-VX7618 -> fixed (9 images)
+EB-VY4740 -> fixed (11 images)
+EB-VX6639 -> fixed (15 images)
+EB-VX7429 -> fixed (8 images)
+EB-VX6616 -> fixed (13 images)
+EB-VX6575 -> fixed (12 images)
+EB-VX6545 -> fixed (11 images)
+EB-VX4710 -> fixed (10 images)
+EB-VX4671 -> fixed (10 images)
+EB-VX4760 -> fixed (10 images)
+EB-VX1518 -> fixed (10 images)
+EB-VX1547 -> fixed (11 images)
+EB-VX1602 -> fixed (12 images)
+EB-VM5044 -> fixed (9 images)
+EB-VM7858 -> fixed (10 images)
+EB-VM5796 -> fixed (8 images)
+EB-VJ6587 -> fixed (8 images)
+EB-VJ2217 -> fixed (10 images)
+EB-VI9506 -> fixed (13 images)
+EB-VI4517 -> fixed (15 images)
+EB-VI4548 -> fixed (15 images)
+EB-VI4474 -> fixed (14 images)
+EB-VI3862 -> fixed (10 images)
+EB-VI3596 -> fixed (10 images)
+EB-VI3606 -> fixed (13 images)
+EB-VI1346 -> fixed (8 images)
+EB-VI1319 -> fixed (12 images)
+EB-VI1273 -> fixed (11 images)
+EB-VI1233 -> fixed (11 images)
+EB-VH8504 -> fixed (10 images)
+EB-VH5992 -> fixed (13 images)
+EB-VH5862 -> fixed (13 images)
+EB-VH5696 -> fixed (14 images)
+EB-VH5401 -> fixed (12 images)
+EB-VH5231 -> fixed (12 images)
+EB-VG0902 -> fixed (9 images)
+EB-VE6823 -> fixed (8 images)
+EB-VH1319 -> fixed (10 images)
+EB-VE6873 -> fixed (10 images)
+EB-VE6385 -> fixed (10 images)
+EB-VE6332 -> fixed (10 images)
+EB-VE4141 -> fixed (12 images)
+EB-VC2082 -> fixed (9 images)
+EB-VE3463 -> fixed (8 images)
+EB-VE3396 -> fixed (8 images)
+EB-VA8396 -> fixed (11 images)
+EB-VA6546 -> fixed (13 images)
+EB-VA8377 -> fixed (8 images)
+EB-VC2022 -> fixed (12 images)
+EB-VA6480 -> fixed (14 images)
+EB-VA5039 -> fixed (8 images)
+EB-UZ8379 -> fixed (11 images)
+EB-UZ7722 -> fixed (10 images)
+EB-UZ6377 -> fixed (12 images)
+EB-UZ7529 -> fixed (14 images)
+EB-UZ8038 -> fixed (11 images)
+EB-UY1973 -> fixed (8 images)
+EB-UZ2162 -> fixed (8 images)
+EB-UW3004 -> fixed (14 images)
+EB-UV8923 -> fixed (8 images)
+EB-UW0709 -> fixed (9 images)
+EB-UV7983 -> fixed (14 images)
+EB-UU8106 -> fixed (11 images)
+EB-UU9705 -> fixed (11 images)
+EB-UU6731 -> fixed (8 images)
+EB-UU8000 -> fixed (8 images)
+EB-UU8033 -> fixed (11 images)
+EB-UU6646 -> fixed (10 images)
+EB-UT5058 -> fixed (12 images)
+EB-UN0722 -> fixed (9 images)
+EB-UM0278 -> fixed (8 images)
+EB-US8361 -> fixed (10 images)
+EB-UL0846 -> fixed (15 images)
+EB-UJ6374 -> fixed (9 images)
+EB-UL8426 -> fixed (14 images)
+EB-UL0921 -> fixed (11 images)
+EB-UJ2149 -> fixed (8 images)
+EB-UJ2272 -> fixed (17 images)
+EB-UI3461 -> fixed (14 images)
+EB-UJ5203 -> fixed (12 images)
+EB-UJ2081 -> fixed (10 images)
+EB-UF2677 -> fixed (13 images)
+EB-UE0696 -> fixed (8 images)
+EB-UF8581 -> fixed (12 images)
+EB-UE1214 -> fixed (9 images)
+EB-UD8270 -> fixed (11 images)
+EB-UD8320 -> fixed (14 images)
+EB-UD1536 -> fixed (8 images)
+EB-UD8162 -> fixed (18 images)
+EB-TZ5516 -> fixed (10 images)
+EB-UD4907 -> fixed (20 images)
+EB-UB2432 -> fixed (15 images)
+EB-TZ5392 -> fixed (9 images)
+EB-TZ2833 -> fixed (19 images)
+EB-TZ1812 -> fixed (8 images)
+EB-TY9845 -> fixed (11 images)
+EB-TY0388 -> fixed (20 images)
+EB-TY0360 -> fixed (19 images)
+EB-TX7892 -> fixed (13 images)
+EB-TX7949 -> fixed (17 images)
+EB-TX8030 -> fixed (18 images)
+EB-TX7703 -> fixed (12 images)
+EB-TV2836 -> fixed (12 images)
+EB-TV2795 -> fixed (15 images)
+EB-TX5280 -> fixed (22 images)
+EB-TT4204 -> fixed (12 images)
+EB-TT2128 -> fixed (15 images)
+EB-TU3110 -> fixed (13 images)
+EB-TT2108 -> fixed (10 images)
+EB-TR0804 -> fixed (15 images)
+EB-TO8302 -> fixed (16 images)
+EB-TH6123 -> fixed (11 images)
+EB-TO8250 -> fixed (16 images)
+EB-TG7868 -> fixed (13 images)
+EB-TL2951 -> fixed (8 images)
+EB-TG7780 -> fixed (13 images)
+EB-SZ8740 -> fixed (12 images)
+EB-SZ8743 -> fixed (12 images)
+EB-SW5672 -> fixed (15 images)
+EB-SZ7127 -> fixed (10 images)
+EB-SW5580 -> fixed (15 images)
+EB-SW4040 -> fixed (15 images)
+EB-SW3647 -> fixed (15 images)
+EB-SV7170 -> fixed (25 images)
+EB-ST7254 -> fixed (12 images)
+EB-SW2735 -> fixed (12 images)
+EB-SV1951 -> fixed (8 images)
+EB-SQ9524 -> fixed (8 images)
+EB-SQ5427 -> fixed (15 images)
+EB-SQ5354 -> fixed (12 images)
+EB-SN5213 -> fixed (13 images)
+EB-SP5671 -> fixed (16 images)
+EB-SN5174 -> fixed (13 images)
+EB-SP5560 -> fixed (16 images)
+EB-SM3188 -> fixed (12 images)
+EB-SM0379 -> fixed (8 images)
+EB-SL9847 -> fixed (13 images)
+EB-SN5152 -> fixed (13 images)
+EB-SJ9392 -> fixed (9 images)
+EB-SH9475 -> fixed (13 images)
+EB-SH7674 -> fixed (13 images)
+EB-SE8438 -> fixed (10 images)
+EB-SG7046 -> fixed (13 images)
+EB-SE6164 -> fixed (9 images)
+EB-SE8393 -> fixed (10 images)
+EB-SE7304 -> fixed (10 images)
+EB-SE1040 -> fixed (14 images)
+EB-SE1019 -> fixed (14 images)
+EB-SD3183 -> fixed (10 images)
+EB-SE1002 -> fixed (13 images)
+EB-SB9420 -> fixed (17 images)
+EB-SB9202 -> fixed (17 images)
+EB-SB9395 -> fixed (17 images)
+EB-RZ8489 -> fixed (13 images)
+EB-RW9528 -> fixed (10 images)
+EB-RZ9329 -> fixed (17 images)
+EB-RT5173 -> fixed (14 images)
+EB-RW2135 -> fixed (14 images)
+EB-RS1496 -> fixed (9 images)
+EB-RT5115 -> fixed (15 images)
+EB-RS0579 -> fixed (8 images)
+EB-RQ1861 -> fixed (13 images)
+EB-RL9214 -> fixed (9 images)
+EB-RL6142 -> fixed (6 images)
+EB-RL5188 -> fixed (9 images)
+EB-RQ1854 -> fixed (13 images)
+EB-RL4050 -> fixed (10 images)
+EB-RL5097 -> fixed (9 images)
+EB-RL5095 -> fixed (9 images)
+EB-RJ5355 -> fixed (9 images)
+EB-RJ2934 -> fixed (12 images)
+EB-RF2928 -> fixed (8 images)
+EB-RG7290 -> fixed (13 images)
+EB-RJ2907 -> fixed (15 images)
+EB-RE0256 -> fixed (13 images)
+EB-RD7598 -> fixed (15 images)
+EB-RB4859 -> fixed (5 images)
+EB-RD8602 -> fixed (19 images)
+EB-RB2104 -> fixed (8 images)
+EB-RA1587 -> fixed (7 images)
+EB-RA1627 -> fixed (6 images)
+EB-RB2085 -> fixed (15 images)
+EB-QZ3179 -> fixed (12 images)
+EB-QZ3170 -> fixed (18 images)
+EB-QY8930 -> fixed (12 images)
+EB-QY4399 -> fixed (11 images)
+EB-QY4337 -> fixed (10 images)
+EB-QY4179 -> fixed (10 images)
+EB-QY8911 -> fixed (21 images)
+EB-QY1874 -> fixed (10 images)
+EB-QX1463 -> fixed (8 images)
+EB-QX4544 -> fixed (11 images)
+EB-QX1437 -> fixed (8 images)
+EB-QY4009 -> fixed (15 images)
+EB-QW9976 -> fixed (8 images)
+EB-QW9788 -> fixed (10 images)
+EB-QW8957 -> fixed (14 images)
+EB-QR5651 -> fixed (13 images)
+EB-QR0245 -> fixed (13 images)
+EB-QM8523 -> fixed (14 images)
+EB-QM3255 -> fixed (10 images)
+EB-QM3237 -> fixed (10 images)
+EB-QK9981 -> fixed (20 images)
+EB-QM3110 -> fixed (10 images)
+EB-QJ3666 -> fixed (15 images)
+EB-QI5867 -> fixed (13 images)
+EB-QJ0952 -> fixed (15 images)
+EB-QF3127 -> fixed (8 images)
+EB-QG4141 -> fixed (10 images)
+EB-QC3415 -> fixed (8 images)
+EB-QE8190 -> fixed (13 images)
+EB-QC1912 -> fixed (9 images)
+EB-QC4131 -> fixed (18 images)
+EB-PY1568 -> fixed (8 images)
+EB-PM6879 -> fixed (12 images)
+EB-PY0678 -> fixed (8 images)
+EB-PP9451 -> fixed (10 images)
+EB-PM6842 -> fixed (11 images)
+EB-PM5050 -> fixed (11 images)
+EB-PI4313 -> fixed (14 images)
+EB-PM4962 -> fixed (11 images)
+EB-LF3438 -> fixed (7 images)
+EB-NZ2617 -> fixed (8 images)
+EB-JL3736 -> fixed (6 images)
+EB-IN4670 -> fixed (9 images)
+EB-MR9952 -> fixed (8 images)
+EB-VM8463 -> fixed (15 images)
+EB-VN0842 -> fixed (9 images)
+EB-VN0979 -> fixed (10 images)
+EB-VN1069 -> fixed (14 images)
+EB-VN1114 -> fixed (14 images)
+EB-VP0690 -> fixed (13 images)
+EB-VP4941 -> fixed (10 images)
+EB-VP5924 -> fixed (5 images)
+EB-VP7824 -> fixed (9 images)
+EB-VP7676 -> fixed (9 images)
+EB-VP8338 -> fixed (9 images)
+EB-VP8360 -> fixed (9 images)
+EB-VP8674 -> fixed (9 images)
+EB-VP8695 -> fixed (9 images)
+EB-VP9947 -> fixed (13 images)
+EB-UV4564 -> fixed (13 images)
+EB-VQ6974 -> fixed (12 images)
+
+=== SUMMARY ===
+Already webp (skipped, untouched): 57
+Fixed (or would fix): 345
+  - reused existing webp asset: 2197
+  - newly converted: 1733 
+No EasyBroker images: 0
+No property-id: 0
+Errors: 1
+[
+  {
+    "pid": "EB-WC7579",
+    "message": "Error occurred during S3 upload: Failed to upload to S3. Status: 503, Response: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Error><Code>SlowDown</Code><Message>Please reduce your request rate.</Message><RequestId>G6FT6JY2YD17476Y</RequestId><HostId>5Qr7sAeCqEkcWT6x/Pj51GpNvn/22whiCVHe5PqctwLNbmZBD9ykBKLX0B2u5fHMajSebW1Xk0M=</HostId></Error>"
+  }
+]
+
+Applied and saved to scripts/audit-and-fix-images-results.json
