@@ -321,6 +321,8 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
     errors,
     durationMs: Date.now() - start,
     dryRun,
+    // @ts-expect-error temporary debug field
+    debugUpdated: toUpdate.map((u) => ({ publicId: u.publicId, fields: Object.keys(u.fieldData) })),
   };
 }
 
