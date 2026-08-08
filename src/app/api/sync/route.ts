@@ -30,8 +30,10 @@ async function handle(req: NextRequest) {
     const dryRun = url.searchParams.get("dryRun") === "true";
     const limitParam = url.searchParams.get("limit");
     const limit = limitParam ? Number(limitParam) : undefined;
-    const result = await runSync({ dryRun, limit });
-    return NextResponse.json({ ok: true, _buildMarker: "debug-210deab-check-2", ...result });
+    const offsetParam = url.searchParams.get("offset");
+    const offset = offsetParam ? Number(offsetParam) : undefined;
+    const result = await runSync({ dryRun, limit, offset });
+    return NextResponse.json({ ok: true, ...result });
   } catch (err) {
     return NextResponse.json(
       { ok: false, error: (err as Error).message },

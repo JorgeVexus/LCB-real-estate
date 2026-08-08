@@ -112,16 +112,20 @@ export interface SyncOptions {
   /** When true, computes the full diff and resolves references read-only, without writing anything to Webflow. */
   dryRun?: boolean;
   /**
-   * Limits processing to the first N published EasyBroker properties — for
-   * testing create/update on a small sample against the live site. The
-   * unpublish step is always skipped when a limit is set, since a partial
-   * EasyBroker list would otherwise look like everything else was delisted.
+   * Limits processing to N published EasyBroker properties (starting at
+   * `offset`) — for testing on a small sample, or for manually running a
+   * one-off full migration in bounded chunks that each fit comfortably
+   * inside the function's time limit. The unpublish step is always skipped
+   * when a limit is set, since a partial EasyBroker list would otherwise
+   * look like everything else was delisted.
    */
   limit?: number;
+  /** Skips the first N published EasyBroker properties before applying `limit`. */
+  offset?: number;
 }
 
 export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
-  const { dryRun = false, limit } = options;
+  const { dryRun = false, limit, offset = 0 } = options;
   const start = Date.now();
   const env = readEnv();
   const errors: SyncResult["errors"] = [];
@@ -136,7 +140,8 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
       getCollectionFieldMap(env.propertiesCollectionId),
     ]);
 
-  const listItems = limit ? allListItems.slice(0, limit) : allListItems;
+  const listItems =
+    offset || limit ? allListItems.slice(offset, limit ? offset + limit : undefined) : allListItems;
 
   const currencyLookup = buildOptionLookup(fieldMap.get("currency"));
   const operationTypeLookup = buildOptionLookup(fieldMap.get("operation-type"));
@@ -232,7 +237,7 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
   await Promise.all(Array.from({ length: Math.min(PROPERTY_CONCURRENCY, publicIds.length) }, worker));
 
   const publishedPublicIds = new Set(allListItems.map((p) => p.public_id));
-  const toUnpublish = limit
+  const toUnpublish = limit || offset
     ? []
     : existingPropertyItems.filter((item) => {
         const key = String(item.fieldData["property-id"] ?? "").trim();
