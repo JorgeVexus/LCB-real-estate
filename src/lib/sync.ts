@@ -154,67 +154,82 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
   const toCreate: { publicId: string; fieldData: ItemFieldData }[] = [];
   const toUpdate: { publicId: string; id: string; fieldData: Record<string, unknown> }[] = [];
 
-  for (const publicId of listItems.map((p) => p.public_id)) {
-    const detail = details.get(publicId);
-    if (!detail) {
-      errors.push({ publicId, message: "No detail response from EasyBroker" });
-      continue;
-    }
+  // Each property can involve real network work (image download/re-encode/
+  // upload when it changed), and this used to run one property at a time —
+  // with 300+ properties that's easily enough to blow past Vercel's function
+  // duration limit even though most days most properties are unchanged and
+  // skip fast. Reference creation (resolveOrCreateReferenceByName) is
+  // separately guarded against concurrent duplicate creates.
+  const PROPERTY_CONCURRENCY = 5;
+  const publicIds = listItems.map((p) => p.public_id);
+  let cursor = 0;
 
-    try {
-      const existing = wfByPropertyId.get(publicId);
-      const fieldData = await buildFieldData(detail, env, {
-        propertyTypeItems,
-        agenteItems,
-        ubicacionItems,
-        currencyLookup,
-        operationTypeLookup,
-        createdReferences,
-        dryRun,
-        existingFieldData: existing?.fieldData,
-      });
-
-      if (existing) {
-        // Never touch slug on update — it's the item's live URL. Changing it
-        // breaks bookmarks, shared links, and search-indexed pages. Also
-        // never re-run the description parser here — it would clobber
-        // whatever a human has already corrected in Webflow.
-        const { slug: _slug, ...fieldDataWithoutSlug } = fieldData;
-        const changedFields = diffFieldData(fieldDataWithoutSlug, existing.fieldData);
-        // Nothing actually changed since the last sync — skip the update
-        // (and the republish that would otherwise follow) entirely.
-        if (Object.keys(changedFields).length > 0) {
-          toUpdate.push({ publicId, id: existing.id, fieldData: changedFields });
-        }
-      } else {
-        // New property: best-effort fill the spec fields EasyBroker doesn't
-        // expose structurally (andenes, tipo de techo, etc.) by parsing its
-        // free-text description. Formatting varies across listings, so this
-        // is approximate — new properties should be spot-checked in Webflow.
-        const parsedSpecs = detail.description ? parseDescriptionFields(detail.description) : {};
-
-        // "Propiedades Similares" is an editorial pick EasyBroker has no
-        // concept of, so best-effort suggest same type + city + closest
-        // size, same as the manual curation the team used to do by hand.
-        const similares = suggestSimilarProperties(
-          {
-            id: "", // not yet created; nothing to exclude
-            propertyTypeId: String(fieldData["property-type"] ?? ""),
-            cityId: String(fieldData.city ?? ""),
-            metros: parseFloat(String(fieldData["metros-cuadrados"] ?? "")) || 0,
-          },
-          existingPropertyItems
-        );
-
-        toCreate.push({
-          publicId,
-          fieldData: { ...fieldData, ...parsedSpecs, "propiedades-similares": similares },
-        });
+  async function worker() {
+    while (cursor < publicIds.length) {
+      const publicId = publicIds[cursor++];
+      const detail = details.get(publicId);
+      if (!detail) {
+        errors.push({ publicId, message: "No detail response from EasyBroker" });
+        continue;
       }
-    } catch (err) {
-      errors.push({ publicId, message: (err as Error).message });
+
+      try {
+        const existing = wfByPropertyId.get(publicId);
+        const fieldData = await buildFieldData(detail, env, {
+          propertyTypeItems,
+          agenteItems,
+          ubicacionItems,
+          currencyLookup,
+          operationTypeLookup,
+          createdReferences,
+          dryRun,
+          existingFieldData: existing?.fieldData,
+        });
+
+        if (existing) {
+          // Never touch slug on update — it's the item's live URL. Changing it
+          // breaks bookmarks, shared links, and search-indexed pages. Also
+          // never re-run the description parser here — it would clobber
+          // whatever a human has already corrected in Webflow.
+          const { slug: _slug, ...fieldDataWithoutSlug } = fieldData;
+          const changedFields = diffFieldData(fieldDataWithoutSlug, existing.fieldData);
+          // Nothing actually changed since the last sync — skip the update
+          // (and the republish that would otherwise follow) entirely.
+          if (Object.keys(changedFields).length > 0) {
+            toUpdate.push({ publicId, id: existing.id, fieldData: changedFields });
+          }
+        } else {
+          // New property: best-effort fill the spec fields EasyBroker doesn't
+          // expose structurally (andenes, tipo de techo, etc.) by parsing its
+          // free-text description. Formatting varies across listings, so this
+          // is approximate — new properties should be spot-checked in Webflow.
+          const parsedSpecs = detail.description ? parseDescriptionFields(detail.description) : {};
+
+          // "Propiedades Similares" is an editorial pick EasyBroker has no
+          // concept of, so best-effort suggest same type + city + closest
+          // size, same as the manual curation the team used to do by hand.
+          const similares = suggestSimilarProperties(
+            {
+              id: "", // not yet created; nothing to exclude
+              propertyTypeId: String(fieldData["property-type"] ?? ""),
+              cityId: String(fieldData.city ?? ""),
+              metros: parseFloat(String(fieldData["metros-cuadrados"] ?? "")) || 0,
+            },
+            existingPropertyItems
+          );
+
+          toCreate.push({
+            publicId,
+            fieldData: { ...fieldData, ...parsedSpecs, "propiedades-similares": similares },
+          });
+        }
+      } catch (err) {
+        errors.push({ publicId, message: (err as Error).message });
+      }
     }
   }
+
+  await Promise.all(Array.from({ length: Math.min(PROPERTY_CONCURRENCY, publicIds.length) }, worker));
 
   const publishedPublicIds = new Set(allListItems.map((p) => p.public_id));
   const toUnpublish = limit

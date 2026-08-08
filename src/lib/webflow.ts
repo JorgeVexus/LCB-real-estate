@@ -357,6 +357,12 @@ export async function unpublishItemsBatched(
  * collections, whose values aren't guaranteed to already exist. Mutates
  * `existingItems` so repeated lookups within the same run reuse newly created ones.
  */
+// Guards resolveOrCreateReferenceByName against duplicate creates when the
+// property loop runs concurrently and two properties need the same
+// brand-new reference (e.g. an agente or ciudad) at once — the second
+// caller awaits the first's in-flight create instead of racing it.
+const inFlightReferenceCreates = new Map<string, Promise<string>>();
+
 export async function resolveOrCreateReferenceByName(
   collectionId: string,
   existingItems: WebflowItemSummary[],
@@ -369,25 +375,37 @@ export async function resolveOrCreateReferenceByName(
   );
   if (match) return match.id;
 
-  const wf = getWebflowClient();
-  const res = await callWithRetry(() =>
-    wf.collections.items.createItem(collectionId, {
-      isArchived: false,
-      isDraft: false,
-      fieldData: {
-        name: name.trim(),
-        slug: slugify(name),
-        ...extraFieldData,
-      },
-    })
-  );
-  existingItems.push({
-    id: res.id!,
-    isDraft: false,
-    isArchived: false,
-    fieldData: res.fieldData as Record<string, unknown>,
-  });
-  return res.id!;
+  const lockKey = `${collectionId}::${normalized}`;
+  const inFlight = inFlightReferenceCreates.get(lockKey);
+  if (inFlight) return inFlight;
+
+  const createPromise = (async () => {
+    try {
+      const wf = getWebflowClient();
+      const res = await callWithRetry(() =>
+        wf.collections.items.createItem(collectionId, {
+          isArchived: false,
+          isDraft: false,
+          fieldData: {
+            name: name.trim(),
+            slug: slugify(name),
+            ...extraFieldData,
+          },
+        })
+      );
+      existingItems.push({
+        id: res.id!,
+        isDraft: false,
+        isArchived: false,
+        fieldData: res.fieldData as Record<string, unknown>,
+      });
+      return res.id!;
+    } finally {
+      inFlightReferenceCreates.delete(lockKey);
+    }
+  })();
+  inFlightReferenceCreates.set(lockKey, createPromise);
+  return createPromise;
 }
 
 /** Publishes the whole site (needed once after items are published, so pages reflect CMS changes). */
