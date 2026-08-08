@@ -31,7 +31,7 @@ async function handle(req: NextRequest) {
     const limitParam = url.searchParams.get("limit");
     const limit = limitParam ? Number(limitParam) : undefined;
     const result = await runSync({ dryRun, limit });
-    return NextResponse.json({ ok: true, _buildMarker: "debug-a823a8b-check-1", ...result });
+    return NextResponse.json({ ok: true, ...result });
   } catch (err) {
     return NextResponse.json(
       { ok: false, error: (err as Error).message },
