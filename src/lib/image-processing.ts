@@ -21,11 +21,24 @@ export function imageMarker(sourceUrl: string): string {
   return crypto.createHash("sha1").update(pathname).digest("hex").slice(0, 12);
 }
 
-/** Reads the marker embedded in an alt string of the form "... — eb:<marker>". */
-export function extractMarker(alt: unknown): string | null {
-  if (typeof alt !== "string") return null;
-  const match = alt.match(/eb:([a-f0-9]{12})$/);
-  return match ? match[1] : null;
+/**
+ * Reads the marker for an already-uploaded image, preferring the alt text
+ * ("... — eb:<marker>") but falling back to the hosted URL's filename —
+ * Webflow prefixes uploads with the asset's own ID (e.g. we upload
+ * "<marker>.webp" and it comes back as ".../<assetId>_<marker>.webp"), so the
+ * marker survives there even when alt wasn't set (e.g. images repaired
+ * directly via a one-off script that only touched the URL).
+ */
+export function extractMarker(alt: unknown, url?: unknown): string | null {
+  if (typeof alt === "string") {
+    const match = alt.match(/eb:([a-f0-9]{12})$/);
+    if (match) return match[1];
+  }
+  if (typeof url === "string") {
+    const match = url.match(/_?([a-f0-9]{12})\.webp(?:\?.*)?$/i);
+    if (match) return match[1].toLowerCase();
+  }
+  return null;
 }
 
 export interface UploadedImage {

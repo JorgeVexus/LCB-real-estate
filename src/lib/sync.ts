@@ -418,7 +418,9 @@ async function buildFieldData(
       ctx.existingFieldData?.["featured-image"],
       ...(Array.isArray(ctx.existingFieldData?.gallery) ? (ctx.existingFieldData!.gallery as unknown[]) : []),
     ].filter(Boolean) as Record<string, unknown>[];
-    const existingMarkers = existingImages.map((img) => extractMarker(img?.alt)).filter(Boolean);
+    const existingMarkers = existingImages
+      .map((img) => extractMarker(img?.alt, img?.url))
+      .filter(Boolean);
 
     const unchanged =
       existingMarkers.length > 0 &&
