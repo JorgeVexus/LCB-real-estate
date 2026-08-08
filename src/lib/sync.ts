@@ -433,8 +433,8 @@ async function buildFieldData(
         images.map((img) => img.url),
         detail.title
       );
-      fieldData["featured-image"] = { fileId: uploaded[0].fileId, alt: uploaded[0].alt };
-      fieldData.gallery = uploaded.map((u) => ({ fileId: u.fileId, alt: u.alt }));
+      fieldData["featured-image"] = { fileId: uploaded[0].fileId, url: uploaded[0].url, alt: uploaded[0].alt };
+      fieldData.gallery = uploaded.map((u) => ({ fileId: u.fileId, url: u.url, alt: u.alt }));
     } else if (!unchanged && ctx.dryRun) {
       // Dry runs never write to Webflow — report intent without uploading.
       fieldData["featured-image"] = { url: images[0].url };

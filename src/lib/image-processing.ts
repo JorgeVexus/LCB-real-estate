@@ -43,6 +43,7 @@ export function extractMarker(alt: unknown, url?: unknown): string | null {
 
 export interface UploadedImage {
   fileId: string;
+  url: string;
   alt: string;
   marker: string;
 }
@@ -84,11 +85,13 @@ export async function processAndUploadImage(
     });
   });
 
-  if (!uploaded.id) {
-    throw new Error(`Webflow asset upload for ${sourceUrl} did not return an asset id`);
+  if (!uploaded.id || !uploaded.hostedUrl) {
+    throw new Error(`Webflow asset upload for ${sourceUrl} did not return an asset id/hostedUrl`);
   }
 
-  return { fileId: uploaded.id, alt, marker };
+  // Webflow's item-update validation requires a 'url' alongside 'fileId' on
+  // image fields — fileId alone is rejected.
+  return { fileId: uploaded.id, url: uploaded.hostedUrl, alt, marker };
 }
 
 /**
