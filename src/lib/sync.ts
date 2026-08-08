@@ -321,8 +321,6 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
     errors,
     durationMs: Date.now() - start,
     dryRun,
-    // @ts-expect-error temporary debug field
-    debugUpdated: toUpdate.map((u) => ({ publicId: u.publicId, fields: Object.keys(u.fieldData) })),
   };
 }
 
@@ -423,7 +421,10 @@ async function buildFieldData(
     "property-type": propertyTypeId,
     city: cityId,
     agente: agenteId,
-    "metros-cuadrados": detail.construction_size != null ? String(detail.construction_size) : "",
+    // Webflow stores an empty string on this PlainText field back as null,
+    // so writing "" here (instead of null) would make the diff check think
+    // the field changed on every single run, forever.
+    "metros-cuadrados": detail.construction_size != null ? String(detail.construction_size) : null,
     "lot-size": Math.trunc(detail.lot_size ?? 0),
     bedrooms: Math.trunc(detail.bedrooms ?? 0),
     bathrooms: Math.trunc(detail.bathrooms ?? 0),
