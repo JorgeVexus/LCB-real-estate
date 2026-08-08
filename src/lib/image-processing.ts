@@ -48,6 +48,63 @@ export interface UploadedImage {
   marker: string;
 }
 
+// S3's presigned-POST field names, as returned (camelCased) by Webflow's
+// asset-create response.
+const S3_FIELD_MAPPINGS: Record<string, string> = {
+  xAmzAlgorithm: "X-Amz-Algorithm",
+  xAmzDate: "X-Amz-Date",
+  xAmzCredential: "X-Amz-Credential",
+  xAmzSignature: "X-Amz-Signature",
+  successActionStatus: "success_action_status",
+  contentType: "Content-Type",
+  cacheControl: "Cache-Control",
+};
+
+/**
+ * Uploads a WebP buffer to Webflow as a registered Asset. Reimplements
+ * webflow-api's `assets.utilities.createAndUpload` by hand instead of
+ * calling it directly — that helper does `file instanceof ArrayBuffer` to
+ * decide how to build the upload, and that check reliably fails under
+ * Vercel's Node runtime (throws "Invalid Buffer: Cannot create a buffer
+ * from the provided file") even though the exact same code works when run
+ * as a plain local script. Building the multipart upload ourselves with
+ * native FormData/Blob sidesteps that check entirely.
+ */
+async function uploadWebpAsset(
+  siteId: string,
+  webpBuffer: Buffer,
+  fileName: string
+): Promise<{ id: string; hostedUrl: string }> {
+  const wf = getWebflowClient();
+  const fileHash = crypto.createHash("md5").update(webpBuffer).digest("hex");
+
+  const created = await callWithRetry(() => wf.assets.create(siteId, { fileName, fileHash }));
+  if (!created.id || !created.hostedUrl || !created.uploadUrl || !created.uploadDetails) {
+    throw new Error(`Webflow asset create for ${fileName} did not return upload details`);
+  }
+
+  const form = new FormData();
+  for (const [key, value] of Object.entries(created.uploadDetails)) {
+    if (value == null) continue;
+    form.append(S3_FIELD_MAPPINGS[key] ?? key, String(value));
+  }
+  form.append(
+    "file",
+    new Blob([new Uint8Array(webpBuffer)], { type: created.contentType || "application/octet-stream" }),
+    fileName
+  );
+
+  await callWithRetry(async () => {
+    const res = await fetch(created.uploadUrl!, { method: "POST", body: form });
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      throw new Error(`S3 upload failed for ${fileName}: ${res.status} ${text}`);
+    }
+  });
+
+  return { id: created.id, hostedUrl: created.hostedUrl };
+}
+
 /**
  * Downloads a source image, re-encodes it to WebP (capped at MAX_WIDTH, never
  * upscaled), and uploads it to Webflow as a real registered Asset. Returns a
@@ -75,14 +132,7 @@ export async function processAndUploadImage(
       .webp({ quality: WEBP_QUALITY })
       .toBuffer();
 
-    const wf = getWebflowClient();
-    return wf.assets.utilities.createAndUpload(siteId, {
-      file: webpBuffer.buffer.slice(
-        webpBuffer.byteOffset,
-        webpBuffer.byteOffset + webpBuffer.byteLength
-      ) as ArrayBuffer,
-      fileName: `${marker}.webp`,
-    });
+    return uploadWebpAsset(siteId, webpBuffer, `${marker}.webp`);
   });
 
   if (!uploaded.id || !uploaded.hostedUrl) {
