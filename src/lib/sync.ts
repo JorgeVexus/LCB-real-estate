@@ -413,11 +413,14 @@ async function buildFieldData(
     // (each Webflow image carries the source marker in its alt text). If
     // nothing changed, skip re-downloading/re-compressing/re-uploading —
     // otherwise every property would get reprocessed on every daily run.
+    // The gallery is written as the full image set (index 0 == the featured
+    // image), so it alone lines up 1:1 with EasyBroker's images — adding
+    // featured-image on top double-counts index 0 and desyncs the lengths,
+    // making "unchanged" impossible to ever detect.
     const freshMarkers = images.map((img) => imageMarker(img.url));
-    const existingImages = [
-      ctx.existingFieldData?.["featured-image"],
-      ...(Array.isArray(ctx.existingFieldData?.gallery) ? (ctx.existingFieldData!.gallery as unknown[]) : []),
-    ].filter(Boolean) as Record<string, unknown>[];
+    const existingImages = (
+      Array.isArray(ctx.existingFieldData?.gallery) ? (ctx.existingFieldData!.gallery as unknown[]) : []
+    ).filter(Boolean) as Record<string, unknown>[];
     const existingMarkers = existingImages
       .map((img) => extractMarker(img?.alt, img?.url))
       .filter(Boolean);
