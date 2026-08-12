@@ -65,7 +65,11 @@ function mapsLink(lat: number, lng: number): string {
 }
 
 function mapsEmbedHtml(lat: number, lng: number): string {
-  return `<figure class="w-richtext-figure-type-video w-richtext-align-center" style="padding-bottom:" data-rt-type="video" data-rt-align="center" data-rt-max-width="" data-rt-max-height="" data-rt-dimensions="" data-page-url=""><div><iframe src="https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed" allowfullscreen=""></iframe></div></figure>`;
+  // Webflow's rich-text video-embed figure sizes itself purely via this
+  // padding-bottom percentage (the iframe is absolutely positioned inside
+  // a 0-height wrapper) — leaving it empty collapses the whole map to 0px
+  // tall even though the iframe itself has the correct src.
+  return `<figure class="w-richtext-figure-type-video w-richtext-align-center" style="padding-bottom:56.25%" data-rt-type="video" data-rt-align="center" data-rt-max-width="" data-rt-max-height="" data-rt-dimensions="" data-page-url=""><div><iframe src="https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed" allowfullscreen=""></iframe></div></figure>`;
 }
 
 /**
