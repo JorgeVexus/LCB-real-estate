@@ -69,7 +69,11 @@ function mapsEmbedHtml(lat: number, lng: number): string {
   // padding-bottom percentage (the iframe is absolutely positioned inside
   // a 0-height wrapper) — leaving it empty collapses the whole map to 0px
   // tall even though the iframe itself has the correct src.
-  return `<figure class="w-richtext-figure-type-video w-richtext-align-center" style="padding-bottom:56.25%" data-rt-type="video" data-rt-align="center" data-rt-max-width="" data-rt-max-height="" data-rt-dimensions="" data-page-url=""><div><iframe src="https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed" allowfullscreen=""></iframe></div></figure>`;
+  // w-richtext-align-center caps the figure's width and centers it, which
+  // is why it renders as a small centered square instead of filling its
+  // parent section — w-richtext-align-fullwidth is Webflow's own class for
+  // an embed that stretches to 100% of its container.
+  return `<figure class="w-richtext-figure-type-video w-richtext-align-fullwidth" style="padding-bottom:56.25%" data-rt-type="video" data-rt-align="fullwidth" data-rt-max-width="" data-rt-max-height="" data-rt-dimensions="" data-page-url=""><div><iframe src="https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed" allowfullscreen=""></iframe></div></figure>`;
 }
 
 /**
