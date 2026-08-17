@@ -1,12 +1,14 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import "@/components/ficha/Ficha.css";
 import { FichaDocument } from "@/components/ficha/FichaDocument";
 import { PropertyForm } from "@/components/editor/PropertyForm";
 import { PhotoPicker } from "@/components/editor/PhotoPicker";
 import { LcbLogo } from "@/components/LcbLogo";
 import type { FichaData } from "@/types/ficha";
+
+const FICHA_WIDTH = 1049;
 
 export default function FichaEditorPage({
   params,
@@ -17,6 +19,9 @@ export default function FichaEditorPage({
   const [ficha, setFicha] = useState<FichaData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [downloading, setDownloading] = useState(false);
+  const [activeTab, setActiveTab] = useState<"editar" | "preview">("editar");
+  const [scale, setScale] = useState(0.6);
+  const previewRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     fetch(`/api/property/${publicId}`)
@@ -27,6 +32,26 @@ export default function FichaEditorPage({
       .then(setFicha)
       .catch((err) => setError(err.message));
   }, [publicId]);
+
+  useEffect(() => {
+    const el = previewRef.current;
+    if (!el) return;
+
+    function recompute(width: number) {
+      const available = width - 32; // padding lateral
+      setScale(Math.min(0.6, Math.max(0.28, available / FICHA_WIDTH)));
+    }
+
+    // El ResizeObserver no dispara de forma confiable cuando el elemento
+    // pasa de display:none a visible (pestaña "Vista previa" en móvil), así
+    // que además se recalcula a mano cada vez que cambia la pestaña activa.
+    recompute(el.clientWidth);
+
+    const observer = new ResizeObserver(([entry]) => recompute(entry.contentRect.width));
+    observer.observe(el);
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab]);
 
   async function handleDownload() {
     if (!ficha) return;
@@ -69,19 +94,8 @@ export default function FichaEditorPage({
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      <header
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "12px 24px",
-          background: "rgba(255, 255, 255, 0.75)",
-          backdropFilter: "blur(20px) saturate(180%)",
-          borderBottom: "1px solid var(--lcb-gray-border)",
-          zIndex: 10,
-        }}
-      >
+    <div className="editor-shell">
+      <header className="editor-header">
         <LcbLogo size={30} />
         <button
           onClick={handleDownload}
@@ -92,22 +106,29 @@ export default function FichaEditorPage({
         </button>
       </header>
 
-      <div style={{ display: "flex", flex: 1, minHeight: 0 }}>
-        <aside
-          style={{
-            width: 380,
-            overflowY: "auto",
-            padding: 20,
-            borderRight: "1px solid var(--lcb-gray-border)",
-            background: "var(--lcb-white)",
-          }}
+      <div className="editor-tabs">
+        <button
+          className={`editor-tab-btn ${activeTab === "editar" ? "is-active" : ""}`}
+          onClick={() => setActiveTab("editar")}
         >
+          Editar
+        </button>
+        <button
+          className={`editor-tab-btn ${activeTab === "preview" ? "is-active" : ""}`}
+          onClick={() => setActiveTab("preview")}
+        >
+          Vista previa
+        </button>
+      </div>
+
+      <div className="editor-body" data-active-tab={activeTab}>
+        <aside className="editor-sidebar">
           <PhotoPicker ficha={ficha} onChange={setFicha} />
           <PropertyForm ficha={ficha} onChange={setFicha} />
         </aside>
 
-        <main style={{ flex: 1, overflow: "auto", background: "#3a3a3a", padding: 32 }}>
-          <div style={{ transform: "scale(0.6)", transformOrigin: "top center" }}>
+        <main className="editor-main" ref={previewRef}>
+          <div style={{ zoom: scale }}>
             <FichaDocument ficha={ficha} />
           </div>
         </main>

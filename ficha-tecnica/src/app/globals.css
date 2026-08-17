@@ -138,3 +138,99 @@ select {
     transform: none;
   }
 }
+
+/* ---- Editor de ficha (layout responsivo) ---- */
+
+.editor-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--lcb-gray-border);
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.editor-tabs {
+  display: none;
+}
+
+.editor-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.editor-sidebar {
+  width: 380px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 20px;
+  border-right: 1px solid var(--lcb-gray-border);
+  background: var(--lcb-white);
+}
+
+.editor-main {
+  flex: 1;
+  overflow: auto;
+  background: #3a3a3a;
+  padding: 32px;
+}
+
+/* Debajo de este ancho la ficha 1049px ya no cabe junto al panel de
+   edición sin que se vea aplastada -- se apilan y se cambia a pestañas
+   en vez de mostrar los dos a la vez. */
+@media (max-width: 860px) {
+  .editor-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--lcb-gray-border);
+    background: var(--lcb-white);
+    flex-shrink: 0;
+  }
+
+  .editor-tab-btn {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--lcb-gray-text);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 150ms ease, color 150ms ease;
+  }
+
+  .editor-tab-btn.is-active {
+    background: var(--lcb-gray-bg);
+    color: var(--lcb-black);
+  }
+
+  .editor-body {
+    flex-direction: column;
+  }
+
+  .editor-sidebar,
+  .editor-main {
+    width: 100%;
+    border-right: none;
+  }
+
+  .editor-body[data-active-tab="editar"] .editor-main {
+    display: none;
+  }
+
+  .editor-body[data-active-tab="preview"] .editor-sidebar {
+    display: none;
+  }
+}
