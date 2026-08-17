@@ -12,6 +12,11 @@
   font-family: "Inter", Arial, Helvetica, sans-serif;
   box-sizing: border-box;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* Margen de página uniforme; el bottom deja hueco para la barra del CTA
+     (footer), que vive dentro de ese margen en vez de a todo el ancho. */
+  padding: 28px 28px 96px 28px;
 }
 
 .ficha-page + .ficha-page {
@@ -35,15 +40,14 @@
 .ficha-header {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  padding: 14px 24px 0 8px;
-  gap: 16px;
+  gap: 48px;
 }
 
 .ficha-logo-row {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .ficha-logo-mark {
@@ -70,7 +74,7 @@
   flex: 1;
   font-size: 30px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.25;
   padding-top: 4px;
 }
 
@@ -78,8 +82,7 @@
 .ficha-photo-row {
   display: flex;
   gap: 8px;
-  padding: 0 8px;
-  margin-top: 10px;
+  margin-top: 14px;
 }
 
 .ficha-hero-photo {
@@ -127,7 +130,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 24px;
-  padding: 16px 8px 0 8px;
+  margin-top: 16px;
 }
 
 .ficha-info-stack {
@@ -220,7 +223,7 @@
 
 /* ---- Description ---- */
 .ficha-description {
-  padding: 20px 8px 0 8px;
+  margin-top: 20px;
 }
 
 .ficha-description-title {
@@ -257,14 +260,15 @@
   margin-top: 6px;
 }
 
-/* ---- Footer ---- */
+/* ---- Footer / CTA ---- */
 .ficha-footer {
   position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 1049px;
-  height: 61px;
-  background: #000000;
+  left: 28px;
+  right: 28px;
+  bottom: 28px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f68804;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -272,12 +276,14 @@
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.3px;
+  text-align: center;
 }
 
 /* ---- Page 2 gallery ---- */
 .ficha-gallery-title {
   text-align: center;
   font-size: 56px;
+  font-weight: 800;
   padding-top: 30px;
 }
 
@@ -286,8 +292,9 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(3, 1fr);
   gap: 10px;
-  padding: 0 10px;
-  height: 1300px;
+  margin-top: 20px;
+  flex: 1;
+  min-height: 0;
 }
 
 .ficha-gallery-grid > div {

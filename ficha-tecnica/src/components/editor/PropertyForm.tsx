@@ -2,6 +2,7 @@
 
 import type { FichaData } from "@/types/ficha";
 import type { DescriptionBullet } from "@/lib/description-sections";
+import { deriveLocationFromMapsUrl } from "@/lib/map";
 
 const sectionStyle: React.CSSProperties = { marginBottom: 20 };
 const sectionTitleStyle: React.CSSProperties = {
@@ -61,6 +62,16 @@ export function PropertyForm({
       s.title === sectionTitle ? { ...s, bullets: [...s.bullets, { label: "", value: "" }] } : s
     );
     onChange({ ...ficha, descriptionSections: sections });
+  }
+
+  function setMapsUrl(url: string) {
+    const derived = deriveLocationFromMapsUrl(url);
+    onChange({
+      ...ficha,
+      googleMapsUrl: url,
+      mapEmbedUrl: derived.embedUrl ?? ficha.mapEmbedUrl,
+      location: derived.address ? { ...ficha.location, address: derived.address } : ficha.location,
+    });
   }
 
   return (
@@ -126,10 +137,19 @@ export function PropertyForm({
       <div style={sectionStyle}>
         <div style={sectionTitleStyle}>Ubicación</div>
         <Field
-          label="Dirección visible"
+          label="Link de Google Maps"
+          value={ficha.googleMapsUrl ?? ""}
+          onChange={setMapsUrl}
+        />
+        <Field
+          label="Dirección visible (debajo del mapa)"
           value={ficha.location.address}
           onChange={(v) => set("location", { ...ficha.location, address: v })}
         />
+        <p style={{ fontSize: 11, color: "var(--lcb-gray-text)", marginTop: -4 }}>
+          Al pegar otro link de Google Maps se intenta actualizar la dirección y el mapa solos —
+          si no queda bien, edítala a mano.
+        </p>
       </div>
 
       <div style={sectionStyle}>

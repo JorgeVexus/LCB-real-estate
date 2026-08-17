@@ -1,6 +1,7 @@
 "use client";
 
 import { use, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import "@/components/ficha/Ficha.css";
 import { FichaDocument } from "@/components/ficha/FichaDocument";
 import { PropertyForm } from "@/components/editor/PropertyForm";
@@ -96,7 +97,12 @@ export default function FichaEditorPage({
   return (
     <div className="editor-shell">
       <header className="editor-header">
-        <LcbLogo size={30} />
+        <div className="editor-header-left">
+          <LcbLogo size={30} />
+          <Link href="/" className="app-btn app-btn-secondary">
+            Crear nueva
+          </Link>
+        </div>
         <button
           onClick={handleDownload}
           disabled={downloading}

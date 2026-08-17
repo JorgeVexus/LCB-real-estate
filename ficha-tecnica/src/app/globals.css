@@ -157,6 +157,14 @@ select {
   border-bottom: 1px solid var(--lcb-gray-border);
   z-index: 10;
   flex-shrink: 0;
+  gap: 12px;
+}
+
+.editor-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
 }
 
 .editor-tabs {
