@@ -1,0 +1,304 @@
+/* Lienzo fijo que replica el frame de Figma (1049 x 1546 px). Hoja de
+   estilos global (no CSS Module) a propósito: el endpoint /api/pdf lee este
+   mismo archivo de disco y lo inyecta como <style> antes de imprimir con
+   Playwright, así que el preview en pantalla y el PDF comparten literalmente
+   el mismo CSS. */
+.ficha-page {
+  width: 1049px;
+  height: 1546px;
+  background: #ffffff;
+  color: #000000;
+  position: relative;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.ficha-page + .ficha-page {
+  margin-top: 24px;
+}
+
+.ficha-page {
+  break-after: page;
+}
+
+/* En impresión cada .ficha-page ya mide el alto exacto de la página del PDF,
+   así que el margen entre fichas (solo útil para el scroll en pantalla) se
+   quita para que Chromium pagine sin espacios en blanco. */
+@media print {
+  .ficha-page + .ficha-page {
+    margin-top: 0;
+  }
+}
+
+/* ---- Header ---- */
+.ficha-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 14px 24px 0 8px;
+  gap: 16px;
+}
+
+.ficha-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ficha-logo-mark {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.ficha-agent-info {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.ficha-agent-name {
+  font-weight: 700;
+}
+
+.ficha-agent-contact {
+  color: #374151;
+}
+
+.ficha-header-title {
+  flex: 1;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding-top: 4px;
+}
+
+/* ---- Photos ---- */
+.ficha-photo-row {
+  display: flex;
+  gap: 8px;
+  padding: 0 8px;
+  margin-top: 10px;
+}
+
+.ficha-hero-photo {
+  flex: 0 0 63%;
+  height: 512px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: #e5e7eb;
+}
+
+.ficha-secondary-photos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ficha-secondary-photos.two-up > * {
+  height: 250px;
+}
+
+.ficha-secondary-photos.one-up > * {
+  height: 512px;
+}
+
+.ficha-photo-row img,
+.ficha-hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ficha-secondary-photos > div {
+  border-radius: 2px;
+  overflow: hidden;
+  background: #e5e7eb;
+}
+
+/* ---- Info + map row: apilado vertical a la izquierda, mapa a la derecha,
+   en vez de una fila horizontal — evita huecos en blanco y textos largos
+   (mantenimiento, "N andenes para trailers") rompiéndose feo. */
+.ficha-info-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 8px 0 8px;
+}
+
+.ficha-info-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ficha-price-block .ficha-price-amount {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.ficha-price-block .ficha-price-operation {
+  font-size: 15px;
+  font-weight: 400;
+  margin-left: 6px;
+}
+
+.ficha-maintenance-block {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.ficha-maintenance-block .ficha-maintenance-caption {
+  font-weight: 400;
+  color: #4b5563;
+}
+
+.ficha-area-block {
+  font-size: 20px;
+  font-weight: 700;
+  color: #4b5563;
+}
+
+.ficha-extra-headline {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* ---- Map ---- */
+.ficha-map-card {
+  width: 288px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.ficha-map-frame {
+  position: relative;
+  width: 288px;
+  height: 145px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #e5e7eb;
+}
+
+.ficha-map-embed {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.ficha-map-image-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.ficha-map-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  text-align: center;
+  padding: 0 12px;
+}
+
+.ficha-map-address {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---- Description ---- */
+.ficha-description {
+  padding: 20px 8px 0 8px;
+}
+
+.ficha-description-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.ficha-description-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+}
+
+.ficha-desc-section {
+  margin-bottom: 14px;
+}
+
+.ficha-desc-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.ficha-desc-bullet {
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.ficha-desc-note {
+  font-size: 10px;
+  font-style: italic;
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+/* ---- Footer ---- */
+.ficha-footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1049px;
+  height: 61px;
+  background: #000000;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* ---- Page 2 gallery ---- */
+.ficha-gallery-title {
+  text-align: center;
+  font-size: 56px;
+  padding-top: 30px;
+}
+
+.ficha-gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+  padding: 0 10px;
+  height: 1300px;
+}
+
+.ficha-gallery-grid > div {
+  overflow: hidden;
+  border-radius: 2px;
+  background: #e5e7eb;
+}
+
+.ficha-gallery-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
