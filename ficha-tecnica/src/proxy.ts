@@ -12,5 +12,9 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!login|api/login|_next/static|_next/image|favicon.ico).*)"],
+  // Deja pasar sin sesión: /login, /api/login, los internos de Next, y
+  // cualquier archivo estático servido tal cual desde public/ (logo, íconos,
+  // etc.) -- si no, el <img> del logo carga el HTML de /login en vez de la
+  // imagen.
+  matcher: ["/((?!login|api/login|_next/static|_next/image|.*\\.[\\w]+$).*)"],
 };
