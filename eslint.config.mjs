@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // ficha-tecnica/ is its own separate Next.js app (own tsconfig, own
+    // Vercel project) living in this repo -- not part of this app's lint/build.
+    "ficha-tecnica/**",
   ]),
 ]);
 
