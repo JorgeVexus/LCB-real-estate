@@ -51,6 +51,9 @@ export interface FichaData {
   googleMapsUrl: string | null;
 
   descriptionSections: DescriptionSection[];
+  /** Se muestra como bullet fijo "Garantía: ..." en REQUISITOS; dropdown de opciones, no texto libre. */
+  garantiaOption: string | null;
 
+  galleryTitle: string;
   ctaText: string;
 }

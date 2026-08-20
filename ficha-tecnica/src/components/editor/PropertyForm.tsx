@@ -3,6 +3,8 @@
 import type { FichaData } from "@/types/ficha";
 import type { DescriptionBullet } from "@/lib/description-sections";
 import { deriveLocationFromMapsUrl } from "@/lib/map";
+import { AGENTS } from "@/lib/agents";
+import { GARANTIA_OPTIONS } from "@/lib/garantia-options";
 
 const sectionStyle: React.CSSProperties = { marginBottom: 20 };
 const sectionTitleStyle: React.CSSProperties = {
@@ -28,6 +30,14 @@ function Field({
       <input className="app-input" value={value} onChange={(e) => onChange(e.target.value)} />
     </div>
   );
+}
+
+function moveItem<T>(arr: T[], index: number, dir: -1 | 1): T[] {
+  const next = [...arr];
+  const target = index + dir;
+  if (target < 0 || target >= next.length) return next;
+  [next[index], next[target]] = [next[target], next[index]];
+  return next;
 }
 
 export function PropertyForm({
@@ -64,6 +74,13 @@ export function PropertyForm({
     onChange({ ...ficha, descriptionSections: sections });
   }
 
+  function moveBullet(sectionTitle: string, index: number, dir: -1 | 1) {
+    const sections = ficha.descriptionSections.map((s) =>
+      s.title === sectionTitle ? { ...s, bullets: moveItem(s.bullets, index, dir) } : s
+    );
+    onChange({ ...ficha, descriptionSections: sections });
+  }
+
   function setMapsUrl(url: string) {
     const derived = deriveLocationFromMapsUrl(url);
     onChange({
@@ -72,6 +89,12 @@ export function PropertyForm({
       mapEmbedUrl: derived.embedUrl ?? ficha.mapEmbedUrl,
       location: derived.address ? { ...ficha.location, address: derived.address } : ficha.location,
     });
+  }
+
+  function setAgentPreset(name: string) {
+    const preset = AGENTS.find((a) => a.name === name);
+    if (!preset) return;
+    set("agent", { name: preset.name, phone: preset.phone, email: preset.email });
   }
 
   return (
@@ -94,6 +117,19 @@ export function PropertyForm({
 
       <div style={sectionStyle}>
         <div style={sectionTitleStyle}>Asesor</div>
+        <div style={rowStyle}>
+          <label className="app-label">Selección rápida</label>
+          <select className="app-input" value="" onChange={(e) => setAgentPreset(e.target.value)}>
+            <option value="" disabled>
+              Elegir asesor...
+            </option>
+            {AGENTS.map((a) => (
+              <option key={a.name} value={a.name}>
+                {a.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <Field label="Nombre" value={ficha.agent.name} onChange={(v) => set("agent", { ...ficha.agent, name: v })} />
         <Field
           label="Teléfono"
@@ -153,6 +189,15 @@ export function PropertyForm({
       </div>
 
       <div style={sectionStyle}>
+        <div style={sectionTitleStyle}>Página 2</div>
+        <Field
+          label="Título de la galería"
+          value={ficha.galleryTitle}
+          onChange={(v) => set("galleryTitle", v)}
+        />
+      </div>
+
+      <div style={sectionStyle}>
         <div style={sectionTitleStyle}>Pie de página</div>
         <Field label="Texto del CTA" value={ficha.ctaText} onChange={(v) => set("ctaText", v)} />
       </div>
@@ -169,7 +214,29 @@ export function PropertyForm({
               {section.title}
             </div>
             {section.bullets.map((bullet, i) => (
-              <div key={i} style={{ display: "flex", gap: 6, marginBottom: 6 }}>
+              <div key={i} style={{ display: "flex", gap: 4, marginBottom: 6 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <button
+                    type="button"
+                    className="app-btn app-btn-secondary"
+                    style={{ padding: "0 8px", fontSize: 10 }}
+                    onClick={() => moveBullet(section.title, i, -1)}
+                    disabled={i === 0}
+                    aria-label="Mover arriba"
+                  >
+                    ↑
+                  </button>
+                  <button
+                    type="button"
+                    className="app-btn app-btn-secondary"
+                    style={{ padding: "0 8px", fontSize: 10 }}
+                    onClick={() => moveBullet(section.title, i, 1)}
+                    disabled={i === section.bullets.length - 1}
+                    aria-label="Mover abajo"
+                  >
+                    ↓
+                  </button>
+                </div>
                 <input
                   className="app-input"
                   style={{ flex: 1 }}
@@ -202,6 +269,24 @@ export function PropertyForm({
             >
               + Agregar
             </button>
+
+            {section.title === "REQUISITOS" && (
+              <div style={{ marginTop: 10 }}>
+                <label className="app-label">Garantía</label>
+                <select
+                  className="app-input"
+                  value={ficha.garantiaOption ?? ""}
+                  onChange={(e) => set("garantiaOption", e.target.value || null)}
+                >
+                  <option value="">Sin especificar</option>
+                  {GARANTIA_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
         ))}
       </div>

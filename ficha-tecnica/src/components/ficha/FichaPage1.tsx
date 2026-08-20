@@ -71,7 +71,7 @@ export function FichaPage1({ ficha, logoSrc }: { ficha: FichaData; logoSrc?: str
         )}
       </div>
 
-      <FichaDescription sections={ficha.descriptionSections} />
+      <FichaDescription sections={ficha.descriptionSections} garantiaOption={ficha.garantiaOption} />
 
       <FichaFooter text={ficha.ctaText} />
     </div>

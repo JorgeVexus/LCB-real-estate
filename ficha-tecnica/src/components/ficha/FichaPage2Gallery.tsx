@@ -10,7 +10,7 @@ export function FichaPage2Gallery({ ficha, logoSrc }: { ficha: FichaData; logoSr
   return (
     <div className="ficha-page">
       <FichaHeader title="" agent={ficha.agent} logoSrc={logoSrc} />
-      <div className="ficha-gallery-title">Fotografías</div>
+      <div className="ficha-gallery-title">{ficha.galleryTitle}</div>
       <div className="ficha-gallery-grid">
         {photos.map((url, i) => (
           <div key={i}>

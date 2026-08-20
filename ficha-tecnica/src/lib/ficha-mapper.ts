@@ -1,5 +1,7 @@
 import type { EasyBrokerPropertyDetail } from "@/lib/easybroker";
-import { parseDescriptionSections } from "@/lib/description-sections";
+import { parseDescriptionSections, type DescriptionSection } from "@/lib/description-sections";
+import { matchGarantiaOption } from "@/lib/garantia-options";
+import { formatMexPhone } from "@/lib/agents";
 import type { FichaData, FichaVariant } from "@/types/ficha";
 
 const DEFAULT_CTA = "AGENDA TU CITA CON 24 HRS. DE ANTICIPACIÓN PARA CONOCERLA.";
@@ -13,7 +15,7 @@ function formatAmount(amount: number, currency: string): string {
 }
 
 function findBulletValue(
-  sections: ReturnType<typeof parseDescriptionSections>,
+  sections: DescriptionSection[],
   sectionTitle: string,
   labelIncludes: string
 ): string | null {
@@ -23,7 +25,7 @@ function findBulletValue(
 }
 
 export function easyBrokerToFichaData(detail: EasyBrokerPropertyDetail): FichaData {
-  const sections = parseDescriptionSections(detail.description ?? "");
+  const { sections, garantiaText } = parseDescriptionSections(detail.description ?? "");
 
   const images = detail.property_images.map((img, i) => ({
     id: `img-${i}`,
@@ -62,7 +64,7 @@ export function easyBrokerToFichaData(detail: EasyBrokerPropertyDetail): FichaDa
     title: detail.title,
     agent: {
       name: detail.agent?.full_name ?? detail.agent?.name ?? "",
-      phone: detail.agent?.mobile_phone ?? "",
+      phone: formatMexPhone(detail.agent?.mobile_phone ?? ""),
       email: detail.agent?.email ?? "",
     },
 
@@ -86,7 +88,9 @@ export function easyBrokerToFichaData(detail: EasyBrokerPropertyDetail): FichaDa
     googleMapsUrl: null,
 
     descriptionSections: sections,
+    garantiaOption: matchGarantiaOption(garantiaText),
 
+    galleryTitle: "Fotografías",
     ctaText: DEFAULT_CTA,
   };
 }
