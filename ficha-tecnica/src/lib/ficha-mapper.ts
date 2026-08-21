@@ -1,7 +1,8 @@
 import type { EasyBrokerPropertyDetail } from "@/lib/easybroker";
 import { parseDescriptionSections, type DescriptionSection } from "@/lib/description-sections";
-import { matchGarantiaOption } from "@/lib/garantia-options";
+import { matchGarantiaOption, DEFAULT_GARANTIA } from "@/lib/garantia-options";
 import { formatMexPhone } from "@/lib/agents";
+import { buildDefaultFileName, sanitizeFileName } from "@/lib/filename";
 import type { FichaData, FichaVariant } from "@/types/ficha";
 
 const DEFAULT_CTA = "AGENDA TU CITA CON 24 HRS. DE ANTICIPACIÓN PARA CONOCERLA.";
@@ -35,10 +36,15 @@ export function easyBrokerToFichaData(detail: EasyBrokerPropertyDetail): FichaDa
   const variant: FichaVariant = images.length >= 3 ? "3-fotos" : "2-fotos";
   const secondaryCount = variant === "3-fotos" ? 2 : 1;
 
+  // Cada foto solo puede ser portada, secundaria o galería -- nunca dos a la
+  // vez -- así que la galería toma las siguientes fotos distintas en vez de
+  // repetir las primeras 6 (la mayoría de propiedades trae de sobra).
+  const galleryStart = 1 + secondaryCount;
+
   const saleOrRental = detail.operations.find((op) => op.type === "rental" || op.type === "sale");
-  const priceLabel = saleOrRental
-    ? saleOrRental.formatted_amount ?? formatAmount(saleOrRental.amount, saleOrRental.currency)
-    : "Precio a consultar";
+  // Siempre se recalcula con Intl (2 decimales fijos) en vez de usar
+  // formatted_amount tal cual -- EasyBroker a veces no trae decimales.
+  const priceLabel = saleOrRental ? formatAmount(saleOrRental.amount, saleOrRental.currency) : "Precio a consultar";
   const priceOperation = saleOrRental?.type === "sale" ? "en Venta" : "en Renta";
 
   const areaFromBullet = findBulletValue(sections, "MEDIDAS", "área total construida");
@@ -70,8 +76,8 @@ export function easyBrokerToFichaData(detail: EasyBrokerPropertyDetail): FichaDa
 
     allImages: images,
     heroImageId: images[0]?.id ?? null,
-    secondaryImageIds: images.slice(1, 1 + secondaryCount).map((img) => img.id),
-    galleryImageIds: images.slice(0, 6).map((img) => img.id),
+    secondaryImageIds: images.slice(1, galleryStart).map((img) => img.id),
+    galleryImageIds: images.slice(galleryStart, galleryStart + 6).map((img) => img.id),
 
     priceLabel,
     priceOperation,
@@ -86,11 +92,13 @@ export function easyBrokerToFichaData(detail: EasyBrokerPropertyDetail): FichaDa
     },
     mapEmbedUrl: null,
     googleMapsUrl: null,
+    customMapImage: null,
 
     descriptionSections: sections,
-    garantiaOption: matchGarantiaOption(garantiaText),
+    garantiaOption: matchGarantiaOption(garantiaText) ?? DEFAULT_GARANTIA,
 
     galleryTitle: "Fotografías",
     ctaText: DEFAULT_CTA,
+    fileName: sanitizeFileName(buildDefaultFileName(detail.title, areaLabel)),
   };
 }

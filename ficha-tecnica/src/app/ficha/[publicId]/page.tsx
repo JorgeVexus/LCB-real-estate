@@ -68,7 +68,7 @@ export default function FichaEditorPage({
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${ficha.publicId}.pdf`;
+      a.download = `${ficha.fileName}.pdf`;
       a.click();
       URL.revokeObjectURL(url);
     } catch (err) {

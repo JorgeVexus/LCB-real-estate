@@ -81,14 +81,46 @@ export function PropertyForm({
     onChange({ ...ficha, descriptionSections: sections });
   }
 
-  function setMapsUrl(url: string) {
-    const derived = deriveLocationFromMapsUrl(url);
+  // Solo actualiza el texto mientras el asesor escribe/pega -- barato, sin red.
+  function setMapsUrlText(url: string) {
+    set("googleMapsUrl", url);
+  }
+
+  // Al salir del campo (paste completo) sí intenta actualizar mapa/dirección.
+  // Si la URL no trae coordenadas visibles (típico de un link corto
+  // "maps.app.goo.gl" compartido desde el celular), resuelve la
+  // redirección en el servidor antes de tirar la toalla.
+  async function resolveMapsUrl(url: string) {
+    if (!url.trim()) return;
+    let derived = deriveLocationFromMapsUrl(url);
+
+    if (!derived.embedUrl) {
+      try {
+        const res = await fetch(`/api/resolve-maps-url?url=${encodeURIComponent(url)}`);
+        if (res.ok) {
+          const { finalUrl } = await res.json();
+          if (finalUrl) derived = deriveLocationFromMapsUrl(finalUrl);
+        }
+      } catch {
+        // Sin conexión o link no resoluble: se deja tal cual, editable a mano.
+      }
+    }
+
     onChange({
       ...ficha,
-      googleMapsUrl: url,
       mapEmbedUrl: derived.embedUrl ?? ficha.mapEmbedUrl,
+      customMapImage: derived.embedUrl ? null : ficha.customMapImage,
       location: derived.address ? { ...ficha.location, address: derived.address } : ficha.location,
     });
+  }
+
+  function handleMapImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => set("customMapImage", reader.result as string);
+    reader.readAsDataURL(file);
+    e.target.value = "";
   }
 
   function setAgentPreset(name: string) {
@@ -172,20 +204,38 @@ export function PropertyForm({
 
       <div style={sectionStyle}>
         <div style={sectionTitleStyle}>Ubicación</div>
-        <Field
-          label="Link de Google Maps"
-          value={ficha.googleMapsUrl ?? ""}
-          onChange={setMapsUrl}
-        />
+        <div style={rowStyle}>
+          <label className="app-label">Link de Google Maps</label>
+          <input
+            className="app-input"
+            value={ficha.googleMapsUrl ?? ""}
+            onChange={(e) => setMapsUrlText(e.target.value)}
+            onBlur={(e) => resolveMapsUrl(e.target.value)}
+          />
+        </div>
         <Field
           label="Dirección visible (debajo del mapa)"
           value={ficha.location.address}
           onChange={(v) => set("location", { ...ficha.location, address: v })}
         />
-        <p style={{ fontSize: 11, color: "var(--lcb-gray-text)", marginTop: -4 }}>
-          Al pegar otro link de Google Maps se intenta actualizar la dirección y el mapa solos —
-          si no queda bien, edítala a mano.
+        <p style={{ fontSize: 11, color: "var(--lcb-gray-text)", marginTop: -4, marginBottom: 10 }}>
+          Al pegar otro link de Google Maps (completo o corto) se intenta actualizar la dirección y
+          la imagen del mapa solos al salir del campo — si no queda bien, edítala a mano.
         </p>
+        <div style={rowStyle}>
+          <label className="app-label">Imagen de mapa personalizada (opcional)</label>
+          <input type="file" accept="image/*" onChange={handleMapImageUpload} style={{ fontSize: 12 }} />
+          {ficha.customMapImage && (
+            <button
+              type="button"
+              className="app-btn app-btn-secondary"
+              style={{ marginTop: 6, fontSize: 12, padding: "6px 12px" }}
+              onClick={() => set("customMapImage", null)}
+            >
+              Quitar imagen y volver al mapa automático
+            </button>
+          )}
+        </div>
       </div>
 
       <div style={sectionStyle}>
@@ -194,6 +244,15 @@ export function PropertyForm({
           label="Título de la galería"
           value={ficha.galleryTitle}
           onChange={(v) => set("galleryTitle", v)}
+        />
+      </div>
+
+      <div style={sectionStyle}>
+        <div style={sectionTitleStyle}>Descarga</div>
+        <Field
+          label="Nombre del archivo al descargar"
+          value={ficha.fileName}
+          onChange={(v) => set("fileName", v)}
         />
       </div>
 
@@ -275,10 +334,9 @@ export function PropertyForm({
                 <label className="app-label">Garantía</label>
                 <select
                   className="app-input"
-                  value={ficha.garantiaOption ?? ""}
-                  onChange={(e) => set("garantiaOption", e.target.value || null)}
+                  value={ficha.garantiaOption}
+                  onChange={(e) => set("garantiaOption", e.target.value)}
                 >
-                  <option value="">Sin especificar</option>
                   {GARANTIA_OPTIONS.map((opt) => (
                     <option key={opt} value={opt}>
                       {opt}

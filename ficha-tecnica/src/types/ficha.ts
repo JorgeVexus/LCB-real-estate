@@ -49,11 +49,15 @@ export interface FichaData {
   location: FichaLocation;
   mapEmbedUrl: string | null;
   googleMapsUrl: string | null;
+  /** Foto de mapa subida a mano (data URL) -- si está presente, reemplaza el iframe embebido. */
+  customMapImage: string | null;
 
   descriptionSections: DescriptionSection[];
   /** Se muestra como bullet fijo "Garantía: ..." en REQUISITOS; dropdown de opciones, no texto libre. */
-  garantiaOption: string | null;
+  garantiaOption: string;
 
   galleryTitle: string;
   ctaText: string;
+  /** Nombre del archivo al descargar (sin ".pdf"), editable por si el auto-generado no queda bien. */
+  fileName: string;
 }

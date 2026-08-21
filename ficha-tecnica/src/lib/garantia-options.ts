@@ -9,6 +9,9 @@ export const GARANTIA_OPTIONS = [
   "Obligado Solidario",
 ] as const;
 
+/** Default cuando la descripción de EasyBroker no trae "Garantía" (o no calza con ninguna opción). */
+export const DEFAULT_GARANTIA = GARANTIA_OPTIONS[1];
+
 /** Intenta emparejar el texto libre que traía EasyBroker con una opción fija. */
 export function matchGarantiaOption(text: string | null): string | null {
   if (!text) return null;

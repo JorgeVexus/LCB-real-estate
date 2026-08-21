@@ -45,10 +45,12 @@ export function FichaPage1({ ficha, logoSrc }: { ficha: FichaData; logoSrc?: str
           {ficha.extraHeadline && <div className="ficha-extra-headline">{ficha.extraHeadline}</div>}
         </div>
 
-        {(ficha.mapEmbedUrl || ficha.googleMapsUrl) && (
+        {(ficha.mapEmbedUrl || ficha.googleMapsUrl || ficha.customMapImage) && (
           <div className="ficha-map-card">
             <div className="ficha-map-frame">
-              {ficha.mapEmbedUrl ? (
+              {ficha.customMapImage ? (
+                <img src={ficha.customMapImage} alt="Ubicación" />
+              ) : ficha.mapEmbedUrl ? (
                 <iframe className="ficha-map-embed" src={ficha.mapEmbedUrl} loading="eager" title="Ubicación" />
               ) : (
                 <div className="ficha-map-placeholder">Ver en Google Maps</div>
@@ -66,6 +68,7 @@ export function FichaPage1({ ficha, logoSrc }: { ficha: FichaData; logoSrc?: str
                 />
               )}
             </div>
+            {ficha.googleMapsUrl && <div className="ficha-map-hint">→ Da clic en el mapa para ver la ubicación</div>}
             <div className="ficha-map-address">{ficha.location.address}</div>
           </div>
         )}

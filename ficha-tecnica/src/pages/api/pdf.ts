@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { renderFichaPdf } from "@/lib/pdf-render";
-import { slugifyFileName } from "@/lib/slugify-filename";
+import { sanitizeFileName } from "@/lib/filename";
 import type { FichaData } from "@/types/ficha";
 
 // Ruta con el Pages Router (no App Router) a propósito: `renderFichaPdf` usa
@@ -14,6 +14,10 @@ export const config = {
   },
 };
 
+function asciiFallback(name: string): string {
+  return name.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^\x20-\x7e]/g, "_");
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
@@ -22,9 +26,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const ficha = req.body as FichaData;
   const pdf = await renderFichaPdf(ficha);
-  const filename = `${slugifyFileName(ficha.title)}-${ficha.publicId}.pdf`;
+  const filename = `${sanitizeFileName(ficha.fileName || ficha.publicId)}.pdf`;
 
   res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+  // filename= es el fallback ASCII para clientes viejos; filename*= (UTF-8,
+  // percent-encoded) es lo que usan los navegadores modernos para respetar
+  // acentos/espacios/comas tal cual, ej. "Bodega Tultitlán 7,439m2 LCB.pdf".
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="${asciiFallback(filename)}"; filename*=UTF-8''${encodeURIComponent(filename)}`
+  );
   res.status(200).send(pdf);
 }

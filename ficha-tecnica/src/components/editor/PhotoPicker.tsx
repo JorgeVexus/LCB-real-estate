@@ -4,6 +4,8 @@ import type { FichaData } from "@/types/ficha";
 
 const MAX_GALLERY = 6;
 
+type Role = "none" | "hero" | "secondary" | "gallery";
+
 function maxSecondary(variant: FichaData["variant"]): number {
   return variant === "3-fotos" ? 2 : 1;
 }
@@ -16,6 +18,13 @@ function moveItem<T>(arr: T[], index: number, dir: -1 | 1): T[] {
   return next;
 }
 
+function roleOf(ficha: FichaData, id: string): Role {
+  if (ficha.heroImageId === id) return "hero";
+  if (ficha.secondaryImageIds.includes(id)) return "secondary";
+  if (ficha.galleryImageIds.includes(id)) return "gallery";
+  return "none";
+}
+
 export function PhotoPicker({
   ficha,
   onChange,
@@ -25,26 +34,22 @@ export function PhotoPicker({
 }) {
   const maxSec = maxSecondary(ficha.variant);
 
-  function setHero(id: string) {
-    onChange({ ...ficha, heroImageId: id });
-  }
+  // Cada foto es portada, secundaria, galería o ninguna -- nunca dos roles
+  // a la vez. Elegir un rol nuevo la saca automáticamente de cualquier otro.
+  function setRole(id: string, role: Role) {
+    let heroImageId = ficha.heroImageId === id ? null : ficha.heroImageId;
+    let secondaryImageIds = ficha.secondaryImageIds.filter((i) => i !== id);
+    let galleryImageIds = ficha.galleryImageIds.filter((i) => i !== id);
 
-  function toggleSecondary(id: string) {
-    const has = ficha.secondaryImageIds.includes(id);
-    if (has) {
-      onChange({ ...ficha, secondaryImageIds: ficha.secondaryImageIds.filter((i) => i !== id) });
-    } else if (ficha.secondaryImageIds.length < maxSec) {
-      onChange({ ...ficha, secondaryImageIds: [...ficha.secondaryImageIds, id] });
+    if (role === "hero") {
+      heroImageId = id;
+    } else if (role === "secondary" && secondaryImageIds.length < maxSec) {
+      secondaryImageIds = [...secondaryImageIds, id];
+    } else if (role === "gallery" && galleryImageIds.length < MAX_GALLERY) {
+      galleryImageIds = [...galleryImageIds, id];
     }
-  }
 
-  function toggleGallery(id: string) {
-    const has = ficha.galleryImageIds.includes(id);
-    if (has) {
-      onChange({ ...ficha, galleryImageIds: ficha.galleryImageIds.filter((i) => i !== id) });
-    } else if (ficha.galleryImageIds.length < MAX_GALLERY) {
-      onChange({ ...ficha, galleryImageIds: [...ficha.galleryImageIds, id] });
-    }
+    onChange({ ...ficha, heroImageId, secondaryImageIds, galleryImageIds });
   }
 
   function reorderGallery(index: number, dir: -1 | 1) {
@@ -57,14 +62,14 @@ export function PhotoPicker({
         Fotos
       </div>
       <p style={{ fontSize: 12, color: "var(--lcb-gray-text)", marginBottom: 10 }}>
-        Portada: 1 · Secundarias: {ficha.secondaryImageIds.length}/{maxSec} · Galería:{" "}
-        {ficha.galleryImageIds.length}/{MAX_GALLERY}
+        Cada foto es portada, secundaria o galería -- nunca dos a la vez. Portada: 1 · Secundarias:{" "}
+        {ficha.secondaryImageIds.length}/{maxSec} · Galería: {ficha.galleryImageIds.length}/{MAX_GALLERY}
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(112px, 1fr))", gap: 8 }}>
         {ficha.allImages.map((img) => {
-          const isHero = ficha.heroImageId === img.id;
-          const isSecondary = ficha.secondaryImageIds.includes(img.id);
-          const isGallery = ficha.galleryImageIds.includes(img.id);
+          const role = roleOf(ficha, img.id);
+          const secondaryFull = ficha.secondaryImageIds.length >= maxSec && role !== "secondary";
+          const galleryFull = ficha.galleryImageIds.length >= MAX_GALLERY && role !== "gallery";
           return (
             <div key={img.id} className="app-card" style={{ padding: 6 }}>
               <img
@@ -72,18 +77,21 @@ export function PhotoPicker({
                 alt=""
                 style={{ width: "100%", height: 74, objectFit: "cover", borderRadius: 4 }}
               />
-              <div style={{ display: "flex", flexDirection: "column", gap: 3, marginTop: 6, fontSize: 11 }}>
-                <label style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <input type="radio" checked={isHero} onChange={() => setHero(img.id)} /> Portada
-                </label>
-                <label style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <input type="checkbox" checked={isSecondary} onChange={() => toggleSecondary(img.id)} />{" "}
+              <select
+                className="app-input"
+                style={{ marginTop: 6, fontSize: 11, padding: "4px 6px" }}
+                value={role}
+                onChange={(e) => setRole(img.id, e.target.value as Role)}
+              >
+                <option value="none">Ninguna</option>
+                <option value="hero">Portada</option>
+                <option value="secondary" disabled={secondaryFull}>
                   Secundaria
-                </label>
-                <label style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <input type="checkbox" checked={isGallery} onChange={() => toggleGallery(img.id)} /> Galería
-                </label>
-              </div>
+                </option>
+                <option value="gallery" disabled={galleryFull}>
+                  Galería
+                </option>
+              </select>
             </div>
           );
         })}
