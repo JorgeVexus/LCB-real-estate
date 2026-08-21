@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { FichaData } from "@/types/ficha";
 import type { DescriptionBullet } from "@/lib/description-sections";
 import { deriveLocationFromMapsUrl } from "@/lib/map";
@@ -47,6 +48,8 @@ export function PropertyForm({
   ficha: FichaData;
   onChange: (next: FichaData) => void;
 }) {
+  const [mapImageFileName, setMapImageFileName] = useState<string | null>(null);
+
   function set<K extends keyof FichaData>(key: K, value: FichaData[K]) {
     onChange({ ...ficha, [key]: value });
   }
@@ -120,7 +123,13 @@ export function PropertyForm({
     const reader = new FileReader();
     reader.onload = () => set("customMapImage", reader.result as string);
     reader.readAsDataURL(file);
+    setMapImageFileName(file.name);
     e.target.value = "";
+  }
+
+  function clearMapImage() {
+    set("customMapImage", null);
+    setMapImageFileName(null);
   }
 
   function setAgentPreset(name: string) {
@@ -224,13 +233,26 @@ export function PropertyForm({
         </p>
         <div style={rowStyle}>
           <label className="app-label">Imagen de mapa personalizada (opcional)</label>
-          <input type="file" accept="image/*" onChange={handleMapImageUpload} style={{ fontSize: 12 }} />
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <label className="app-btn app-btn-secondary" style={{ cursor: "pointer" }}>
+              Elegir imagen
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleMapImageUpload}
+                style={{ display: "none" }}
+              />
+            </label>
+            <span style={{ fontSize: 12, color: "var(--lcb-gray-text)" }}>
+              {mapImageFileName ?? (ficha.customMapImage ? "Imagen cargada" : "Ningún archivo seleccionado")}
+            </span>
+          </div>
           {ficha.customMapImage && (
             <button
               type="button"
               className="app-btn app-btn-secondary"
-              style={{ marginTop: 6, fontSize: 12, padding: "6px 12px" }}
-              onClick={() => set("customMapImage", null)}
+              style={{ marginTop: 8, fontSize: 12, padding: "6px 12px" }}
+              onClick={clearMapImage}
             >
               Quitar imagen y volver al mapa automático
             </button>
