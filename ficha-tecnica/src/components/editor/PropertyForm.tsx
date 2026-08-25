@@ -54,32 +54,37 @@ export function PropertyForm({
     onChange({ ...ficha, [key]: value });
   }
 
-  function updateBullet(sectionTitle: string, index: number, bullet: DescriptionBullet) {
+  function updateBullet(sectionKey: string, index: number, bullet: DescriptionBullet) {
     const sections = ficha.descriptionSections.map((s) =>
-      s.title === sectionTitle
+      s.key === sectionKey
         ? { ...s, bullets: s.bullets.map((b, i) => (i === index ? bullet : b)) }
         : s
     );
     onChange({ ...ficha, descriptionSections: sections });
   }
 
-  function removeBullet(sectionTitle: string, index: number) {
+  function removeBullet(sectionKey: string, index: number) {
     const sections = ficha.descriptionSections.map((s) =>
-      s.title === sectionTitle ? { ...s, bullets: s.bullets.filter((_, i) => i !== index) } : s
+      s.key === sectionKey ? { ...s, bullets: s.bullets.filter((_, i) => i !== index) } : s
     );
     onChange({ ...ficha, descriptionSections: sections });
   }
 
-  function addBullet(sectionTitle: string) {
+  function addBullet(sectionKey: string) {
     const sections = ficha.descriptionSections.map((s) =>
-      s.title === sectionTitle ? { ...s, bullets: [...s.bullets, { label: "", value: "" }] } : s
+      s.key === sectionKey ? { ...s, bullets: [...s.bullets, { label: "", value: "" }] } : s
     );
     onChange({ ...ficha, descriptionSections: sections });
   }
 
-  function moveBullet(sectionTitle: string, index: number, dir: -1 | 1) {
+  function renameSection(sectionKey: string, title: string) {
+    const sections = ficha.descriptionSections.map((s) => (s.key === sectionKey ? { ...s, title } : s));
+    onChange({ ...ficha, descriptionSections: sections });
+  }
+
+  function moveBullet(sectionKey: string, index: number, dir: -1 | 1) {
     const sections = ficha.descriptionSections.map((s) =>
-      s.title === sectionTitle ? { ...s, bullets: moveItem(s.bullets, index, dir) } : s
+      s.key === sectionKey ? { ...s, bullets: moveItem(s.bullets, index, dir) } : s
     );
     onChange({ ...ficha, descriptionSections: sections });
   }
@@ -287,13 +292,23 @@ export function PropertyForm({
         <div style={sectionTitleStyle}>Descripción</div>
         {ficha.descriptionSections.map((section) => (
           <div
-            key={section.title}
+            key={section.key}
             className="app-card"
             style={{ marginBottom: 12, padding: 12 }}
           >
-            <div style={{ fontSize: 11, fontWeight: 700, color: "var(--lcb-gray-text)", marginBottom: 8 }}>
-              {section.title}
-            </div>
+            <input
+              className="app-input"
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                color: "var(--lcb-gray-text)",
+                marginBottom: 8,
+                padding: "6px 8px",
+                textTransform: "uppercase",
+              }}
+              value={section.title}
+              onChange={(e) => renameSection(section.key, e.target.value)}
+            />
             {section.bullets.map((bullet, i) => (
               <div key={i} style={{ display: "flex", gap: 4, marginBottom: 6 }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -301,7 +316,7 @@ export function PropertyForm({
                     type="button"
                     className="app-btn app-btn-secondary"
                     style={{ padding: "0 8px", fontSize: 10 }}
-                    onClick={() => moveBullet(section.title, i, -1)}
+                    onClick={() => moveBullet(section.key, i, -1)}
                     disabled={i === 0}
                     aria-label="Mover arriba"
                   >
@@ -311,7 +326,7 @@ export function PropertyForm({
                     type="button"
                     className="app-btn app-btn-secondary"
                     style={{ padding: "0 8px", fontSize: 10 }}
-                    onClick={() => moveBullet(section.title, i, 1)}
+                    onClick={() => moveBullet(section.key, i, 1)}
                     disabled={i === section.bullets.length - 1}
                     aria-label="Mover abajo"
                   >
@@ -323,20 +338,20 @@ export function PropertyForm({
                   style={{ flex: 1 }}
                   placeholder="Etiqueta"
                   value={bullet.label}
-                  onChange={(e) => updateBullet(section.title, i, { ...bullet, label: e.target.value })}
+                  onChange={(e) => updateBullet(section.key, i, { ...bullet, label: e.target.value })}
                 />
                 <input
                   className="app-input"
                   style={{ flex: 1 }}
                   placeholder="Valor"
                   value={bullet.value}
-                  onChange={(e) => updateBullet(section.title, i, { ...bullet, value: e.target.value })}
+                  onChange={(e) => updateBullet(section.key, i, { ...bullet, value: e.target.value })}
                 />
                 <button
                   type="button"
                   className="app-btn app-btn-secondary"
                   style={{ padding: "0 12px" }}
-                  onClick={() => removeBullet(section.title, i)}
+                  onClick={() => removeBullet(section.key, i)}
                 >
                   ×
                 </button>
@@ -346,12 +361,12 @@ export function PropertyForm({
               type="button"
               className="app-btn app-btn-secondary"
               style={{ marginTop: 4, fontSize: 12, padding: "6px 12px" }}
-              onClick={() => addBullet(section.title)}
+              onClick={() => addBullet(section.key)}
             >
               + Agregar
             </button>
 
-            {section.title === "REQUISITOS" && (
+            {section.key === "REQUISITOS" && (
               <div style={{ marginTop: 10 }}>
                 <label className="app-label">Garantía</label>
                 <select

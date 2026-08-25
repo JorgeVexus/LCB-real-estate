@@ -4,6 +4,10 @@ export interface DescriptionBullet {
 }
 
 export interface DescriptionSection {
+  /** Identidad fija (PRECIO, MEDIDAS, ...) -- de esto dependen el mapeo de
+   * columnas y el bullet de Garantía. Nunca se edita. */
+  key: SectionTitle;
+  /** Rótulo visible en la ficha; editable por el asesor, empieza igual a `key`. */
   title: string;
   bullets: DescriptionBullet[];
 }
@@ -169,7 +173,7 @@ export function parseDescriptionSections(description: string): {
   }
 
   return {
-    sections: SECTION_TITLES.map((title) => ({ title, bullets: sections.get(title)! })),
+    sections: SECTION_TITLES.map((key) => ({ key, title: key, bullets: sections.get(key)! })),
     garantiaText,
   };
 }

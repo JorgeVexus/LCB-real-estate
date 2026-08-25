@@ -24,8 +24,8 @@ export function FichaDescription({
   sections: DescriptionSection[];
   garantiaOption?: string | null;
 }) {
-  const left = sections.filter((s) => LEFT_COLUMN.has(s.title));
-  const right = sections.filter((s) => !LEFT_COLUMN.has(s.title));
+  const left = sections.filter((s) => LEFT_COLUMN.has(s.key));
+  const right = sections.filter((s) => !LEFT_COLUMN.has(s.key));
 
   return (
     <div className="ficha-description">
@@ -33,15 +33,15 @@ export function FichaDescription({
       <div className="ficha-description-columns">
         <div>
           {left.map((s) => (
-            <Section key={s.title} section={s} />
+            <Section key={s.key} section={s} />
           ))}
         </div>
         <div>
           {right.map((s) => (
             <Section
-              key={s.title}
+              key={s.key}
               section={s}
-              extraBullet={s.title === "REQUISITOS" ? garantiaOption : null}
+              extraBullet={s.key === "REQUISITOS" ? garantiaOption : null}
             />
           ))}
           <div className="ficha-desc-note">*El precio puede cambiar sin aviso previo*.</div>

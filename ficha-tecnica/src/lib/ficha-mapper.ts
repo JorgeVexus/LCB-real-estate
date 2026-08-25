@@ -17,10 +17,10 @@ function formatAmount(amount: number, currency: string): string {
 
 function findBulletValue(
   sections: DescriptionSection[],
-  sectionTitle: string,
+  sectionKey: string,
   labelIncludes: string
 ): string | null {
-  const section = sections.find((s) => s.title === sectionTitle);
+  const section = sections.find((s) => s.key === sectionKey);
   const bullet = section?.bullets.find((b) => b.label.toLowerCase().includes(labelIncludes));
   return bullet?.value ?? null;
 }
