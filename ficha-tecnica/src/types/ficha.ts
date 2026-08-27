@@ -13,6 +13,14 @@ export interface FichaImage {
   url: string;
 }
 
+export interface FichaExtraFile {
+  id: string;
+  name: string;
+  /** data URL (base64) -- PDF o imagen. */
+  dataUrl: string;
+  mimeType: string;
+}
+
 export interface FichaLocation {
   address: string;
   latitude: number | null;
@@ -60,4 +68,7 @@ export interface FichaData {
   ctaText: string;
   /** Nombre del archivo al descargar (sin ".pdf"), editable por si el auto-generado no queda bien. */
   fileName: string;
+
+  /** Planos u otros archivos (imagen o PDF) que se anexan como páginas extra al final del PDF. */
+  extraFiles: FichaExtraFile[];
 }

@@ -11,6 +11,9 @@ import type { FichaData } from "@/types/ficha";
 export const config = {
   api: {
     responseLimit: false,
+    // El default (1mb) se queda corto en cuanto la ficha trae una imagen de
+    // mapa personalizada o planos adjuntos como data URLs.
+    bodyParser: { sizeLimit: "30mb" },
   },
 };
 
@@ -24,7 +27,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const ficha = req.body as FichaData;
+  // El editor manda la ficha como un <form> normal (campo "ficha" con el
+  // JSON como texto) en vez de fetch+JSON, porque Safari/iOS no maneja bien
+  // la descarga vía blob: -- ver el comentario en la página del editor.
+  const ficha = (
+    typeof req.body?.ficha === "string" ? JSON.parse(req.body.ficha) : req.body
+  ) as FichaData;
   const pdf = await renderFichaPdf(ficha);
   const filename = `${sanitizeFileName(ficha.fileName || ficha.publicId)}.pdf`;
 

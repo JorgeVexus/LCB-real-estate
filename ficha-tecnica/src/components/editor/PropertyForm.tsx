@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import type { FichaData } from "@/types/ficha";
+import type { FichaData, FichaExtraFile } from "@/types/ficha";
 import type { DescriptionBullet } from "@/lib/description-sections";
 import { deriveLocationFromMapsUrl } from "@/lib/map";
 import { AGENTS } from "@/lib/agents";
 import { GARANTIA_OPTIONS } from "@/lib/garantia-options";
+import { PhotoPicker } from "./PhotoPicker";
 
 const sectionStyle: React.CSSProperties = { marginBottom: 20 };
 const sectionTitleStyle: React.CSSProperties = {
@@ -143,22 +144,45 @@ export function PropertyForm({
     set("agent", { name: preset.name, phone: preset.phone, email: preset.email });
   }
 
+  function readAsDataUrl(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function handleExtraFilesUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    e.target.value = "";
+
+    const newFiles: FichaExtraFile[] = await Promise.all(
+      Array.from(files).map(async (file) => ({
+        id: `extra-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        name: file.name,
+        dataUrl: await readAsDataUrl(file),
+        mimeType: file.type,
+      }))
+    );
+
+    onChange({ ...ficha, extraFiles: [...ficha.extraFiles, ...newFiles] });
+  }
+
+  function removeExtraFile(id: string) {
+    onChange({ ...ficha, extraFiles: ficha.extraFiles.filter((f) => f.id !== id) });
+  }
+
   return (
     <div>
       <div style={sectionStyle}>
-        <div style={sectionTitleStyle}>Datos generales</div>
-        <Field label="Título" value={ficha.title} onChange={(v) => set("title", v)} />
-        <div style={rowStyle}>
-          <label className="app-label">Variante de fotos (página 1)</label>
-          <select
-            className="app-input"
-            value={ficha.variant}
-            onChange={(e) => set("variant", e.target.value as FichaData["variant"])}
-          >
-            <option value="3-fotos">3 fotos (portada + 2)</option>
-            <option value="2-fotos">2 fotos (portada + 1)</option>
-          </select>
-        </div>
+        <div style={sectionTitleStyle}>Descarga</div>
+        <Field
+          label="Nombre del archivo al descargar"
+          value={ficha.fileName}
+          onChange={(v) => set("fileName", v)}
+        />
       </div>
 
       <div style={sectionStyle}>
@@ -187,6 +211,57 @@ export function PropertyForm({
           value={ficha.agent.email}
           onChange={(v) => set("agent", { ...ficha.agent, email: v })}
         />
+      </div>
+
+      <div style={sectionStyle}>
+        <div style={sectionTitleStyle}>Título</div>
+        <Field label="Título" value={ficha.title} onChange={(v) => set("title", v)} />
+      </div>
+
+      <div style={sectionStyle}>
+        <div style={sectionTitleStyle}>Fotos</div>
+        <PhotoPicker ficha={ficha} onChange={onChange} />
+      </div>
+
+      <div style={sectionStyle}>
+        <div style={sectionTitleStyle}>Archivos adicionales</div>
+        <p style={{ fontSize: 11, color: "var(--lcb-gray-text)", marginTop: -4, marginBottom: 10 }}>
+          Planos u otros archivos (JPG, PNG o PDF) que se agregan como páginas extra al final del PDF.
+        </p>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+          <label className="app-btn app-btn-secondary" style={{ cursor: "pointer" }}>
+            Añadir archivo
+            <input
+              type="file"
+              accept="image/png,image/jpeg,application/pdf"
+              multiple
+              onChange={handleExtraFilesUpload}
+              style={{ display: "none" }}
+            />
+          </label>
+          <span style={{ fontSize: 12, color: "var(--lcb-gray-text)" }}>
+            {ficha.extraFiles.length === 0 ? "Ningún archivo seleccionado" : `${ficha.extraFiles.length} archivo(s)`}
+          </span>
+        </div>
+        {ficha.extraFiles.length > 0 && (
+          <ul style={{ listStyle: "none", fontSize: 12 }}>
+            {ficha.extraFiles.map((f) => (
+              <li key={f.id} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                <span style={{ flex: 1, color: "var(--lcb-gray-text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {f.name}
+                </span>
+                <button
+                  type="button"
+                  className="app-btn app-btn-secondary"
+                  style={{ padding: "0 12px" }}
+                  onClick={() => removeExtraFile(f.id)}
+                >
+                  ×
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <div style={sectionStyle}>
@@ -263,29 +338,6 @@ export function PropertyForm({
             </button>
           )}
         </div>
-      </div>
-
-      <div style={sectionStyle}>
-        <div style={sectionTitleStyle}>Página 2</div>
-        <Field
-          label="Título de la galería"
-          value={ficha.galleryTitle}
-          onChange={(v) => set("galleryTitle", v)}
-        />
-      </div>
-
-      <div style={sectionStyle}>
-        <div style={sectionTitleStyle}>Descarga</div>
-        <Field
-          label="Nombre del archivo al descargar"
-          value={ficha.fileName}
-          onChange={(v) => set("fileName", v)}
-        />
-      </div>
-
-      <div style={sectionStyle}>
-        <div style={sectionTitleStyle}>Pie de página</div>
-        <Field label="Texto del CTA" value={ficha.ctaText} onChange={(v) => set("ctaText", v)} />
       </div>
 
       <div style={sectionStyle}>
@@ -384,6 +436,20 @@ export function PropertyForm({
             )}
           </div>
         ))}
+      </div>
+
+      <div style={sectionStyle}>
+        <div style={sectionTitleStyle}>Pie de página</div>
+        <Field label="Texto del CTA" value={ficha.ctaText} onChange={(v) => set("ctaText", v)} />
+      </div>
+
+      <div style={sectionStyle}>
+        <div style={sectionTitleStyle}>Página 2</div>
+        <Field
+          label="Título de la galería"
+          value={ficha.galleryTitle}
+          onChange={(v) => set("galleryTitle", v)}
+        />
       </div>
     </div>
   );

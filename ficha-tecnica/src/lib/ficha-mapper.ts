@@ -100,5 +100,6 @@ export function easyBrokerToFichaData(detail: EasyBrokerPropertyDetail): FichaDa
     galleryTitle: "Fotografías",
     ctaText: DEFAULT_CTA,
     fileName: sanitizeFileName(buildDefaultFileName(detail.title, areaLabel)),
+    extraFiles: [],
   };
 }

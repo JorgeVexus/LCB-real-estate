@@ -5,7 +5,6 @@ import Link from "next/link";
 import "@/components/ficha/Ficha.css";
 import { FichaDocument } from "@/components/ficha/FichaDocument";
 import { PropertyForm } from "@/components/editor/PropertyForm";
-import { PhotoPicker } from "@/components/editor/PhotoPicker";
 import { LcbLogo } from "@/components/LcbLogo";
 import type { FichaData } from "@/types/ficha";
 
@@ -54,28 +53,35 @@ export default function FichaEditorPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
-  async function handleDownload() {
+  // Safari (sobre todo iOS) no maneja bien el patrón fetch + blob +
+  // URL.createObjectURL + <a download> para archivos grandes: el PDF a veces
+  // se abre en el visor interno en vez de descargarse, y si el asesor
+  // intenta compartirlo desde ahí, comparte el texto "blob:https://..." en
+  // vez del archivo real. Un <form> con method="POST" hacia /api/pdf y
+  // target="_blank" hace que sea el navegador el que reciba la respuesta
+  // directamente (con el Content-Disposition real), como una descarga
+  // normal de toda la vida -- funciona igual en Safari, Chrome y Firefox.
+  function handleDownload() {
     if (!ficha) return;
     setDownloading(true);
-    try {
-      const res = await fetch("/api/pdf", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(ficha),
-      });
-      if (!res.ok) throw new Error("No se pudo generar el PDF");
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${ficha.fileName}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      alert(err instanceof Error ? err.message : "Error al descargar el PDF");
-    } finally {
-      setDownloading(false);
-    }
+
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "/api/pdf";
+    form.target = "_blank";
+    form.style.display = "none";
+
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "ficha";
+    input.value = JSON.stringify(ficha);
+    form.appendChild(input);
+
+    document.body.appendChild(form);
+    form.submit();
+    form.remove();
+
+    setTimeout(() => setDownloading(false), 1500);
   }
 
   if (error) {
@@ -129,7 +135,6 @@ export default function FichaEditorPage({
 
       <div className="editor-body" data-active-tab={activeTab}>
         <aside className="editor-sidebar">
-          <PhotoPicker ficha={ficha} onChange={setFicha} />
           <PropertyForm ficha={ficha} onChange={setFicha} />
         </aside>
 
