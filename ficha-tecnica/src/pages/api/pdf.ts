@@ -15,6 +15,9 @@ export const config = {
     // mapa personalizada o planos adjuntos como data URLs.
     bodyParser: { sizeLimit: "30mb" },
   },
+  // Nunca se había puesto explícito -- el default de Vercel puede ser
+  // demasiado corto para Chromium (cold start + 9 fotos + impresión).
+  maxDuration: 60,
 };
 
 function asciiFallback(name: string): string {
