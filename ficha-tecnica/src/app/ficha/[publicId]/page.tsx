@@ -53,35 +53,54 @@ export default function FichaEditorPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
-  // Safari (sobre todo iOS) no maneja bien el patrón fetch + blob +
-  // URL.createObjectURL + <a download> para archivos grandes: el PDF a veces
-  // se abre en el visor interno en vez de descargarse, y si el asesor
-  // intenta compartirlo desde ahí, comparte el texto "blob:https://..." en
-  // vez del archivo real. Un <form> con method="POST" hacia /api/pdf y
-  // target="_blank" hace que sea el navegador el que reciba la respuesta
-  // directamente (con el Content-Disposition real), como una descarga
-  // normal de toda la vida -- funciona igual en Safari, Chrome y Firefox.
-  function handleDownload() {
+  // En Safari/iOS, abrir el PDF por navegación (form POST, o fetch+blob+<a>)
+  // lo muestra en su visor integrado en vez de "guardarlo" -- y si el
+  // asesor lo comparte desde ahí, Safari manda la URL de la página junto
+  // con el archivo (o en su lugar), y eso es lo que WhatsApp muestra como
+  // el link "https://.../api/pdf" debajo del PDF. La Web Share API
+  // (navigator.share con el archivo real, no una URL) es lo único que
+  // abre el share sheet nativo con el PDF de verdad adjunto y nada de URL
+  // -- disponible en iOS Safari 15+ y Chrome/Android. Donde no exista
+  // (desktop), se cae a la descarga normal por blob, que ahí sí funciona bien.
+  async function handleDownload() {
     if (!ficha) return;
     setDownloading(true);
+    try {
+      const res = await fetch("/api/pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(ficha),
+      });
+      if (!res.ok) throw new Error("No se pudo generar el PDF");
+      const blob = await res.blob();
+      const file = new File([blob], `${ficha.fileName}.pdf`, { type: "application/pdf" });
 
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = "/api/pdf";
-    form.target = "_blank";
-    form.style.display = "none";
+      const nav = navigator as Navigator & {
+        canShare?: (data?: ShareData) => boolean;
+        share?: (data: ShareData) => Promise<void>;
+      };
 
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = "ficha";
-    input.value = JSON.stringify(ficha);
-    form.appendChild(input);
+      if (nav.canShare?.({ files: [file] }) && nav.share) {
+        await nav.share({ files: [file], title: ficha.fileName });
+        return;
+      }
 
-    document.body.appendChild(form);
-    form.submit();
-    form.remove();
-
-    setTimeout(() => setDownloading(false), 1500);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${ficha.fileName}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      // El usuario cerrando el share sheet también dispara AbortError -- no es un error real.
+      if (err instanceof Error && err.name !== "AbortError") {
+        alert(err.message || "Error al descargar el PDF");
+      }
+    } finally {
+      setDownloading(false);
+    }
   }
 
   if (error) {
