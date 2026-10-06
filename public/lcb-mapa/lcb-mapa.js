@@ -41,8 +41,21 @@
   var boundaryCache = {};
 
   // ---------- estado en URL ----------
+  // El motor escribe ?operacion= pero no lo lee al cargar; se restaura aquí
+  // (p. ej. al regresar de una ficha).
+  var pendingOps = [];
+  function restoreOperacion() {
+    var ops = pendingOps;
+    pendingOps = [];
+    ops.forEach(function (v) {
+      var cb = document.getElementById(v.charAt(0).toUpperCase() + v.slice(1).toLowerCase());
+      if (cb && cb.type === 'checkbox' && !cb.checked) (cb.closest('label') || cb).click();
+    });
+  }
+
   function readUrlState() {
     var p = new URLSearchParams(location.search);
+    pendingOps = p.getAll('operacion');
     if (p.get('vista') === 'mapa') state.view = 'map';
     var z = (p.get('zona') || '').split(',').map(Number);
     if (z.length === 4 && z.every(isFinite)) state.zone = z;
@@ -74,6 +87,7 @@
     } catch (e) { /* query ajena: se deja pasar intacta */ }
     // El motor reescribe la URL justo antes de consultar; se re-agregan vista/zona.
     writeUrlState();
+    if (pendingOps.length) setTimeout(restoreOperacion, 0);
     scheduleMapQuery();
     return origFetch(input, init).then(function (res) {
       res.clone().json().then(function (d) {
