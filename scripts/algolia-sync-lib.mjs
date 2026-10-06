@@ -93,7 +93,18 @@ export function buildAlgoliaRecord(item, lookups) {
     createdOn: item.createdOn ? new Date(item.createdOn).getTime() : Date.now(),
     lastPublished: item.lastPublished ? new Date(item.lastPublished).getTime() : Date.now(),
     cmsOrder: 0,
+    ...(parseGeoloc(fd["location-full-link"]) ? { _geoloc: parseGeoloc(fd["location-full-link"]) } : {}),
   };
+}
+
+// Mirrors parseGeoloc in src/lib/algolia.ts.
+export function parseGeoloc(mapsLink) {
+  const m = String(mapsLink ?? "").match(/[?&]q=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+  if (!m) return undefined;
+  const lat = Number(m[1]);
+  const lng = Number(m[2]);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng) || (lat === 0 && lng === 0)) return undefined;
+  return { lat, lng };
 }
 
 export async function algoliaBatch(requests) {

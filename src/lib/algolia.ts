@@ -41,6 +41,18 @@ export interface AlgoliaRecord {
   createdOn: number;
   lastPublished: number;
   cmsOrder: number;
+  _geoloc?: { lat: number; lng: number };
+}
+
+// The Webflow "latitud"/"longitud" fields are integer-only, so the precise
+// coordinates are recovered from the Google Maps link the sync writes.
+export function parseGeoloc(mapsLink: unknown): { lat: number; lng: number } | undefined {
+  const m = String(mapsLink ?? "").match(/[?&]q=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+  if (!m) return undefined;
+  const lat = Number(m[1]);
+  const lng = Number(m[2]);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng) || (lat === 0 && lng === 0)) return undefined;
+  return { lat, lng };
 }
 
 /**
@@ -62,6 +74,7 @@ export function buildAlgoliaRecord(
     return map.get(key) ?? key;
   };
 
+  const geoloc = parseGeoloc(fd["location-full-link"]);
   const featured = fd["featured-image"] as { url?: string } | undefined;
   const gallery = (fd.gallery as { url?: string }[] | undefined) ?? [];
 
@@ -89,6 +102,7 @@ export function buildAlgoliaRecord(
     createdOn: item.createdOn ? new Date(item.createdOn).getTime() : Date.now(),
     lastPublished: item.lastPublished ? new Date(item.lastPublished).getTime() : Date.now(),
     cmsOrder: 0,
+    ...(geoloc ? { _geoloc: geoloc } : {}),
   };
 }
 
