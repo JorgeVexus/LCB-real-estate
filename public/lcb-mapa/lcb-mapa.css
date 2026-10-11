@@ -34,6 +34,20 @@
 .lcbm-toggle-btn.is-active { border-color: var(--lcbm-orange); color: var(--lcbm-orange); background: var(--lcbm-orange-soft); }
 .lcbm-toggle-btn:focus-visible { outline: 2px solid var(--lcbm-orange); outline-offset: 2px; }
 
+/* ---------- Corrige el desbordamiento horizontal preexistente del sitio
+ * (también está en /propiedades): las pistas del grid ".25fr 1.25fr" no
+ * tienen min-width:0, así que heredan el ancho mínimo de contenido del
+ * carrusel de cada card y se desbordan. Scoped a .lcbm-page — no toca la
+ * página /propiedades real, que no carga este CSS. ---------- */
+.lcbm-page .grid-propiedades,
+.lcbm-page .grid-propiedades > * { min-width: 0; }
+.lcbm-page .collection-list-propiedades,
+.lcbm-page .w-dyn-items,
+.lcbm-page .w-dyn-item,
+.lcbm-page .property-slider,
+.lcbm-page .swiper,
+.lcbm-page .swiper-wrapper { min-width: 0; }
+
 /* =====================================================================
    Todo lo siguiente es EXCLUSIVO del modo Mapa. La vista Listado nunca
    recibe estas reglas y conserva el layout original (sidebar + grid).

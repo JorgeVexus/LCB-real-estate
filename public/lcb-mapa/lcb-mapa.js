@@ -17,30 +17,10 @@
   var MX_BOUNDS = [[-117.2, 14.4], [-86.6, 32.8]];
   var ORANGE = '#F39300';
   var INK = '#1A1A1A';
-  // Vista satelital (Esri World Imagery, gratis/sin cuenta) + capa de
-  // referencia con calles y nombres de lugar, tipo "híbrido" de Google Maps.
-  var SATELLITE_STYLE = {
-    version: 8,
-    glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
-    sources: {
-      'lcbm-sat': {
-        type: 'raster',
-        tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
-        tileSize: 256,
-        attribution: 'Esri, Maxar, Earthstar Geographics'
-      },
-      'lcbm-sat-ref': {
-        type: 'raster',
-        tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'],
-        tileSize: 256
-      }
-    },
-    layers: [
-      { id: 'lcbm-sat-layer', type: 'raster', source: 'lcbm-sat' },
-      { id: 'lcbm-sat-ref-layer', type: 'raster', source: 'lcbm-sat-ref' }
-    ]
-  };
-  var MAP_STYLE = CFG.mapStyle || SATELLITE_STYLE;
+  // Estilo tipo Apple/Google Maps "claro": calles, áreas verdes, ríos — sin
+  // el peso de imágenes satelitales. Vectorial (OpenFreeMap, gratis/sin
+  // cuenta), se renderiza mucho más rápido que un raster satelital.
+  var MAP_STYLE = CFG.mapStyle || 'https://tiles.openfreemap.org/styles/liberty';
 
   var state = {
     view: 'list',
