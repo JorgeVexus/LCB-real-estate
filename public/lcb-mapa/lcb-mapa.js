@@ -1,8 +1,8 @@
 /* LCB — Vista de mapa para /propiedades(-copy).
  * Se apoya en el motor de listado Algolia del sitio (custom code global):
- * intercepta su query para conocer filtros activos, replica esos filtros en
- * una query de mapa y, en modo "zona", agrega insideBoundingBox a la query del
- * listado para que cards y mapa muestren lo mismo. */
+ * intercepta su query para conocer filtros activos y, en modo Mapa, agrega
+ * siempre insideBoundingBox con el área visible del mapa — así listado y
+ * mapa muestran lo mismo en todo momento, sin botón manual. */
 (function () {
   'use strict';
 
@@ -12,22 +12,46 @@
   var INDEX = 'lcb_propiedades';
   var QUERY_PATH = '/indexes/' + INDEX + '/query';
   var BOUNDARY_URL = CFG.boundaryEndpoint || '';
-  var MAP_STYLE = CFG.mapStyle || 'https://tiles.openfreemap.org/styles/positron';
   var MAPLIBRE_JS = 'https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js';
   var MAPLIBRE_CSS = 'https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css';
   var MX_BOUNDS = [[-117.2, 14.4], [-86.6, 32.8]];
   var ORANGE = '#F39300';
   var INK = '#1A1A1A';
+  // Vista satelital (Esri World Imagery, gratis/sin cuenta) + capa de
+  // referencia con calles y nombres de lugar, tipo "híbrido" de Google Maps.
+  var SATELLITE_STYLE = {
+    version: 8,
+    glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
+    sources: {
+      'lcbm-sat': {
+        type: 'raster',
+        tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+        tileSize: 256,
+        attribution: 'Esri, Maxar, Earthstar Geographics'
+      },
+      'lcbm-sat-ref': {
+        type: 'raster',
+        tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'],
+        tileSize: 256
+      }
+    },
+    layers: [
+      { id: 'lcbm-sat-layer', type: 'raster', source: 'lcbm-sat' },
+      { id: 'lcbm-sat-ref-layer', type: 'raster', source: 'lcbm-sat-ref' }
+    ]
+  };
+  var MAP_STYLE = CFG.mapStyle || SATELLITE_STYLE;
 
   var state = {
     view: 'list',
-    body: null,          // última query del listado: { query, filters }
-    zone: null,          // [w, s, e, n] cuando "Buscar en esta zona" está activo
+    body: null,              // última query del listado: { query, filters }
+    filterKey: null,         // firma query+filters, para distinguir "cambió un filtro" de "solo se movió el mapa"
+    triggeredByFilterChange: false,
+    viewport: null,          // [w, s, e, n] del mapa, se actualiza solo al mover/zoom (siempre activo en modo Mapa)
     hits: [],
     total: 0,
     boundaryKey: null,
     boundary: null,
-    userMoved: false,
     mapReady: false,
     selectedSlug: null
   };
@@ -38,7 +62,9 @@
   var els = {};
   var mapQueryTimer = null;
   var mapQueryVersion = 0;
+  var moveDebounceTimer = null;
   var boundaryCache = {};
+  var skipNextFit = false;
 
   // ---------- estado en URL ----------
   // El motor escribe ?operacion= pero no lo lee al cargar; se restaura aquí
@@ -58,14 +84,16 @@
     pendingOps = p.getAll('operacion');
     if (p.get('vista') === 'mapa') state.view = 'map';
     var z = (p.get('zona') || '').split(',').map(Number);
-    if (z.length === 4 && z.every(isFinite)) state.zone = z;
+    if (z.length === 4 && z.every(isFinite)) state.viewport = z;
   }
 
   function writeUrlState() {
     var p = new URLSearchParams(location.search);
     p.delete('vista'); p.delete('zona');
     if (state.view === 'map') p.set('vista', 'mapa');
-    if (state.zone) p.set('zona', state.zone.map(function (n) { return n.toFixed(4); }).join(','));
+    if (state.view === 'map' && state.viewport) {
+      p.set('zona', state.viewport.map(function (n) { return n.toFixed(4); }).join(','));
+    }
     var qs = p.toString();
     history.replaceState(history.state, '', location.pathname + (qs ? '?' + qs : ''));
   }
@@ -78,10 +106,12 @@
     }
     try {
       var body = JSON.parse(init.body);
+      var key = (body.query || '') + '|' + (body.filters || '');
+      state.triggeredByFilterChange = state.filterKey !== null && state.filterKey !== key || state.filterKey === null;
+      state.filterKey = key;
       state.body = { query: body.query || '', filters: body.filters || '' };
-      if (!state.zone) state.userMoved = false;
-      if (state.zone) {
-        body.insideBoundingBox = [bboxToAlgolia(state.zone)];
+      if (state.view === 'map' && state.viewport) {
+        body.insideBoundingBox = [bboxToAlgolia(state.viewport)];
         init = Object.assign({}, init, { body: JSON.stringify(body) });
       }
     } catch (e) { /* query ajena: se deja pasar intacta */ }
@@ -92,7 +122,6 @@
     return origFetch(input, init).then(function (res) {
       res.clone().json().then(function (d) {
         state.total = d.nbHits || 0;
-        updateZoneBadge();
       }).catch(function () {});
       return res;
     });
@@ -119,6 +148,7 @@
   function runMapQuery() {
     if (!state.body) return;
     var v = ++mapQueryVersion;
+    showUpdating(true);
     var params = {
       query: state.body.query,
       filters: state.body.filters,
@@ -127,7 +157,7 @@
         'precioDisplay', 'locationFull', 'propertyType', 'operationType', 'andenes', 'destacada'],
       attributesToHighlight: []
     };
-    if (state.zone) params.insideBoundingBox = [bboxToAlgolia(state.zone)];
+    if (state.view === 'map' && state.viewport) params.insideBoundingBox = [bboxToAlgolia(state.viewport)];
     origFetch('https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX + '/query', {
       method: 'POST',
       headers: { 'X-Algolia-Application-Id': APP_ID, 'X-Algolia-API-Key': SEARCH_KEY, 'Content-Type': 'application/json' },
@@ -137,12 +167,17 @@
       state.hits = (d.hits || []).filter(function (h) { return h._geoloc; });
       renderPoints();
       updateBoundary();
-    }).catch(function (e) { console.error('[LCB mapa]', e); });
+      showUpdating(false);
+    }).catch(function (e) { console.error('[LCB mapa]', e); showUpdating(false); });
+  }
+
+  function showUpdating(on) {
+    if (els.updating) els.updating.classList.toggle('is-visible', on);
   }
 
   // ---------- límite geográfico real ----------
   function boundaryPlace() {
-    if (!state.body || state.zone) return null;
+    if (!state.body) return null;
     var q = (state.body.query || '').trim();
     if (q.length >= 3 && !/\d/.test(q)) return q;
     var cities = (state.body.filters.match(/city:"([^"]+)"/g) || []).map(function (s) { return s.slice(6, -1); });
@@ -186,6 +221,8 @@
     map.getSource('lcbm-boundary').setData(b
       ? { type: 'Feature', properties: {}, geometry: b.geometry }
       : { type: 'FeatureCollection', features: [] });
+    // Un límite nuevo (o quitado) siempre recentra, aunque solo haya cambiado
+    // por una query disparada desde el paneo del mapa.
     fitToData(true);
   }
 
@@ -210,7 +247,7 @@
       map = new maplibregl.Map({
         container: els.map,
         style: MAP_STYLE,
-        bounds: state.zone ? [[state.zone[0], state.zone[1]], [state.zone[2], state.zone[3]]] : MX_BOUNDS,
+        bounds: state.viewport ? [[state.viewport[0], state.viewport[1]], [state.viewport[2], state.viewport[3]]] : MX_BOUNDS,
         attributionControl: { compact: true },
         cooperativeGestures: window.matchMedia('(max-width: 767px)').matches
       });
@@ -218,9 +255,17 @@
       map.addControl(new maplibregl.GeolocateControl({ fitBoundsOptions: { maxZoom: 11 } }), 'top-right');
       map.on('load', onMapLoad);
       map.on('moveend', function (e) {
+        // Ignora moves programáticos (nuestro propio fitBounds/resize); solo
+        // reacciona a interacción real del usuario (drag, scroll, controles,
+        // o un easeTo marcado explícitamente con lcbmUser, p. ej. al abrir
+        // un cluster).
         if (!e.originalEvent && !e.lcbmUser) return;
-        state.userMoved = true;
-        els.zoneBtn.hidden = false;
+        clearTimeout(moveDebounceTimer);
+        moveDebounceTimer = setTimeout(function () {
+          var b = map.getBounds();
+          state.viewport = [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()];
+          rerunListing();
+        }, 400);
       });
     }).catch(function () {
       els.map.innerHTML = '<p class="lcbm-map-error">No se pudo cargar el mapa. Intenta recargar la página.</p>';
@@ -230,9 +275,9 @@
   function onMapLoad() {
     map.addSource('lcbm-boundary', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
     map.addLayer({ id: 'lcbm-boundary-fill', type: 'fill', source: 'lcbm-boundary',
-      paint: { 'fill-color': ORANGE, 'fill-opacity': 0.14 } });
+      paint: { 'fill-color': ORANGE, 'fill-opacity': 0.18 } });
     map.addLayer({ id: 'lcbm-boundary-line', type: 'line', source: 'lcbm-boundary',
-      paint: { 'line-color': ORANGE, 'line-width': 2 } });
+      paint: { 'line-color': ORANGE, 'line-width': 2.5 } });
 
     map.addSource('lcbm-props', {
       type: 'geojson', data: toGeoJSON(), cluster: true, clusterRadius: 48, clusterMaxZoom: 13
@@ -241,7 +286,8 @@
       paint: {
         'circle-color': INK,
         'circle-radius': ['step', ['get', 'point_count'], 15, 10, 19, 50, 24],
-        'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff'
+        'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff',
+        'circle-radius-transition': { duration: 300 }
       } });
     map.addLayer({ id: 'lcbm-cluster-count', type: 'symbol', source: 'lcbm-props', filter: ['has', 'point_count'],
       layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-font': ['Noto Sans Bold'], 'text-size': 12 },
@@ -250,7 +296,8 @@
       paint: {
         'circle-color': ORANGE,
         'circle-radius': 7,
-        'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff'
+        'circle-stroke-width': 2, 'circle-stroke-color': '#ffffff',
+        'circle-opacity-transition': { duration: 300 }
       } });
     map.addLayer({ id: 'lcbm-points-active', type: 'circle', source: 'lcbm-props',
       filter: ['all', ['!', ['has', 'point_count']], ['==', ['get', 'slug'], '']],
@@ -299,24 +346,34 @@
     fitToData();
   }
 
-  function fitToData(force) {
-    if (!state.mapReady || state.zone || (state.userMoved && !force)) return;
-    var b = null;
+  function computeBounds() {
     if (state.boundary && state.boundary.bbox) {
       var x = state.boundary.bbox;
-      b = [[x[0], x[1]], [x[2], x[3]]];
-    } else if (state.hits.length) {
+      return [[x[0], x[1]], [x[2], x[3]]];
+    }
+    if (state.hits.length) {
       var w = 180, s = 90, e = -180, n = -90;
       state.hits.forEach(function (h) {
         w = Math.min(w, h._geoloc.lng); e = Math.max(e, h._geoloc.lng);
         s = Math.min(s, h._geoloc.lat); n = Math.max(n, h._geoloc.lat);
       });
-      b = [[w, s], [e, n]];
+      return [[w, s], [e, n]];
     }
+    return null;
+  }
+
+  // Solo recentra el mapa ante un cambio real de filtros/búsqueda — nunca
+  // como reacción a que el propio usuario movió el mapa (eso alimenta el
+  // listado, no al revés).
+  function fitToData(force) {
+    if (!state.mapReady) return;
+    if (!force) {
+      if (skipNextFit) { skipNextFit = false; return; }
+      if (!state.triggeredByFilterChange) return;
+    }
+    var b = computeBounds();
     if (!b) return;
     map.fitBounds(b, { padding: 56, maxZoom: 14, duration: 500 });
-    state.userMoved = false;
-    els.zoneBtn.hidden = true;
   }
 
   function hitBySlug(slug) {
@@ -353,7 +410,7 @@
         '</span>' +
       '</a>';
     if (popup) popup.remove();
-    popup = new maplibregl.Popup({ closeButton: true, offset: 14, maxWidth: '300px', className: 'lcbm-popup' })
+    popup = new maplibregl.Popup({ closeButton: true, offset: 14, maxWidth: '340px', className: 'lcbm-popup' })
       .setLngLat([h._geoloc.lng, h._geoloc.lat]).setHTML(html).addTo(map);
     popup.on('close', function () { state.selectedSlug = null; highlight(null); });
     var card = cardBySlug(slug);
@@ -376,39 +433,6 @@
     return a ? (a.getAttribute('href').split('/propiedades/')[1] || '').replace(/\/$/, '') : null;
   }
 
-  // ---------- zona ----------
-  function applyZone() {
-    var b = map.getBounds();
-    state.zone = [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()];
-    els.zoneBtn.hidden = true;
-    // La zona sustituye a los criterios de ubicación (lugar buscado y estados);
-    // operación, tipo y m² se conservan.
-    var si = searchInput();
-    if (si && state.boundaryKey && si.value.trim().toLowerCase() === state.boundaryKey.toLowerCase()) si.value = '';
-    document.querySelectorAll('span[fs-cmsfilter-field="ciudad"],span[fs-cmsfilter-field="cuidad"]').forEach(function (sp) {
-      var label = sp.closest('label');
-      var cb = label && label.querySelector('input[type="checkbox"]');
-      if (cb && cb.checked) label.click();
-    });
-    state.boundaryKey = null;
-    setBoundary(null);
-    rerunListing();
-  }
-
-  function clearZone(rerun) {
-    if (!state.zone) return;
-    state.zone = null;
-    state.userMoved = false;
-    updateZoneBadge();
-    if (rerun) rerunListing();
-  }
-
-  function updateZoneBadge() {
-    if (!els.badge) return;
-    els.badge.hidden = !state.zone;
-    els.badgeCount.textContent = state.total + (state.total === 1 ? ' propiedad' : ' propiedades');
-  }
-
   // ---------- vista ----------
   function setView(view) {
     state.view = view;
@@ -418,16 +442,27 @@
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
-    if (view === 'map') { initMap(); setTimeout(function () { if (map) map.resize(); }, 50); }
-    else { closePreview(); }
+    if (view === 'map') {
+      // Si se restauró una posición de mapa desde la URL (p. ej. al volver
+      // de una ficha), no la pise un fit automático en la primera query.
+      if (!map) skipNextFit = !!state.viewport;
+      initMap();
+      setTimeout(function () { if (map) map.resize(); }, 50);
+    } else {
+      closePreview();
+    }
     writeUrlState();
     measureTop();
   }
 
   function measureTop() {
     var nav = document.querySelector('.navbar, .w-nav, nav');
-    var h = nav ? nav.getBoundingClientRect().height : 0;
-    document.documentElement.style.setProperty('--lcbm-top', Math.round(h + 12) + 'px');
+    var navH = nav ? nav.getBoundingClientRect().height : 0;
+    document.documentElement.style.setProperty('--lcbm-nav-h', Math.round(navH) + 'px');
+    document.documentElement.style.setProperty('--lcbm-top', Math.round(navH + 12) + 'px');
+    var header = document.querySelector('.div-filtro.propiedades');
+    var headerH = header ? header.getBoundingClientRect().height : 0;
+    document.documentElement.style.setProperty('--lcbm-header-h', Math.round(headerH) + 'px');
   }
 
   // ---------- UI (usa elementos nativos de Webflow si existen) ----------
@@ -456,7 +491,7 @@
       if (b) { e.preventDefault(); setView(b.getAttribute('data-lcbm-view')); }
     });
 
-    // El buscador vive en el hero; en la barra horizontal va primero.
+    // El buscador vive en el hero; en la barra horizontal (solo modo Mapa) va primero.
     var bar = document.querySelector('.filtro-horizontal-fix');
     var search = document.querySelector('.select-filter-drow.search');
     if (bar && search && !bar.contains(search)) bar.insertBefore(search, bar.firstChild);
@@ -473,21 +508,12 @@
     if (list) list.classList.add('lcbm-list');
     els.panel.innerHTML =
       '<div id="lcbm-map" class="lcbm-map"></div>' +
-      '<button type="button" class="lcbm-zone-btn" hidden>' +
-        '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="m21 21-4.3-4.3M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14z"/></svg>' +
-        'Buscar en esta zona</button>' +
-      '<div class="lcbm-zone-badge" hidden><span class="lcbm-zone-dot"></span>' +
-        '<span><strong>Resultados en esta zona</strong><span class="lcbm-zone-count"></span></span>' +
-        '<button type="button" class="lcbm-zone-clear" aria-label="Quitar zona">×</button></div>';
+      '<div class="lcbm-updating"><span class="lcbm-updating-dot"></span>Actualizando resultados…</div>';
     els.map = els.panel.querySelector('#lcbm-map');
-    els.zoneBtn = els.panel.querySelector('.lcbm-zone-btn');
-    els.badge = els.panel.querySelector('.lcbm-zone-badge');
-    els.badgeCount = els.panel.querySelector('.lcbm-zone-count');
-    els.zoneBtn.addEventListener('click', applyZone);
-    els.panel.querySelector('.lcbm-zone-clear').addEventListener('click', function () { clearZone(true); });
+    els.updating = els.panel.querySelector('.lcbm-updating');
 
     var clear = document.querySelector('[fs-cmsfilter-element="clear"]');
-    if (clear) clear.addEventListener('click', function () { clearZone(false); }, true);
+    if (clear) clear.addEventListener('click', function () { state.viewport = null; }, true);
 
     // Card ↔ marker.
     document.addEventListener('mouseover', function (e) {

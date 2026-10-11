@@ -1,14 +1,21 @@
-/* Solo aplica a la página donde lcb-mapa.js agrega body.lcbm-page. */
+/* Solo aplica a la página donde lcb-mapa.js agrega body.lcbm-page.
+ * Las reglas SIN el prefijo .lcbm-map-mode viven en ambas vistas
+ * (Listado/Mapa) — por diseño son pocas: solo el selector Listado|Mapa.
+ * Todo lo demás (barra horizontal, split 25/75, cards compactas) está
+ * scoped a .lcbm-map-mode para que la vista Listado conserve exactamente
+ * el layout de la página publicada (filtros a la izquierda). */
 .lcbm-page {
   --lcbm-orange: #f39300;
   --lcbm-orange-soft: #fff4e6;
   --lcbm-ink: #1a1a1a;
   --lcbm-line: #0000001a;
+  --lcbm-nav-h: 78px;
   --lcbm-top: 90px;
+  --lcbm-header-h: 56px;
   --lcbm-map-h: calc(100vh - var(--lcbm-top) - 24px);
 }
 
-/* ---------- Cabecera: contador + selector Listado | Mapa ---------- */
+/* ---------- Cabecera: contador + selector Listado | Mapa (ambas vistas) ---------- */
 .lcbm-page .div-filtro.propiedades {
   flex-direction: row;
   justify-content: space-between;
@@ -27,10 +34,19 @@
 .lcbm-toggle-btn.is-active { border-color: var(--lcbm-orange); color: var(--lcbm-orange); background: var(--lcbm-orange-soft); }
 .lcbm-toggle-btn:focus-visible { outline: 2px solid var(--lcbm-orange); outline-offset: 2px; }
 
-/* ---------- Barra de filtros horizontal ---------- */
-.lcbm-page .grid-propiedades { grid-template-columns: minmax(0, 1fr) !important; }
-.lcbm-page .div-wrapperflitro { margin-bottom: 16px; grid-column: 1 / -1; }
-.lcbm-page .filtro-horizontal-fix {
+/* =====================================================================
+   Todo lo siguiente es EXCLUSIVO del modo Mapa. La vista Listado nunca
+   recibe estas reglas y conserva el layout original (sidebar + grid).
+   ===================================================================== */
+
+/* ---------- Barra de filtros horizontal (solo Mapa) ---------- */
+.lcbm-map-mode .grid-propiedades { grid-template-columns: minmax(0, 1fr) !important; }
+.lcbm-map-mode .div-wrapperflitro {
+  margin-bottom: 16px; grid-column: 1 / -1;
+  position: sticky; top: calc(var(--lcbm-nav-h) + var(--lcbm-header-h)); z-index: 24;
+  background: #fff;
+}
+.lcbm-map-mode .filtro-horizontal-fix {
   display: flex !important;
   flex-flow: row wrap;
   align-items: stretch;
@@ -38,14 +54,14 @@
   max-width: none !important;
   padding: 10px;
 }
-.lcbm-page .filtro-horizontal-fix > .select-filter-drow { width: auto; flex: 1 1 170px; min-width: 0; }
-.lcbm-page .filtro-horizontal-fix > .select-filter-drow.search {
+.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow { width: auto; flex: 1 1 170px; min-width: 0; }
+.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow.search {
   flex: 1.6 1 240px; height: auto; min-height: 43px;
   box-shadow: none; border-color: var(--lcbm-line); border-radius: 8px; background: #fff;
 }
-.lcbm-page .filtro-horizontal-fix .text-field.propiedades { background: transparent; }
-.lcbm-page .filtro-horizontal-fix .div-fake-dropdown { cursor: pointer; }
-.lcbm-page .filtro-horizontal-fix .div-fake-dropdown-list {
+.lcbm-map-mode .filtro-horizontal-fix .text-field.propiedades { background: transparent; }
+.lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown { cursor: pointer; }
+.lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown-list {
   position: absolute !important;
   top: calc(100% + 6px); left: 0;
   min-width: 100%; width: max-content; max-width: 320px;
@@ -55,8 +71,21 @@
   box-shadow: 0 12px 28px #00000024;
   z-index: 40;
 }
-.lcbm-page .filtro-horizontal-fix .metros-slider-wrap { min-width: 260px; padding: 6px 4px; }
-.lcbm-page .filtro-horizontal-fix > .clear-btn { flex: 0 0 auto; width: auto; padding: 0 18px; align-self: stretch; }
+.lcbm-map-mode .filtro-horizontal-fix .metros-slider-wrap { min-width: 260px; padding: 6px 4px; }
+.lcbm-map-mode .filtro-horizontal-fix > .clear-btn { flex: 0 0 auto; width: auto; padding: 0 18px; align-self: stretch; }
+
+/* Header pegado justo debajo del nav, y la barra de filtros justo debajo
+ * del header — ambos visibles siempre al hacer scroll dentro del modo Mapa. */
+.lcbm-map-mode .div-filtro.propiedades {
+  position: sticky; top: var(--lcbm-nav-h); z-index: 25;
+  background: #fff;
+}
+
+/* Sin otras secciones (FAQ, CTA, footer) en modo Mapa: todo cabe en una
+ * sola ventana, sin scroll de página hacia contenido ajeno al mapa. */
+body.lcbm-map-mode .section-faq,
+body.lcbm-map-mode .section-cta.propiedades,
+body.lcbm-map-mode .footer { display: none; }
 
 /* ---------- Modo mapa: 25% resultados · 75% mapa ---------- */
 .lcbm-map-panel { display: none; position: relative; }
@@ -89,9 +118,9 @@
   column-count: auto;
 }
 .lcbm-map-mode .lcbm-list .card-propiedades {
-  display: grid; grid-template-columns: 40% minmax(0, 1fr); grid-template-rows: auto auto;
-  column-gap: 12px; row-gap: 8px;
-  height: auto; padding: 10px;
+  display: grid; grid-template-columns: 128px minmax(0, 1fr); grid-template-rows: auto;
+  column-gap: 14px; row-gap: 0;
+  height: auto; min-height: 128px; padding: 12px;
   border: 1px solid var(--lcbm-line);
   transform: none !important;
 }
@@ -99,85 +128,95 @@
 .lcbm-map-mode .lcbm-list .lcbm-card-active .card-propiedades {
   border-color: var(--lcbm-orange); box-shadow: 0 6px 16px #0000001f;
 }
-.lcbm-map-mode .lcbm-list .div-img-propiedades { grid-column: 1; grid-row: 1 / span 2; width: 100%; border-radius: 8px; }
+.lcbm-map-mode .lcbm-list .div-img-propiedades {
+  grid-column: 1; grid-row: 1; width: 128px; height: 104px; border-radius: 8px; overflow: hidden;
+}
 .lcbm-map-mode .lcbm-list .property-image-wrapper,
 .lcbm-map-mode .lcbm-list .property-slider,
-.lcbm-map-mode .lcbm-list .swiper { height: 100%; min-height: 128px; }
+.lcbm-map-mode .lcbm-list .swiper { width: 100%; height: 100%; min-height: 0; }
 .lcbm-map-mode .lcbm-list .swiper-button-next,
 .lcbm-map-mode .lcbm-list .swiper-button-prev,
 .lcbm-map-mode .lcbm-list .swiper-pagination { display: none; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades { grid-column: 2; min-width: 0; width: auto; height: auto; margin: 0; gap: 4px; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { flex-wrap: wrap; width: auto; }
-.lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; row-gap: 2px; }
-.lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 12px; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .h5 { font-size: 15px; }
-.lcbm-map-mode .lcbm-list .nombre-propiedad { font-size: 14px; line-height: 1.25; }
-.lcbm-map-mode .lcbm-list .text-medium.prorpiedades { font-size: 12px; line-height: 1.3; }
-.lcbm-map-mode .lcbm-list .grid-btn.propiedades { grid-column: 2; padding: 0; grid-template-columns: 1fr 1fr; }
-.lcbm-map-mode .lcbm-list .grid-btn .btn { padding: 8px 6px; font-size: 12px; min-height: 0; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades {
+  grid-column: 2; grid-row: 1; min-width: 0; width: auto; height: auto; margin: 0;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 5px;
+}
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { flex-wrap: wrap; width: auto; align-items: baseline; gap: 4px; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { font-size: 16px; line-height: 1.2; }
+.lcbm-map-mode .lcbm-list .nombre-propiedad {
+  font-size: 13px; line-height: 1.3; color: #555;
+  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+}
+.lcbm-map-mode .lcbm-list .text-medium.prorpiedades {
+  font-size: 12px; line-height: 1.35; color: #777;
+  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+}
+.lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; row-gap: 4px; column-gap: 6px; margin-top: 2px; }
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 11.5px; white-space: nowrap; }
+.lcbm-map-mode .lcbm-list .grid-btn.propiedades {
+  grid-column: 1 / -1; grid-row: 2; padding: 0; margin-top: 10px;
+  grid-template-columns: 1fr 1fr; column-gap: 8px;
+}
+.lcbm-map-mode .lcbm-list .grid-btn .btn { padding: 9px 6px; font-size: 12.5px; min-height: 0; }
 .lcbm-map-mode .lcbm-list .rich-text-block-2 { display: none; }
 .lcbm-map-mode .pagination-property { margin-top: 12px; }
 
-/* ---------- Controles sobre el mapa ---------- */
-.lcbm-zone-btn {
-  position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+/* ---------- Indicador de actualización automática (sin botón manual) ---------- */
+.lcbm-updating {
+  position: absolute; top: 14px; left: 50%; transform: translateX(-50%) translateY(-8px);
   z-index: 5;
   display: inline-flex; align-items: center; gap: 8px;
-  height: 40px; padding: 0 18px;
-  border: 0; border-radius: 999px; background: #fff; color: var(--lcbm-ink);
-  font: 500 14px/1 "Work Sans", sans-serif;
-  box-shadow: 0 4px 14px #00000033; cursor: pointer;
+  height: 36px; padding: 0 16px;
+  border-radius: 999px; background: #fff; color: var(--lcbm-ink);
+  font: 500 13px/1 "Work Sans", sans-serif;
+  box-shadow: 0 4px 14px #00000033;
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
 }
-.lcbm-zone-btn[hidden], .lcbm-zone-badge[hidden] { display: none; }
-.lcbm-zone-btn:hover { color: var(--lcbm-orange); }
-.lcbm-zone-badge {
-  position: absolute; right: 14px; bottom: 28px; z-index: 5;
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 12px; border-radius: 8px; background: #fff;
-  box-shadow: 0 4px 14px #00000026;
-  font: 13px/1.3 "Work Sans", sans-serif; color: var(--lcbm-ink);
+.lcbm-updating.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+.lcbm-updating-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--lcbm-orange);
+  animation: lcbm-pulse 1s ease-in-out infinite;
 }
-.lcbm-zone-badge strong { display: block; font-weight: 600; }
-.lcbm-zone-count { color: #666; }
-.lcbm-zone-dot { width: 18px; height: 18px; border-radius: 4px; background: #f3930033; border: 2px solid var(--lcbm-orange); flex: none; }
-.lcbm-zone-clear { border: 0; background: none; font-size: 20px; line-height: 1; cursor: pointer; color: #666; padding: 0 2px; }
+@keyframes lcbm-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.7); } }
 
 /* Preview de propiedad */
 .lcbm-popup .maplibregl-popup-content { padding: 0; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 24px #00000033; }
-.lcbm-popup .maplibregl-popup-close-button { font-size: 18px; color: #fff; text-shadow: 0 1px 3px #0009; right: 4px; top: 2px; }
-.lcbm-preview { display: grid; grid-template-columns: 96px 1fr; color: var(--lcbm-ink); text-decoration: none; font-family: "Work Sans", sans-serif; }
-.lcbm-preview-img { width: 96px; height: 100%; min-height: 96px; object-fit: cover; display: block; }
-.lcbm-preview-body { display: flex; flex-direction: column; gap: 3px; padding: 10px 12px; min-width: 0; }
-.lcbm-preview-title { font-weight: 600; font-size: 14px; line-height: 1.25; }
-.lcbm-preview-meta { font-size: 12px; color: #444; }
+.lcbm-popup .maplibregl-popup-close-button {
+  width: 22px; height: 22px; font-size: 18px; line-height: 20px; color: #fff;
+  text-shadow: 0 1px 3px #000c; right: 6px; top: 6px;
+}
+.lcbm-preview { display: grid; grid-template-columns: 112px minmax(0, 1fr); color: var(--lcbm-ink); text-decoration: none; font-family: "Work Sans", sans-serif; }
+.lcbm-preview-img { width: 112px; height: 100%; min-height: 112px; object-fit: cover; display: block; }
+.lcbm-preview-body { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; min-width: 0; }
+.lcbm-preview-title {
+  font-weight: 600; font-size: 14px; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.lcbm-preview-meta { font-size: 12.5px; color: #444; font-weight: 500; }
 .lcbm-preview-loc { font-size: 12px; color: #777; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.lcbm-preview-cta { font-size: 13px; font-weight: 600; color: var(--lcbm-orange); margin-top: 2px; }
+.lcbm-preview-cta { font-size: 13px; font-weight: 600; color: var(--lcbm-orange); margin-top: 3px; }
 
-/* ---------- Tablet ---------- */
+/* ---------- Tablet (solo Mapa) ---------- */
 @media (max-width: 991px) {
   .lcbm-map-mode .grid-propiedades { grid-template-columns: minmax(260px, 38%) minmax(0, 1fr) !important; }
-  .lcbm-map-mode .lcbm-list .card-propiedades { grid-template-columns: 1fr; }
-  .lcbm-map-mode .lcbm-list .div-img-propiedades,
-  .lcbm-map-mode .lcbm-list .info-card-propiedades,
-  .lcbm-map-mode .lcbm-list .grid-btn.propiedades { grid-column: 1; grid-row: auto; }
-  .lcbm-map-mode .lcbm-list .property-slider,
-  .lcbm-map-mode .lcbm-list .swiper { height: 150px; min-height: 0; }
 }
 
-/* ---------- Mobile: mapa arriba, lista debajo ---------- */
+/* ---------- Mobile (solo Mapa): filtros fijos arriba, mapa, lista debajo ---------- */
 @media (max-width: 767px) {
   .lcbm-page .div-filtro.propiedades { flex-wrap: wrap; gap: 10px; padding-left: 16px; padding-right: 16px; }
   .lcbm-toggle { width: 100%; }
   .lcbm-toggle-btn { flex: 1; justify-content: center; }
-  .lcbm-page .filtro-horizontal-fix { flex-wrap: wrap; gap: 8px; padding: 8px; }
-  .lcbm-page .filtro-horizontal-fix > .select-filter-drow { flex: 1 1 calc(50% - 4px); min-width: 0; padding: 8px 10px; }
-  .lcbm-page .filtro-horizontal-fix > .select-filter-drow.search { flex-basis: 100%; }
-  .lcbm-page .filtro-horizontal-fix .div-fake-dropdown { gap: 4px; }
-  .lcbm-page .filtro-horizontal-fix .div-fake-dropdown .h6 { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .lcbm-page .filtro-horizontal-fix > .clear-btn { flex-basis: 100%; padding: 12px; }
-  .lcbm-page .filtro-horizontal-fix .div-fake-dropdown-list { position: fixed !important; top: auto; bottom: 0; left: 0; right: 0; width: auto; max-width: none; max-height: 60vh; border-radius: 14px 14px 0 0; }
+
+  .lcbm-map-mode .filtro-horizontal-fix { flex-wrap: wrap; gap: 8px; padding: 8px; }
+  .lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow { flex: 1 1 calc(50% - 4px); min-width: 0; padding: 8px 10px; }
+  .lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow.search { flex-basis: 100%; }
+  .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown { gap: 4px; }
+  .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown .h6 { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lcbm-map-mode .filtro-horizontal-fix > .clear-btn { flex-basis: 100%; padding: 12px; }
+  .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown-list { position: fixed !important; top: auto; bottom: 0; left: 0; right: 0; width: auto; max-width: none; max-height: 60vh; border-radius: 14px 14px 0 0; }
+
   .lcbm-map-mode .grid-propiedades { grid-template-columns: minmax(0, 1fr) !important; }
-  .lcbm-map-mode .lcbm-map-panel { grid-column: 1; grid-row: 2; position: relative; top: 0; height: 62vh; }
+  .lcbm-map-mode .lcbm-map-panel { grid-column: 1; grid-row: 2; position: relative; top: 0; height: 56vh; }
   .lcbm-map-mode .grid-propiedades > .lcbm-list { grid-column: 1; grid-row: 3; max-height: none; overflow: visible; padding-right: 0; }
-  .lcbm-zone-badge { left: 10px; right: 10px; bottom: 10px; }
 }
