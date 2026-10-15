@@ -18,8 +18,20 @@
 /* ---------- Cabecera: contador + selector Listado | Mapa (ambas vistas) ---------- */
 .lcbm-page .div-filtro.propiedades {
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  row-gap: 14px;
+}
+/* El buscador vive en este header en Listado (posición original del sitio
+ * publicado); se fuerza a su propia línea completa debajo de
+ * contador+toggle en vez de apretarse como tercer ítem de la fila. En modo
+ * Mapa el buscador no es hijo de este header (se movió a la barra), así
+ * que esta regla no aplica ahí. */
+.lcbm-page .div-filtro.propiedades > .select-filter-drow.search {
+  order: 3;
+  flex-basis: 100%;
+  width: 100%;
 }
 .lcbm-toggle { display: inline-flex; gap: 8px; flex: none; }
 .lcbm-toggle-btn {

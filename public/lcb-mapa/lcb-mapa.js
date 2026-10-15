@@ -45,6 +45,7 @@
   var moveDebounceTimer = null;
   var boundaryCache = {};
   var skipNextFit = false;
+  var searchHome = null; // { parent, next } — posición original del buscador, fuera del modo Mapa
 
   // ---------- estado en URL ----------
   // El motor escribe ?operacion= pero no lo lee al cargar; se restaura aquí
@@ -125,13 +126,28 @@
     mapQueryTimer = setTimeout(runMapQuery, 60);
   }
 
+  // Quita la(s) cláusula(s) city:"..." de un string de filtros Algolia
+  // (segmentos unidos con " AND ", cada cláusula entre paréntesis — mismo
+  // formato que arma el motor del sitio). El mapa no debe perder de vista
+  // propiedades de otras zonas solo porque el listado esté filtrado por
+  // ubicación; el listado sigue usando el filtro completo sin tocar.
+  function stripCityFilter(filters) {
+    return (filters || '').split(' AND ').filter(function (f) {
+      return f.indexOf('city:') === -1;
+    }).join(' AND ');
+  }
+
   function runMapQuery() {
     if (!state.body) return;
     var v = ++mapQueryVersion;
     showUpdating(true);
     var params = {
-      query: state.body.query,
-      filters: state.body.filters,
+      // El mapa muestra todo lo que matchea operación/tipo/m² — ubicación
+      // (checkbox de ciudad y texto buscado) no se usa aquí, solo narra el
+      // listado y decide el polígono/centrado. Así las burbujas de zonas
+      // cercanas siguen visibles como referencia al buscar una zona.
+      query: '',
+      filters: stripCityFilter(state.body.filters),
       hitsPerPage: 1000,
       attributesToRetrieve: ['_geoloc', 'name', 'slug', 'pageUrl', 'featuredImageUrl', 'metrosDisplay',
         'precioDisplay', 'locationFull', 'propertyType', 'operationType', 'andenes', 'destacada'],
@@ -422,6 +438,7 @@
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
+    placeSearch(view);
     if (view === 'map') {
       // Si se restauró una posición de mapa desde la URL (p. ej. al volver
       // de una ficha), no la pise un fit automático en la primera query.
@@ -433,6 +450,19 @@
     }
     writeUrlState();
     measureTop();
+  }
+
+  // El buscador vive arriba del grid en Listado (como en /propiedades); solo
+  // se mueve dentro de la barra horizontal mientras se está en modo Mapa.
+  function placeSearch(view) {
+    var search = document.querySelector('.select-filter-drow.search');
+    if (!search) return;
+    if (view === 'map') {
+      var bar = document.querySelector('.filtro-horizontal-fix');
+      if (bar && !bar.contains(search)) bar.insertBefore(search, bar.firstChild);
+    } else if (searchHome && !searchHome.parent.contains(search)) {
+      searchHome.parent.insertBefore(search, searchHome.next);
+    }
   }
 
   function measureTop() {
@@ -471,10 +501,10 @@
       if (b) { e.preventDefault(); setView(b.getAttribute('data-lcbm-view')); }
     });
 
-    // El buscador vive en el hero; en la barra horizontal (solo modo Mapa) va primero.
-    var bar = document.querySelector('.filtro-horizontal-fix');
+    // Guarda dónde vive el buscador originalmente (arriba del grid, como en
+    // /propiedades) para poder devolverlo ahí al salir del modo Mapa.
     var search = document.querySelector('.select-filter-drow.search');
-    if (bar && search && !bar.contains(search)) bar.insertBefore(search, bar.firstChild);
+    if (search) searchHome = { parent: search.parentNode, next: search.nextSibling };
 
     var grid = document.querySelector('.grid-propiedades');
     var list = grid && grid.querySelector('[fs-cmsfilter-element="list"]');
