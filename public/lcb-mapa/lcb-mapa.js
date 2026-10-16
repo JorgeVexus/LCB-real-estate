@@ -627,6 +627,11 @@
       input.value = label;
       close();
       input.dispatchEvent(new Event('input', { bubbles: true }));
+      // El dispatch de arriba también corre el listener 'input' de este mismo
+      // módulo (más abajo), que vuelve a programar un render() con el valor
+      // recién elegido y reabre el dropdown solo. Se cancela ese timer justo
+      // después del dispatch (ya corrió síncronamente y lo dejó programado).
+      clearTimeout(debounceTimer);
     }
 
     function highlight(i) {
