@@ -112,11 +112,12 @@
   background: #fff;
 }
 
-/* Sin otras secciones (FAQ, CTA, footer) en modo Mapa: todo cabe en una
- * sola ventana, sin scroll de página hacia contenido ajeno al mapa. */
+/* FAQ y CTA siguen ocultos en modo Mapa (contenido largo, ajeno al mapa).
+ * El footer sí se deja ver — ahora que el scroll de página ya no queda
+ * atrapado dentro del mapa, conviene que haya algo al final en vez de
+ * cortar la página justo debajo del mapa. */
 body.lcbm-map-mode .section-faq,
-body.lcbm-map-mode .section-cta.propiedades,
-body.lcbm-map-mode .footer { display: none; }
+body.lcbm-map-mode .section-cta.propiedades { display: none; }
 
 /* ---------- Modo mapa: 25% resultados · 75% mapa ---------- */
 .lcbm-map-panel { display: none; position: relative; }
