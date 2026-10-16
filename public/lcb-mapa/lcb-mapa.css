@@ -74,7 +74,6 @@
 .lcbm-map-mode .grid-propiedades { grid-template-columns: minmax(0, 1fr) !important; }
 .lcbm-map-mode .div-wrapperflitro {
   margin-bottom: 16px; grid-column: 1 / -1;
-  position: sticky; top: calc(var(--lcbm-nav-h) + var(--lcbm-header-h)); z-index: 24;
   background: #fff;
 }
 .lcbm-map-mode .filtro-horizontal-fix {
@@ -105,8 +104,9 @@
 .lcbm-map-mode .filtro-horizontal-fix .metros-slider-wrap { min-width: 260px; padding: 6px 4px; }
 .lcbm-map-mode .filtro-horizontal-fix > .clear-btn { flex: 0 0 auto; width: auto; padding: 0 18px; align-self: stretch; }
 
-/* Header pegado justo debajo del nav, y la barra de filtros justo debajo
- * del header — ambos visibles siempre al hacer scroll dentro del modo Mapa. */
+/* Header (título + toggle Lista|Mapa) pegado justo debajo del nav — visible
+ * siempre al hacer scroll. La barra de filtros (Operación/Ubicación/Tipo/
+ * Metros/Limpiar), justo debajo, ya NO es fija: se desplaza con el resto. */
 .lcbm-map-mode .div-filtro.propiedades {
   position: sticky; top: var(--lcbm-nav-h); z-index: 25;
   background: #fff;

@@ -672,13 +672,10 @@
     var header = document.querySelector('.div-filtro.propiedades');
     var headerH = header ? header.getBoundingClientRect().height : 0;
     document.documentElement.style.setProperty('--lcbm-header-h', Math.round(headerH) + 'px');
-    // El mapa (y la lista, a su lado) empiezan justo debajo de TODO el stack
-    // fijo (nav + header + barra de filtros) — si no, su propio top quedaba
-    // más arriba que el de la barra y el popup/los primeros px del mapa
-    // aparecían tapados detrás de ella al hacer scroll.
-    var bar = document.querySelector('.div-wrapperflitro');
-    var barH = (state.view === 'map' && bar) ? bar.getBoundingClientRect().height : 0;
-    document.documentElement.style.setProperty('--lcbm-top', Math.round(navH + headerH + barH + 12) + 'px');
+    // El mapa (y la lista, a su lado) empiezan justo debajo del stack fijo
+    // (nav + header) — la barra de filtros ya no es fija, así que no se
+    // cuenta aquí.
+    document.documentElement.style.setProperty('--lcbm-top', Math.round(navH + headerH + 12) + 'px');
   }
 
   // ---------- UI (usa elementos nativos de Webflow si existen) ----------
