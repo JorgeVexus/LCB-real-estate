@@ -661,10 +661,16 @@
     var nav = document.querySelector('.navbar, .w-nav, nav');
     var navH = nav ? nav.getBoundingClientRect().height : 0;
     document.documentElement.style.setProperty('--lcbm-nav-h', Math.round(navH) + 'px');
-    document.documentElement.style.setProperty('--lcbm-top', Math.round(navH + 12) + 'px');
     var header = document.querySelector('.div-filtro.propiedades');
     var headerH = header ? header.getBoundingClientRect().height : 0;
     document.documentElement.style.setProperty('--lcbm-header-h', Math.round(headerH) + 'px');
+    // El mapa (y la lista, a su lado) empiezan justo debajo de TODO el stack
+    // fijo (nav + header + barra de filtros) — si no, su propio top quedaba
+    // más arriba que el de la barra y el popup/los primeros px del mapa
+    // aparecían tapados detrás de ella al hacer scroll.
+    var bar = document.querySelector('.div-wrapperflitro');
+    var barH = (state.view === 'map' && bar) ? bar.getBoundingClientRect().height : 0;
+    document.documentElement.style.setProperty('--lcbm-top', Math.round(navH + headerH + barH + 12) + 'px');
   }
 
   // ---------- UI (usa elementos nativos de Webflow si existen) ----------
