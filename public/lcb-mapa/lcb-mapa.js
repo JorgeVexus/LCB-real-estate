@@ -93,6 +93,14 @@
       state.filterKey = key;
       state.body = { query: body.query || '', filters: body.filters || '' };
       if (state.view === 'map' && state.viewport) {
+        // Así es como EasyBroker implementa su propio mapa de búsqueda: una
+        // vez que mueves el mapa, el viewport manda y el listado muestra lo
+        // que hay en esa zona — se ignoran el texto buscado y el filtro de
+        // ciudad (igual que runMapQuery()) para que lista y mapa siempre
+        // coincidan, en vez de que la lista diga "sin resultados" cuando el
+        // mapa sí tiene propiedades visibles ahí.
+        body.query = '';
+        body.filters = stripCityFilter(body.filters);
         body.insideBoundingBox = [bboxToAlgolia(state.viewport)];
         init = Object.assign({}, init, { body: JSON.stringify(body) });
       }
