@@ -33,6 +33,11 @@
   flex-basis: 100%;
   width: 100%;
 }
+/* Contador "Mostrando X propiedades" — oculto a pedido del cliente (ambas
+ * vistas); el motor del sitio lo sigue actualizando por dentro, solo no se
+ * muestra. */
+.lcbm-page #mostra-propiedades { display: none; }
+
 .lcbm-toggle { display: inline-flex; gap: 8px; flex: none; }
 .lcbm-toggle-btn {
   display: inline-flex; align-items: center; gap: 8px;
