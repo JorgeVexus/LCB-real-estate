@@ -15,6 +15,13 @@
   --lcbm-map-h: calc(100vh - var(--lcbm-top) - 24px);
 }
 
+/* ---------- Filtro "Tipo de propiedad": LCB es real estate industrial,
+ * no maneja Edificio ni Terreno (ambas vistas) ---------- */
+.lcbm-page .w-dyn-item:has(span[fs-cmsfilter-value="Edificio"]),
+.lcbm-page .w-dyn-item:has(span[fs-cmsfilter-value="Terreno"]) {
+  display: none !important;
+}
+
 /* ---------- Cabecera: contador + selector Listado | Mapa (ambas vistas) ---------- */
 .lcbm-page .div-filtro.propiedades {
   flex-direction: row;
@@ -152,7 +159,7 @@ body.lcbm-map-mode .section-cta.propiedades { display: none; }
 .lcbm-map-mode .lcbm-list .card-propiedades {
   display: grid; grid-template-columns: 128px minmax(0, 1fr); grid-template-rows: auto;
   column-gap: 14px; row-gap: 0;
-  height: auto; min-height: 128px; padding: 12px;
+  height: auto; min-height: 128px; padding: 14px;
   border: 1px solid var(--lcbm-line);
   transform: none !important;
 }
@@ -171,25 +178,31 @@ body.lcbm-map-mode .section-cta.propiedades { display: none; }
 .lcbm-map-mode .lcbm-list .swiper-pagination { display: none; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades {
   grid-column: 2; grid-row: 1; min-width: 0; width: auto; height: auto; margin: 0;
-  display: flex; flex-direction: column; justify-content: flex-start; gap: 5px;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 7px;
 }
+/* Mismos tamaños/pesos de texto que la card de la vista Listado (.card-propiedades
+ * ahí mismo), solo que en un layout compacto (imagen a la izquierda) para caber
+ * en la columna angosta junto al mapa. */
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { flex-wrap: wrap; width: auto; align-items: baseline; gap: 4px; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { font-size: 16px; line-height: 1.2; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { font-size: 18px; line-height: 1.2; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { font-size: 13px; line-height: 1.2; font-weight: 400; color: #777; }
 .lcbm-map-mode .lcbm-list .nombre-propiedad {
-  font-size: 13px; line-height: 1.3; color: #555;
-  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+  font-size: 16px; font-weight: 500; line-height: 1.3; color: var(--lcbm-ink);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .lcbm-map-mode .lcbm-list .text-medium.prorpiedades {
-  font-size: 12px; line-height: 1.35; color: #777;
+  font-size: 13px; line-height: 1.4; color: #333;
   display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
 }
 .lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; row-gap: 4px; column-gap: 6px; margin-top: 2px; }
-.lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 11.5px; white-space: nowrap; }
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 13px; font-weight: 400; color: rgba(0,0,0,.8); white-space: nowrap; }
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 15px; font-weight: 700; color: var(--lcbm-orange); }
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small.bold { font-weight: 700; }
 .lcbm-map-mode .lcbm-list .grid-btn.propiedades {
-  grid-column: 1 / -1; grid-row: 2; padding: 0; margin-top: 10px;
+  grid-column: 1 / -1; grid-row: 2; padding: 0; margin-top: 12px;
   grid-template-columns: 1fr 1fr; column-gap: 8px;
 }
-.lcbm-map-mode .lcbm-list .grid-btn .btn { padding: 9px 6px; font-size: 12.5px; min-height: 0; }
+.lcbm-map-mode .lcbm-list .grid-btn .btn { padding: 10px 6px; font-size: 14px; font-weight: 500; min-height: 0; }
 .lcbm-map-mode .lcbm-list .rich-text-block-2 { display: none; }
 .lcbm-map-mode .pagination-property { margin-top: 12px; }
 
