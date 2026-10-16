@@ -11,7 +11,6 @@
   --lcbm-line: #0000001a;
   --lcbm-nav-h: 78px;
   --lcbm-top: 90px;
-  --lcbm-header-h: 56px;
   --lcbm-map-h: calc(100vh - var(--lcbm-top) - 24px);
 }
 
@@ -111,13 +110,9 @@
 .lcbm-map-mode .filtro-horizontal-fix .metros-slider-wrap { min-width: 260px; padding: 6px 4px; }
 .lcbm-map-mode .filtro-horizontal-fix > .clear-btn { flex: 0 0 auto; width: auto; padding: 0 18px; align-self: stretch; }
 
-/* Header (título + toggle Lista|Mapa) pegado justo debajo del nav — visible
- * siempre al hacer scroll. La barra de filtros (Operación/Ubicación/Tipo/
- * Metros/Limpiar), justo debajo, ya NO es fija: se desplaza con el resto. */
-.lcbm-map-mode .div-filtro.propiedades {
-  position: sticky; top: var(--lcbm-nav-h); z-index: 25;
-  background: #fff;
-}
+/* Header (título + toggle Lista|Mapa) y barra de filtros (Operación/
+ * Ubicación/Tipo/Metros/Limpiar): ninguno de los dos queda fijo al hacer
+ * scroll — ambos se desplazan con el resto del contenido. */
 
 /* FAQ y CTA siguen ocultos en modo Mapa (contenido largo, ajeno al mapa).
  * El footer sí se deja ver — ahora que el scroll de página ya no queda
