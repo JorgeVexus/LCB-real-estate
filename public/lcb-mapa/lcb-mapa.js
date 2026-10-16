@@ -46,6 +46,7 @@
   var boundaryCache = {};
   var skipNextFit = false;
   var searchHome = null; // { parent, next } — posición original del buscador, fuera del modo Mapa
+  var headerHome = null; // { parent, next } — posición original del header (contador + toggle), fuera del modo Mapa
 
   // ---------- estado en URL ----------
   // El motor escribe ?operacion= pero no lo lee al cargar; se restaura aquí
@@ -245,7 +246,12 @@
         style: MAP_STYLE,
         bounds: state.viewport ? [[state.viewport[0], state.viewport[1]], [state.viewport[2], state.viewport[3]]] : MX_BOUNDS,
         attributionControl: { compact: true },
-        cooperativeGestures: window.matchMedia('(max-width: 767px)').matches
+        // En desktop, un scroll normal sobre el mapa hacía zoom y se comía el
+        // scroll de la página entera (solo se podía bajar con el cursor fuera
+        // del mapa). Con gestos cooperativos, un scroll simple sigue bajando
+        // la página; hace falta Ctrl/Cmd + scroll (o un dedo en touch) para
+        // hacer zoom — el mapa muestra un aviso breve si se intenta sin eso.
+        cooperativeGestures: true
       });
       map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.addControl(new maplibregl.GeolocateControl({ fitBoundsOptions: { maxZoom: 11 } }), 'top-right');
@@ -261,7 +267,7 @@
           var b = map.getBounds();
           state.viewport = [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()];
           rerunListing();
-        }, 400);
+        }, 180);
       });
     }).catch(function () {
       els.map.innerHTML = '<p class="lcbm-map-error">No se pudo cargar el mapa. Intenta recargar la página.</p>';
@@ -339,6 +345,18 @@
     if (!state.mapReady) return;
     map.getSource('lcbm-props').setData(toGeoJSON());
     if (popup && state.selectedSlug && !hitBySlug(state.selectedSlug)) closePreview();
+    // La lista se reconstruye en cada query del motor (cards nuevas en el
+    // DOM); si seguía habiendo una propiedad seleccionada, su card se
+    // re-ancla primero en la lista reconstruida. La query del mapa y la del
+    // listado son independientes y pueden resolver en distinto orden, así
+    // que se reintenta una vez poco después por si la lista llegó tarde.
+    else if (state.selectedSlug && state.view === 'map') {
+      var slugToPin = state.selectedSlug;
+      pinCardFirst(slugToPin);
+      setTimeout(function () {
+        if (state.selectedSlug === slugToPin) pinCardFirst(slugToPin);
+      }, 350);
+    }
     fitToData();
   }
 
@@ -408,20 +426,38 @@
     if (popup) popup.remove();
     popup = new maplibregl.Popup({ closeButton: true, offset: 14, maxWidth: '340px', className: 'lcbm-popup' })
       .setLngLat([h._geoloc.lng, h._geoloc.lat]).setHTML(html).addTo(map);
-    popup.on('close', function () { state.selectedSlug = null; highlight(null); });
-    var card = cardBySlug(slug);
-    if (card && state.view === 'map') {
+    popup.on('close', function () { state.selectedSlug = null; highlight(null); unpinCard(); });
+    if (state.view === 'map') {
       document.querySelectorAll('.lcbm-card-active').forEach(function (c) { c.classList.remove('lcbm-card-active'); });
-      card.classList.add('lcbm-card-active');
-      card.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      pinCardFirst(slug);
+      if (pinnedCard) {
+        pinnedCard.classList.add('lcbm-card-active');
+        pinnedCard.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
     }
   }
 
-  function closePreview() { if (popup) popup.remove(); popup = null; }
+  function closePreview() { if (popup) popup.remove(); popup = null; unpinCard(); }
 
   function cardBySlug(slug) {
     var a = document.querySelector('.w-dyn-item a[href$="/propiedades/' + CSS.escape(slug) + '"]');
     return a && a.closest('.w-dyn-item');
+  }
+
+  // La card de la propiedad seleccionada en el mapa (el punto al que se le
+  // dio clic) pasa a ser la primera de la lista — vía CSS `order` (la lista
+  // ya es un flex container en modo Mapa), sin tocar el orden real del DOM
+  // para no romper listeners/Swiper/IntersectionObserver de las cards.
+  var pinnedCard = null;
+  function pinCardFirst(slug) {
+    unpinCard();
+    var card = cardBySlug(slug);
+    if (!card) return;
+    card.style.order = '-1';
+    pinnedCard = card;
+  }
+  function unpinCard() {
+    if (pinnedCard) { pinnedCard.style.order = ''; pinnedCard = null; }
   }
 
   function slugFromCard(item) {
@@ -439,6 +475,7 @@
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
     placeSearch(view);
+    placeHeader(view);
     if (view === 'map') {
       // Si se restauró una posición de mapa desde la URL (p. ej. al volver
       // de una ficha), no la pise un fit automático en la primera query.
@@ -463,6 +500,161 @@
     } else if (searchHome && !searchHome.parent.contains(search)) {
       searchHome.parent.insertBefore(search, searchHome.next);
     }
+  }
+
+  // El header (contador + toggle Listado|Mapa) vive, en el HTML original,
+  // dentro de una sección "hero" angosta (su contenedor mide justo lo que
+  // mide el header, ni un px más) — totalmente aparte de la sección con el
+  // grid de resultados. `position: sticky` solo puede quedarse pegado
+  // mientras su propio contenedor padre sigue en pantalla; con un padre tan
+  // angosto, el header se despega apenas se hace scroll un poco, aunque la
+  // barra de filtros (que SÍ vive dentro del grid, un contenedor alto) se
+  // quede pegada sin problema. En modo Mapa se mueve el header para que sea
+  // hermano directo del grid, dentro del mismo contenedor alto — así ambos
+  // quedan fijos durante todo el scroll de la lista/mapa, igual que ya
+  // pasa con la barra. Se devuelve a su lugar original al salir de Mapa.
+  function placeHeader(view) {
+    var header = document.querySelector('.div-filtro.propiedades');
+    if (!header) return;
+    if (view === 'map') {
+      var grid = document.querySelector('.grid-propiedades');
+      if (grid && grid.parentNode && header.nextElementSibling !== grid) {
+        grid.parentNode.insertBefore(header, grid);
+      }
+    } else if (headerHome && !headerHome.parent.contains(header)) {
+      headerHome.parent.insertBefore(header, headerHome.next);
+    }
+  }
+
+  // ---------- autocompletado de ubicación en el buscador ----------
+  // El buscador ya hace full-text contra Algolia (incluye locationFull), así
+  // que escribir "Cuautitlán" a mano ya funcionaba — esto solo agrega
+  // sugerencias mientras se escribe, para no depender de que el usuario
+  // sepa el nombre exacto del municipio/colonia. Corpus 100% del lado del
+  // cliente: una sola consulta liviana (solo locationFull) a Algolia,
+  // cacheada en sessionStorage — no hay geocoding ni servicio de pago.
+  var placesCorpus = null; // [{ label, norm }]
+  var placesCorpusPromise = null;
+
+  function normalizePlace(s) {
+    return String(s || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, ''); // quita acentos
+  }
+
+  function loadPlacesCorpus() {
+    if (placesCorpusPromise) return placesCorpusPromise;
+    placesCorpusPromise = (function () {
+      try {
+        var cached = sessionStorage.getItem('lcbm-places-corpus');
+        if (cached) return Promise.resolve(JSON.parse(cached));
+      } catch (e) {}
+      return origFetch('https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX + '/query', {
+        method: 'POST',
+        headers: { 'X-Algolia-Application-Id': APP_ID, 'X-Algolia-API-Key': SEARCH_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: '', hitsPerPage: 1000, attributesToRetrieve: ['locationFull'], attributesToHighlight: [] })
+      }).then(function (r) { return r.json(); }).then(function (d) {
+        var seen = {};
+        var list = [];
+        (d.hits || []).forEach(function (h) {
+          if (!h.locationFull) return;
+          h.locationFull.split(',').forEach(function (part) {
+            var label = part.trim();
+            if (label.length < 3) return;
+            var key = normalizePlace(label);
+            if (seen[key]) return;
+            seen[key] = true;
+            list.push({ label: label, norm: key });
+          });
+        });
+        try { sessionStorage.setItem('lcbm-places-corpus', JSON.stringify(list)); } catch (e) {}
+        return list;
+      }).catch(function () { return []; });
+    })();
+    return placesCorpusPromise;
+  }
+
+  function matchPlaces(query) {
+    var q = normalizePlace(query);
+    if (q.length < 2 || !placesCorpus) return [];
+    var starts = [], contains = [];
+    for (var i = 0; i < placesCorpus.length; i++) {
+      var idx = placesCorpus[i].norm.indexOf(q);
+      if (idx === 0) starts.push(placesCorpus[i]);
+      else if (idx > 0) contains.push(placesCorpus[i]);
+    }
+    starts.sort(function (a, b) { return a.label.length - b.label.length; });
+    contains.sort(function (a, b) { return a.label.length - b.label.length; });
+    return starts.concat(contains).slice(0, 8);
+  }
+
+  function initAutocomplete() {
+    var wrap = document.querySelector('.select-filter-drow.search');
+    var input = searchInput();
+    if (!wrap || !input || wrap.querySelector('.lcbm-autocomplete')) return;
+    var cs = getComputedStyle(wrap);
+    if (cs.position === 'static') wrap.style.position = 'relative';
+
+    var box = document.createElement('div');
+    box.className = 'lcbm-autocomplete';
+    box.setAttribute('role', 'listbox');
+    wrap.appendChild(box);
+
+    var activeIndex = -1;
+    var items = [];
+
+    function render(matches) {
+      items = matches;
+      activeIndex = -1;
+      if (!matches.length) { box.classList.remove('is-open'); box.innerHTML = ''; return; }
+      box.innerHTML = matches.map(function (m, i) {
+        return '<div class="lcbm-autocomplete-item" role="option" data-i="' + i + '">' + esc(m.label) + '</div>';
+      }).join('');
+      box.classList.add('is-open');
+    }
+
+    function close() { box.classList.remove('is-open'); box.innerHTML = ''; items = []; activeIndex = -1; }
+
+    function choose(label) {
+      input.value = label;
+      close();
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    function highlight(i) {
+      var nodes = box.querySelectorAll('.lcbm-autocomplete-item');
+      nodes.forEach(function (n, idx) { n.classList.toggle('is-active', idx === i); });
+      activeIndex = i;
+    }
+
+    var debounceTimer;
+    input.addEventListener('input', function () {
+      clearTimeout(debounceTimer);
+      var val = input.value;
+      debounceTimer = setTimeout(function () {
+        if (!placesCorpus) { loadPlacesCorpus().then(function (list) { placesCorpus = list; render(matchPlaces(val)); }); return; }
+        render(matchPlaces(val));
+      }, 120);
+    });
+    input.addEventListener('focus', function () {
+      loadPlacesCorpus().then(function (list) { placesCorpus = list; if (document.activeElement === input) render(matchPlaces(input.value)); });
+    });
+    input.addEventListener('keydown', function (e) {
+      if (!items.length) return;
+      if (e.key === 'ArrowDown') { e.preventDefault(); highlight((activeIndex + 1) % items.length); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); highlight((activeIndex - 1 + items.length) % items.length); }
+      else if (e.key === 'Enter' && activeIndex > -1) { e.preventDefault(); choose(items[activeIndex].label); }
+      else if (e.key === 'Escape') { close(); }
+    });
+    box.addEventListener('mousedown', function (e) {
+      var item = e.target.closest('.lcbm-autocomplete-item');
+      if (!item) return;
+      e.preventDefault();
+      choose(items[+item.getAttribute('data-i')].label);
+    });
+    document.addEventListener('click', function (e) {
+      if (e.target !== input && !box.contains(e.target)) close();
+    });
   }
 
   function measureTop() {
@@ -506,6 +698,11 @@
     var search = document.querySelector('.select-filter-drow.search');
     if (search) searchHome = { parent: search.parentNode, next: search.nextSibling };
 
+    // Igual para el header (contador + toggle): se guarda su posición
+    // original para devolverlo ahí al salir del modo Mapa.
+    var header = document.querySelector('.div-filtro.propiedades');
+    if (header) headerHome = { parent: header.parentNode, next: header.nextSibling };
+
     var grid = document.querySelector('.grid-propiedades');
     var list = grid && grid.querySelector('[fs-cmsfilter-element="list"]');
     els.panel = document.getElementById('lcbm-map-panel');
@@ -538,6 +735,7 @@
     });
 
     window.addEventListener('resize', measureTop);
+    initAutocomplete();
     setView(state.view);
   }
 
