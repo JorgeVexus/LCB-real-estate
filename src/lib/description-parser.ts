@@ -79,6 +79,12 @@ export function parseDescriptionFields(description: string): Record<string, unkn
       alturaLibre = value;
     } else if (label.includes("área de oficinas") || label.includes("area de oficinas")) {
       fieldData["area-de-oficinas"] = value;
+    } else if (label.startsWith("área de bodega") || label.startsWith("area de bodega")) {
+      // Distinct from construction_size/"metros-cuadrados" (the total built
+      // area): this is the free/rentable warehouse area alone, e.g. "Área de
+      // bodega libre: 3,267.27 m2" or "Área de bodega: 80,000 m2" when there's
+      // no separate office area. EasyBroker doesn't expose it structurally.
+      fieldData["area-de-bodega-libre"] = value;
     } else if (label.includes("disponible a partir de")) {
       fieldData["disponible-desde"] = value;
     } else if (label.includes("antigüedad") || label.includes("antiguedad")) {
@@ -97,8 +103,12 @@ export function parseDescriptionFields(description: string): Record<string, unkn
     }
   }
 
-  if (alturaMaxima) fieldData["altura-libre"] = alturaMaxima;
-  else if (alturaLibre) fieldData["altura-libre"] = alturaLibre;
+  // Cuando la ficha trae "Altura máxima" y "Altura mínima" por separado (sin
+  // una línea "Altura libre" propia), se prefiere la mínima — es la altura
+  // libre real y utilizable en toda la nave, mientras que la máxima solo
+  // aplica a una parte de ella.
+  if (alturaLibre) fieldData["altura-libre"] = alturaLibre;
+  else if (alturaMaxima) fieldData["altura-libre"] = alturaMaxima;
 
   return fieldData;
 }
