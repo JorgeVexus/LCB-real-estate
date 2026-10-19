@@ -475,6 +475,12 @@
 
   // ---------- vista ----------
   function setView(view) {
+    // Listado↔Mapa reacomoda bastante DOM de golpe (grid, buscador, header,
+    // panel del mapa) — se oculta un instante y se revela con un fundo
+    // suave ya reacomodado, en vez de que el reacomodo se vea como un salto.
+    var grid = document.querySelector('.grid-propiedades');
+    if (grid) grid.classList.add('lcbm-view-fade');
+
     state.view = view;
     document.body.classList.toggle('lcbm-map-mode', view === 'map');
     els.toggle.querySelectorAll('[data-lcbm-view]').forEach(function (b) {
@@ -495,6 +501,12 @@
     }
     writeUrlState();
     measureTop();
+
+    if (grid) {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { grid.classList.remove('lcbm-view-fade'); });
+      });
+    }
   }
 
   // El buscador vive arriba del grid en Listado (como en /propiedades); solo

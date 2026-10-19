@@ -14,6 +14,16 @@
   --lcbm-map-h: calc(100vh - var(--lcbm-top) - 24px);
 }
 
+/* Transición entre Listado y Mapa: el cambio reacomoda bastante DOM de
+ * golpe (grid, buscador, header, panel del mapa) — en vez de que eso se
+ * vea como un salto, se oculta un instante y se revela con un fundo
+ * suave ya reacomodado (setView() en lcb-mapa.js agrega/quita la clase). */
+.lcbm-page .grid-propiedades { transition: opacity 180ms ease-out; }
+.lcbm-page .grid-propiedades.lcbm-view-fade { opacity: 0; transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .lcbm-page .grid-propiedades { transition: opacity 120ms ease; }
+}
+
 /* ---------- Filtro "Tipo de propiedad": LCB es real estate industrial,
  * no maneja Edificio ni Terreno (ambas vistas) ---------- */
 .lcbm-page .w-dyn-item:has(span[fs-cmsfilter-value="Edificio"]),
@@ -51,9 +61,12 @@
   border: 1px solid var(--lcbm-line); border-radius: 8px;
   background: #fff; color: var(--lcbm-ink);
   font: 500 14px/1 "Work Sans", sans-serif; cursor: pointer;
-  transition: border-color .15s, color .15s, background-color .15s;
+  transition: border-color .15s, color .15s, background-color .15s, transform .1s ease-out;
 }
-.lcbm-toggle-btn:hover { border-color: var(--lcbm-orange); }
+@media (hover: hover) and (pointer: fine) {
+  .lcbm-toggle-btn:hover { border-color: var(--lcbm-orange); }
+}
+.lcbm-toggle-btn:active { transform: scale(0.96); }
 .lcbm-toggle-btn.is-active { border-color: var(--lcbm-orange); color: var(--lcbm-orange); background: var(--lcbm-orange-soft); }
 .lcbm-toggle-btn:focus-visible { outline: 2px solid var(--lcbm-orange); outline-offset: 2px; }
 
@@ -106,6 +119,22 @@
   background: #fff; border: 1px solid var(--lcbm-line); border-radius: 8px;
   box-shadow: 0 12px 28px #00000024;
   z-index: 40;
+  transform-origin: top left;
+  transition: opacity 160ms ease-out, transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+/* Entrada animada al abrir (Webflow alterna display:none/block por su cuenta,
+ * sin clase ni transición propia) — @starting-style define el frame inicial
+ * sin tocar su JS de apertura/cierre; el cierre queda instantáneo como antes. */
+@starting-style {
+  .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown-list {
+    opacity: 0; transform: translateY(-6px) scale(0.98);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown-list { transition: opacity 120ms ease; }
+  @starting-style {
+    .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown-list { opacity: 0; transform: none; }
+  }
 }
 .lcbm-map-mode .filtro-horizontal-fix .metros-slider-wrap { min-width: 260px; padding: 6px 4px; }
 .lcbm-map-mode .filtro-horizontal-fix > .clear-btn { flex: 0 0 auto; width: auto; padding: 0 18px; align-self: stretch; }
@@ -146,38 +175,46 @@ body.lcbm-map-mode .section-cta.propiedades { display: none; }
 .lcbm-map-panel .lcbm-map { position: absolute; inset: 0; width: 100%; height: 100%; }
 .lcbm-map-error { padding: 24px; font: 14px "Work Sans", sans-serif; }
 
-/* Cards compactas (imagen izquierda, datos derecha) */
+/* Cards tipo "hero" (imagen arriba a todo lo ancho, datos abajo) — igual
+ * estructura que la card real de Listado (imagen-grande + info debajo),
+ * solo que más compacta. El layout lado-a-lado anterior (imagen fija de
+ * 128px) se rompía en breakpoints angostos (tablet ~768px: el texto no
+ * cabía y se traslapaba con el precio) y además la imagen se veía
+ * diminuta — a todo lo ancho resuelve ambos problemas a la vez: la card
+ * ya no depende de un ancho mínimo fijo, y la imagen gana mucha más
+ * presencia visual. */
 .lcbm-map-mode .collection-list-propiedades {
-  display: flex !important; flex-direction: column; gap: 12px;
+  display: flex !important; flex-direction: column; gap: 14px;
   column-count: auto;
 }
 .lcbm-map-mode .lcbm-list .card-propiedades {
-  display: grid; grid-template-columns: 128px minmax(0, 1fr); grid-template-rows: auto;
-  column-gap: 14px; row-gap: 0;
-  height: auto; min-height: 128px; padding: 14px;
-  border: 1px solid var(--lcbm-line);
+  display: flex; flex-direction: column;
+  height: auto; padding: 0;
+  border: 1px solid var(--lcbm-line); border-radius: 12px; overflow: hidden;
+  background: #fff;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
   transform: none !important;
 }
 .lcbm-map-mode .lcbm-list .card-propiedades:hover,
 .lcbm-map-mode .lcbm-list .lcbm-card-active .card-propiedades {
-  border-color: var(--lcbm-orange); box-shadow: 0 6px 16px #0000001f;
+  border-color: var(--lcbm-orange); box-shadow: 0 10px 24px #00000022;
 }
 .lcbm-map-mode .lcbm-list .div-img-propiedades {
-  grid-column: 1; grid-row: 1; width: 128px; height: 104px; border-radius: 8px; overflow: hidden;
+  width: 100%; aspect-ratio: 16 / 10; height: auto; border-radius: 0; flex: none;
 }
 .lcbm-map-mode .lcbm-list .property-image-wrapper,
 .lcbm-map-mode .lcbm-list .property-slider,
-.lcbm-map-mode .lcbm-list .swiper { width: 100%; height: 100%; min-height: 0; }
+.lcbm-map-mode .lcbm-list .swiper,
+.lcbm-map-mode .lcbm-list .swiper-wrapper { width: 100%; height: 100%; min-height: 0; }
+.lcbm-map-mode .lcbm-list .swiper-slide { width: 100% !important; height: 100%; }
+.lcbm-map-mode .lcbm-list .swiper-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .lcbm-map-mode .lcbm-list .swiper-button-next,
-.lcbm-map-mode .lcbm-list .swiper-button-prev,
-.lcbm-map-mode .lcbm-list .swiper-pagination { display: none; }
+.lcbm-map-mode .lcbm-list .swiper-button-prev { display: none; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades {
-  grid-column: 2; grid-row: 1; min-width: 0; width: auto; height: auto; margin: 0;
+  min-width: 0; width: auto; height: auto; margin: 0; padding: 14px 14px 0;
   display: flex; flex-direction: column; justify-content: flex-start; gap: 7px;
 }
-/* Mismos tamaños/pesos de texto que la card de la vista Listado (.card-propiedades
- * ahí mismo), solo que en un layout compacto (imagen a la izquierda) para caber
- * en la columna angosta junto al mapa. */
+/* Mismos tamaños/pesos de texto que la card de la vista Listado. */
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { flex-wrap: wrap; width: auto; align-items: baseline; gap: 4px; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { font-size: 18px; line-height: 1.2; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { font-size: 13px; line-height: 1.2; font-weight: 400; color: #777; }
@@ -194,10 +231,14 @@ body.lcbm-map-mode .section-cta.propiedades { display: none; }
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 15px; font-weight: 700; color: var(--lcbm-orange); }
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small.bold { font-weight: 700; }
 .lcbm-map-mode .lcbm-list .grid-btn.propiedades {
-  grid-column: 1 / -1; grid-row: 2; padding: 0; margin-top: 12px;
+  padding: 0 14px 14px; margin-top: 12px;
   grid-template-columns: 1fr 1fr; column-gap: 8px;
 }
-.lcbm-map-mode .lcbm-list .grid-btn .btn { padding: 10px 6px; font-size: 14px; font-weight: 500; min-height: 0; }
+.lcbm-map-mode .lcbm-list .grid-btn .btn {
+  padding: 10px 6px; font-size: 14px; font-weight: 500; min-height: 0;
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+.lcbm-map-mode .lcbm-list .grid-btn .btn:active { transform: scale(0.97); opacity: .9; }
 .lcbm-map-mode .lcbm-list .rich-text-block-2 { display: none; }
 .lcbm-map-mode .pagination-property { margin-top: 12px; }
 
@@ -237,8 +278,19 @@ body.lcbm-map-mode .section-cta.propiedades { display: none; }
 }
 @keyframes lcbm-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.7); } }
 
-/* Preview de propiedad */
-.lcbm-popup .maplibregl-popup-content { padding: 0; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 24px #00000033; }
+/* Preview de propiedad — se anima solo el contenido interno (nunca el
+ * elemento raíz .maplibregl-popup: MapLibre lo posiciona con su propio
+ * transform inline, y animar ese mismo transform rompería el anclaje). */
+@keyframes lcbm-popup-in { from { opacity: 0; transform: scale(.94) translateY(4px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.lcbm-popup .maplibregl-popup-content {
+  padding: 0; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 24px #00000033;
+  animation: lcbm-popup-in 180ms cubic-bezier(0.23, 1, 0.32, 1);
+  transform-origin: center bottom;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lcbm-popup .maplibregl-popup-content { animation: lcbm-fade-in 120ms ease; }
+}
+@keyframes lcbm-fade-in { from { opacity: 0; } to { opacity: 1; } }
 .lcbm-popup .maplibregl-popup-close-button {
   width: 22px; height: 22px; font-size: 18px; line-height: 20px; color: #fff;
   text-shadow: 0 1px 3px #000c; right: 6px; top: 6px;
