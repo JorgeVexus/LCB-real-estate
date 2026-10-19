@@ -1,0 +1,3390 @@
+[
+  {
+    "id": "6ad1f0de42f59e9eab5e7828",
+    "propertyId": "EB-XG4905",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ad1f0de97cf526053c3dd85",
+    "propertyId": "EB-XG4700",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6acdfc5886bb2e8ae8ec0d53",
+    "propertyId": "EB-XF7922",
+    "current": null,
+    "correct": "1 marzo 2027",
+    "status": "mismatch"
+  },
+  {
+    "id": "6acdfc57785bade5b5b649e9",
+    "propertyId": "EB-XF7897",
+    "current": null,
+    "correct": "1 marzo 2027",
+    "status": "mismatch"
+  },
+  {
+    "id": "6acdfc57a3fa0ac545a7049d",
+    "propertyId": "EB-XF7790",
+    "current": null,
+    "correct": "1 marzo 2027",
+    "status": "mismatch"
+  },
+  {
+    "id": "6aca0812b9a6dfc4abc1670d",
+    "propertyId": "EB-XF2064",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6aca0812b9a6dfc4abc166d7",
+    "propertyId": "EB-XF4348",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6aca081248054d7013bcfaf3",
+    "propertyId": "EB-XF4066",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6aca080f5ff8b5dff3560d0e",
+    "propertyId": "EB-XF3327",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6aca080f6c3b129ea8c9e59b",
+    "propertyId": "EB-XF4045",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6aca080ffa528d645a4fe86b",
+    "propertyId": "EB-XF3954",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6aca080f64736f4df5f9048a",
+    "propertyId": "EB-XF4129",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6aca080f194e0cf8a115923b",
+    "propertyId": "EB-XF3443",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac8b66c2d8193c7c7626877",
+    "propertyId": "EB-XE7708",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac8b66aaa669bd751d835f1",
+    "propertyId": "EB-XF1981",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac8b669a744da7d22ca4c93",
+    "propertyId": "EB-XE8164",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac8b66923cf2b18204fb342",
+    "propertyId": "EB-XE8379",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac8b6690aa9e9d29148e99b",
+    "propertyId": "EB-XE5956",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac764ecbdee9bf964563e3b",
+    "propertyId": "EB-XE5566",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac764eb1feacbc30a080cd4",
+    "propertyId": "EB-XE5729",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac764ead4d00a9007e44a4c",
+    "propertyId": "EB-XE5537",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac764ea2a715d3e7029e450",
+    "propertyId": "EB-XE5910",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac764e97bad84d543941b17",
+    "propertyId": "EB-RC3143",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac586562fa6a73e4bc3cd80",
+    "propertyId": "EB-WZ2485",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac586305143d6d380d805ad",
+    "propertyId": "EB-WW7332",
+    "current": "1 marzo 2027",
+    "correct": "1 marzo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac586302d5186d646c6b7cf",
+    "propertyId": "EB-WW2974",
+    "current": "1 marzo 2027",
+    "correct": "1 marzo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac58630615dbbc5298e7cb1",
+    "propertyId": "EB-WW7464",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585cd1ded1eb7364bd0b3",
+    "propertyId": "EB-XD2102",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585cc441b818ccf307cfe",
+    "propertyId": "EB-XD8912",
+    "current": null,
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6ac585cc2fa6a73e4bc390a5",
+    "propertyId": "EB-XE1528",
+    "current": "1 diciembre 2026",
+    "correct": "1 diciembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585ccb69cd9ad16240466",
+    "propertyId": "EB-XD2581",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585cb4bd04b9b94535fd2",
+    "propertyId": "EB-XD8844",
+    "current": "8 meses después de la firma",
+    "correct": "8 meses después de la firma",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585cbb12d5e2b49d61c84",
+    "propertyId": "EB-XD2478",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585cbb09dc785e7c29923",
+    "propertyId": "EB-WW2133",
+    "current": "6-8 meses después de la firma",
+    "correct": "6-8 meses después de la firma",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585cb0eb9a8169734ea47",
+    "propertyId": "EB-XD0078",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac5858ab12d5e2b49d60fb9",
+    "propertyId": "EB-XC4836",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac585890f88f4e73287aa7f",
+    "propertyId": "EB-XC8034",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac58589b2d0dbab2ea77391",
+    "propertyId": "EB-XB7229",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac585892b9a2c4a10c5882c",
+    "propertyId": "EB-XB6113",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac585882fa6a73e4bc3778d",
+    "propertyId": "EB-XB9285",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585871ded1eb7364ba78e",
+    "propertyId": "EB-XB5711",
+    "current": null,
+    "correct": "1 marzo 2027",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac585878b8692b7d8a75c5a",
+    "propertyId": "EB-XA5612",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac58587de17dce904ce446a",
+    "propertyId": "EB-WY0480",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585874bd04b9b94534651",
+    "propertyId": "EB-XB6082",
+    "current": null,
+    "correct": "1 enero 2027",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac585874b2d16bbf1364e00",
+    "propertyId": "EB-WZ8473",
+    "current": "1 junio 2027",
+    "correct": "1 junio 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac58587de17dce904ce444b",
+    "propertyId": "EB-WY0555",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585866cc4cff643577fe4",
+    "propertyId": "EB-WZ8776",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585862fa6a73e4bc37705",
+    "propertyId": "EB-WU5245",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585852fa6a73e4bc376f1",
+    "propertyId": "EB-WY0460",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585858b8692b7d8a75b9b",
+    "propertyId": "EB-XB2861",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac585851ded1eb7364ba69f",
+    "propertyId": "EB-WX3911",
+    "current": "1 diciembre 2026",
+    "correct": "1 diciembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac58584b5d4e475649e4bf1",
+    "propertyId": "EB-WY1240",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac5858423b819fc9727b8c3",
+    "propertyId": "EB-WX4066",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585830f88f4e73287a8b5",
+    "propertyId": "EB-WZ2494",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585832b9a2c4a10c5872f",
+    "propertyId": "EB-WZ2946",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac585178b8692b7d8a72622",
+    "propertyId": "EB-WY1263",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585156d721ccd0a6baffb",
+    "propertyId": "EB-WV4972",
+    "current": "1 noviembre 2026",
+    "correct": "1 noviembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585144c9e0564135f984e",
+    "propertyId": "EB-WT0917",
+    "current": "1 noviembre 2026",
+    "correct": "1 noviembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac58513d2e081bcab367ac9",
+    "propertyId": "EB-WW7398",
+    "current": "1 julio 2027",
+    "correct": "1 julio 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585137374061ffbafa1ab",
+    "propertyId": "EB-WX3447",
+    "current": "1 febrero 2027",
+    "correct": "1 febrero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585131d047ac5e57cdcb0",
+    "propertyId": "EB-WX3837",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac58513de17dce904ce0da3",
+    "propertyId": "EB-WW2564",
+    "current": null,
+    "correct": "1 noviembre 2027",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac58512441b818ccf305dc2",
+    "propertyId": "EB-WW2966",
+    "current": "1 marzo 2027",
+    "correct": "1 marzo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac58511baebc3c1bc05530f",
+    "propertyId": "EB-WU3941",
+    "current": null,
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6ac585114674a4c6b90e37fd",
+    "propertyId": "EB-WU3183",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac585114c9e0564135f9739",
+    "propertyId": "EB-WT6686",
+    "current": "1 noviembre 2026",
+    "correct": "1 noviembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585114674a4c6b90e37ed",
+    "propertyId": "EB-WT2690",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac585114c9e0564135f9723",
+    "propertyId": "EB-WU3875",
+    "current": null,
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6ac585111d047ac5e57cdc87",
+    "propertyId": "EB-WV5958",
+    "current": null,
+    "correct": "30 noviembre 2026",
+    "status": "mismatch"
+  },
+  {
+    "id": "6ac5850f16ac3199821b58d2",
+    "propertyId": "EB-WT6629",
+    "current": "1 noviembre 2026",
+    "correct": "1 noviembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac5850f0f88f4e732877deb",
+    "propertyId": "EB-WT2788",
+    "current": "1 septiembre 2026",
+    "correct": "1 septiembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6ac5850f615dbbc5298e1ca0",
+    "propertyId": "EB-WU3919",
+    "current": null,
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6ac5850e1d047ac5e57cdc45",
+    "propertyId": "EB-WU3897",
+    "current": null,
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6ac584732ac2c0b766b6e804",
+    "propertyId": "EB-SO0013",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a803085b30b803b0ee13b1a",
+    "propertyId": "EB-WR9473",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a80308529c27a176bf35a09",
+    "propertyId": "EB-WR9459",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a803085905af5ffe7fee539",
+    "propertyId": "EB-WR9392",
+    "current": "1 diciembre 2026",
+    "correct": "1 diciembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a803085b4c5ee8b6786acaa",
+    "propertyId": "EB-OD5168",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a80308576589e8f5e791764",
+    "propertyId": "EB-WR9370",
+    "current": "1 septiembre 2026",
+    "correct": "1 septiembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a7edef267ce6427b7ea1030",
+    "propertyId": "EB-WR6725",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a7edef255dd11df092bbda0",
+    "propertyId": "EB-WR7128",
+    "current": "1 octubre 2026",
+    "correct": "1 octubre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6d42244a3793f712b88934",
+    "propertyId": "EB-WO6030",
+    "current": "1 octubre 2026",
+    "correct": "1 octubre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6c25dfe2c52825fab81eb6",
+    "propertyId": "EB-WO9950",
+    "current": "1 septiembre 2026",
+    "correct": "1 septiembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6c25dbad82ecc6330de306",
+    "propertyId": "EB-WP0777",
+    "current": null,
+    "correct": "1 octubre 2026",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6c25db04075f9a96b7b90d",
+    "propertyId": "EB-SF8211",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6c25dbb81ff065687f335a",
+    "propertyId": "EB-WP0813",
+    "current": null,
+    "correct": "1 octubre 2026",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb4abc169ca782820b02",
+    "propertyId": "EB-RJ1457",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb4a1864dae48930c137",
+    "propertyId": "EB-RJ1479",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb4843aea6d7106fab4f",
+    "propertyId": "EB-WK8869",
+    "current": null,
+    "correct": "1 mes después de la firma de contrato",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb48b7af72a0719b15d0",
+    "propertyId": "EB-WO3600",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb4742c0d904e8aa049c",
+    "propertyId": "EB-WE7351",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb479aa527c30e2349b9",
+    "propertyId": "EB-WL6911",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb47f5e2160ec0ee1c98",
+    "propertyId": "EB-WF3877",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb451761d2ddeb597aff",
+    "propertyId": "EB-WC7206",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb44f5c75336d4f007b4",
+    "propertyId": "EB-WC7183",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb44f5e2160ec0ee1bb3",
+    "propertyId": "EB-WH8637",
+    "current": "30 marzo 2027",
+    "correct": "30 marzo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb449ca3bf757150a31b",
+    "propertyId": "EB-WF9172",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb43414319e4827a4cd4",
+    "propertyId": "EB-WH8630",
+    "current": "30 marzo 2027",
+    "correct": "30 marzo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb421864dae48930be03",
+    "propertyId": "EB-WL8394",
+    "current": "1 septiembre 2026",
+    "correct": "1 septiembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb425978b1d93fb3264c",
+    "propertyId": "EB-VB9022",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb416a227af3b1d5742e",
+    "propertyId": "EB-WN0735",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb40e24facd8e2783a58",
+    "propertyId": "EB-WK8777",
+    "current": null,
+    "correct": "1 mes después de la firma de contrato",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb4029957251740653d0",
+    "propertyId": "EB-WL8001",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb3ead504d59fcd5560e",
+    "propertyId": "EB-WJ5982",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb3ee45a0f49eff3cf12",
+    "propertyId": "EB-WG6006",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb3e1864dae48930bb58",
+    "propertyId": "EB-WE6447",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb3e414319e4827a4b5a",
+    "propertyId": "EB-WE0299",
+    "current": "1 septiembre 2026",
+    "correct": "1 septiembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb3ce24facd8e278396d",
+    "propertyId": "EB-WG2392",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb3b80dd28193f3c36ff",
+    "propertyId": "EB-WE2437",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb3b5978b1d93fb32501",
+    "propertyId": "EB-WG5728",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb3b35869b00e1adadfd",
+    "propertyId": "EB-WH6002",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb3afbadff06b593e2db",
+    "propertyId": "EB-WI2809",
+    "current": "1 noviembre 2026",
+    "correct": "1 noviembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb386a227af3b1d571b9",
+    "propertyId": "EB-WH3839",
+    "current": null,
+    "correct": "1 julio 2026",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb3843aea6d7106fa6a5",
+    "propertyId": "EB-WI2453",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb38e45a0f49eff3cd4a",
+    "propertyId": "EB-WH2148",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb36dd732383d09c7591",
+    "propertyId": "EB-WH2099",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb361864dae48930b60a",
+    "propertyId": "EB-WE0366",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb362ba977fcaf2ade78",
+    "propertyId": "EB-WE7881",
+    "current": "1 noviembre 2026",
+    "correct": "1 noviembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb34bc169ca782820488",
+    "propertyId": "EB-WI0001",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb334f4355cd4f85bfb3",
+    "propertyId": "EB-WI2748",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb329ffb96dabbe96ebd",
+    "propertyId": "EB-TR6272",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb322ba977fcaf2addc2",
+    "propertyId": "EB-VM5963",
+    "current": "1 octubre 2026",
+    "correct": "1 octubre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb3294906dede2b22615",
+    "propertyId": "EB-WH6009",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb302ba977fcaf2add80",
+    "propertyId": "EB-WF8352",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb2f5978b1d93fb3214a",
+    "propertyId": "EB-WE6240",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb2f43aea6d7106fa1ec",
+    "propertyId": "EB-WC2198",
+    "current": "1 diciembre 2026",
+    "correct": "1 diciembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb2fe45a0f49eff3c9bd",
+    "propertyId": "EB-WC2254",
+    "current": "1 marzo 2027",
+    "correct": "1 marzo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb2f9aa527c30e233f01",
+    "propertyId": "EB-WE6225",
+    "current": null,
+    "correct": "Inmediata",
+    "status": "mismatch"
+  },
+  {
+    "id": "6a6afb2d1cd0c74668013f31",
+    "propertyId": "EB-WD2236",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb2c94906dede2b2240e",
+    "propertyId": "EB-WE0091",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb2c314293f632d42561",
+    "propertyId": "EB-WC7596",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb2bc394d715b5b85e24",
+    "propertyId": "EB-WD2100",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb2bad504d59fcd54d09",
+    "propertyId": "EB-WC9845",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb2a9ffb96dabbe9680c",
+    "propertyId": "EB-WC7588",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb2942c0d904e8a9fc0e",
+    "propertyId": "EB-WE0183",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb28fbadff06b593dc08",
+    "propertyId": "EB-WC7579",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb28b61b99b0efeedad8",
+    "propertyId": "EB-WC7567",
+    "current": "15 junio 2026",
+    "correct": "15 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a6afb28dd732383d09c70c5",
+    "propertyId": "EB-WC7295",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081949",
+    "propertyId": "EB-WB5626",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081936",
+    "propertyId": "EB-VX4799",
+    "current": "1 septiembre 2026",
+    "correct": "1 septiembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819aa",
+    "propertyId": "EB-IL2589",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ae",
+    "propertyId": "EB-VX7274",
+    "current": "1 julio 2026",
+    "correct": "1 julio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081906",
+    "propertyId": "EB-WA6564",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819a4",
+    "propertyId": "EB-UU8151",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819a3",
+    "propertyId": "EB-UV4105",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819a2",
+    "propertyId": "EB-UV4605",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819a1",
+    "propertyId": "EB-UV4738",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819a0",
+    "propertyId": "EB-UV4776",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508199f",
+    "propertyId": "EB-UV4829",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508199e",
+    "propertyId": "EB-UV4793",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508199d",
+    "propertyId": "EB-UV4855",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508199c",
+    "propertyId": "EB-UV4956",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508199b",
+    "propertyId": "EB-UV4975",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508199a",
+    "propertyId": "EB-UV4895",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081999",
+    "propertyId": "EB-UV4876",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081904",
+    "propertyId": "EB-VB8295",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081890",
+    "propertyId": "EB-VZ9294",
+    "current": "1 mes después de la firma",
+    "correct": "1 mes después de la firma",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818bb",
+    "propertyId": "EB-VZ1717",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508190b",
+    "propertyId": "EB-VY6981",
+    "current": "1 noviembre 2026",
+    "correct": "1 noviembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818fa",
+    "propertyId": "EB-VX7578",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ea",
+    "propertyId": "EB-VX7397",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081989",
+    "propertyId": "EB-VX4599",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081967",
+    "propertyId": "EB-VX7960",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081948",
+    "propertyId": "EB-VX7513",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081988",
+    "propertyId": "EB-VX3645",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081953",
+    "propertyId": "EB-VX7659",
+    "current": "4 meses después de la firma del contrato",
+    "correct": "4 meses después de la firma del contrato",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818f9",
+    "propertyId": "EB-VX7598",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081929",
+    "propertyId": "EB-VI8688",
+    "current": "1 julio 2026",
+    "correct": "1 julio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081987",
+    "propertyId": "EB-VI5098",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508190a",
+    "propertyId": "EB-VD7496",
+    "current": "1 noviembre 2026",
+    "correct": "1 noviembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081941",
+    "propertyId": "EB-UZ5962",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818e1",
+    "propertyId": "EB-UY2414",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818e0",
+    "propertyId": "EB-UY2411",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081940",
+    "propertyId": "EB-UW3494",
+    "current": "Mayo 2027",
+    "correct": "Mayo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508193f",
+    "propertyId": "EB-UW3441",
+    "current": "Mayo 2027",
+    "correct": "Mayo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508193e",
+    "propertyId": "EB-UW3412",
+    "current": "Mayo 2027",
+    "correct": "Mayo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508193d",
+    "propertyId": "EB-UW3559",
+    "current": "Mayo 2027",
+    "correct": "Mayo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508193c",
+    "propertyId": "EB-UW2677",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508193b",
+    "propertyId": "EB-UW3576",
+    "current": "Mayo 2027",
+    "correct": "Mayo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508193a",
+    "propertyId": "EB-UW3099",
+    "current": "Mayo 2027",
+    "correct": "Mayo 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081903",
+    "propertyId": "EB-UF6349",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081952",
+    "propertyId": "EB-UE6160",
+    "current": "1 enero 2026",
+    "correct": "1 enero 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081951",
+    "propertyId": "EB-UE5627",
+    "current": "1 enero 2026",
+    "correct": "1 enero 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081950",
+    "propertyId": "EB-UE1664",
+    "current": "1 enero 2026",
+    "correct": "1 enero 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081935",
+    "propertyId": "EB-UE1323",
+    "current": "1 mayo 2026",
+    "correct": "1 mayo 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819b5",
+    "propertyId": "EB-SI7616",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819b3",
+    "propertyId": "EB-SE9757",
+    "current": "1 a 2 meses después de la firma de contrato",
+    "correct": "1 a 2 meses después de la firma de contrato",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818cd",
+    "propertyId": "EB-SE7367",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818d0",
+    "propertyId": "EB-RW3061",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818cf",
+    "propertyId": "EB-RS5136",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819b2",
+    "propertyId": "EB-QX1960",
+    "current": "1 a 2 meses después de la firma de contrato",
+    "correct": "1 a 2 meses después de la firma de contrato",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508191f",
+    "propertyId": "EB-QL0958",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818d2",
+    "propertyId": "EB-QD6613",
+    "current": "Inmediatamente",
+    "correct": "Inmediatamente",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818d1",
+    "propertyId": "EB-PK0027",
+    "current": "Inmediatamente",
+    "correct": "Inmediatamente",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ba",
+    "propertyId": "EB-OL2319",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818b9",
+    "propertyId": "EB-OL2295",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819ba",
+    "propertyId": "EB-NZ2582",
+    "current": "4.355 M3/HR",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081907",
+    "propertyId": "EB-VZ4739",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081947",
+    "propertyId": "EB-VZ2786",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818be",
+    "propertyId": "EB-VY7215",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ad",
+    "propertyId": "EB-VY6928",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819b1",
+    "propertyId": "EB-VY6887",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818e8",
+    "propertyId": "EB-VY4760",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818e7",
+    "propertyId": "EB-VY4740",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818e6",
+    "propertyId": "EB-VY4720",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818e5",
+    "propertyId": "EB-VY4690",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818e4",
+    "propertyId": "EB-VY4361",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819b0",
+    "propertyId": "EB-VX7618",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081939",
+    "propertyId": "EB-VX7429",
+    "current": "1 septiembre 2026",
+    "correct": "1 septiembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081966",
+    "propertyId": "EB-VX6639",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081965",
+    "propertyId": "EB-VX6616",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081964",
+    "propertyId": "EB-VX6575",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081963",
+    "propertyId": "EB-VX6545",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081962",
+    "propertyId": "EB-VX4760",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081961",
+    "propertyId": "EB-VX4710",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081960",
+    "propertyId": "EB-VX4671",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081998",
+    "propertyId": "EB-VX1602",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081997",
+    "propertyId": "EB-VX1547",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081996",
+    "propertyId": "EB-VX1518",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081934",
+    "propertyId": "EB-VM7858",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081995",
+    "propertyId": "EB-VM5897",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081909",
+    "propertyId": "EB-VM5796",
+    "current": "1 noviembre 2026",
+    "correct": "1 noviembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508188c",
+    "propertyId": "EB-VM5044",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508195c",
+    "propertyId": "EB-VK6796",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508192d",
+    "propertyId": "EB-VK4896",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081912",
+    "propertyId": "EB-VJ6587",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081911",
+    "propertyId": "EB-VJ2217",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081910",
+    "propertyId": "EB-VI9506",
+    "current": "1 abril 2026",
+    "correct": "1 abril 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081986",
+    "propertyId": "EB-VI4548",
+    "current": "30 octubre 2026",
+    "correct": "30 octubre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081985",
+    "propertyId": "EB-VI4517",
+    "current": "30 octubre 2026",
+    "correct": "30 octubre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081984",
+    "propertyId": "EB-VI4474",
+    "current": "30 octubre 2026",
+    "correct": "30 octubre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081983",
+    "propertyId": "EB-VI3862",
+    "current": "30 octubre 2026",
+    "correct": "30 octubre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081982",
+    "propertyId": "EB-VI3606",
+    "current": "1 agosto 2026",
+    "correct": "1 agosto 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081981",
+    "propertyId": "EB-VI3596",
+    "current": "30 octubre 2026",
+    "correct": "30 octubre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081980",
+    "propertyId": "EB-VI1346",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508197f",
+    "propertyId": "EB-VI1319",
+    "current": "1 septiembre 2026",
+    "correct": "1 septiembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508197e",
+    "propertyId": "EB-VI1273",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508197d",
+    "propertyId": "EB-VI1233",
+    "current": "1 septiembre 2026",
+    "correct": "1 septiembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508197c",
+    "propertyId": "EB-VI1137",
+    "current": "1 agosto 2026",
+    "correct": "1 agosto 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508197b",
+    "propertyId": "EB-VH8504",
+    "current": "30 octubre 2026",
+    "correct": "30 octubre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081899",
+    "propertyId": "EB-VH5992",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081898",
+    "propertyId": "EB-VH5862",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081897",
+    "propertyId": "EB-VH5696",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081896",
+    "propertyId": "EB-VH5401",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081895",
+    "propertyId": "EB-VH5231",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081894",
+    "propertyId": "EB-VH1319",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508194f",
+    "propertyId": "EB-VG0902",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818b5",
+    "propertyId": "EB-VG0290",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508190f",
+    "propertyId": "EB-VE6873",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818f3",
+    "propertyId": "EB-VE6823",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ac",
+    "propertyId": "EB-VE6385",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ab",
+    "propertyId": "EB-VE6332",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818aa",
+    "propertyId": "EB-VE4141",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818a9",
+    "propertyId": "EB-VE3463",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818a8",
+    "propertyId": "EB-VE3396",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819af",
+    "propertyId": "EB-VC2082",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819ae",
+    "propertyId": "EB-VC2022",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081946",
+    "propertyId": "EB-VB8603",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081919",
+    "propertyId": "EB-VA8396",
+    "current": "1 abril 2026",
+    "correct": "1 abril 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508191d",
+    "propertyId": "EB-VA8377",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081918",
+    "propertyId": "EB-VA6546",
+    "current": "1 febrero 2026",
+    "correct": "1 febrero 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508191c",
+    "propertyId": "EB-VA6480",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818f2",
+    "propertyId": "EB-VA5039",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081917",
+    "propertyId": "EB-UZ8379",
+    "current": "1 abril 2026",
+    "correct": "1 abril 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508191b",
+    "propertyId": "EB-UZ8038",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508191a",
+    "propertyId": "EB-UZ7722",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081916",
+    "propertyId": "EB-UZ7529",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081886",
+    "propertyId": "EB-UZ6377",
+    "current": "19 febrero 2026",
+    "correct": "19 febrero 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818df",
+    "propertyId": "EB-UZ2162",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081882",
+    "propertyId": "EB-UY1973",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081889",
+    "propertyId": "EB-UW3004",
+    "current": "1 marzo 2026",
+    "correct": "1 marzo 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818d3",
+    "propertyId": "EB-UW0709",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818d9",
+    "propertyId": "EB-UV8923",
+    "current": "Julio - Agosto 2026",
+    "correct": "Julio - Agosto 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508197a",
+    "propertyId": "EB-UV8440",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081979",
+    "propertyId": "EB-UV8406",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081978",
+    "propertyId": "EB-UV8285",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081977",
+    "propertyId": "EB-UV8059",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818de",
+    "propertyId": "EB-UV7983",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081976",
+    "propertyId": "EB-UV7702",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081975",
+    "propertyId": "EB-UV7216",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818cc",
+    "propertyId": "EB-UU9705",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818cb",
+    "propertyId": "EB-UU8106",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818dd",
+    "propertyId": "EB-UU8033",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081881",
+    "propertyId": "EB-UU8000",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508195e",
+    "propertyId": "EB-UU6731",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ca",
+    "propertyId": "EB-UU6646",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819ad",
+    "propertyId": "EB-UT5058",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081994",
+    "propertyId": "EB-US8361",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081938",
+    "propertyId": "EB-UR2897",
+    "current": "15 mayo 2026",
+    "correct": "15 mayo 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081945",
+    "propertyId": "EB-UR2888",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081908",
+    "propertyId": "EB-UN0722",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508195d",
+    "propertyId": "EB-UM0278",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081974",
+    "propertyId": "EB-UL8426",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081893",
+    "propertyId": "EB-UL0921",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818f8",
+    "propertyId": "EB-UL0846",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508194e",
+    "propertyId": "EB-UJ6374",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818c9",
+    "propertyId": "EB-UJ5203",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508194d",
+    "propertyId": "EB-UJ2272",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508194c",
+    "propertyId": "EB-UJ2149",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508194b",
+    "propertyId": "EB-UJ2081",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081884",
+    "propertyId": "EB-UI3461",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081937",
+    "propertyId": "EB-UF8581",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508192e",
+    "propertyId": "EB-UF2677",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508194a",
+    "propertyId": "EB-UE1214",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508195b",
+    "propertyId": "EB-UE0696",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081973",
+    "propertyId": "EB-UD8320",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081972",
+    "propertyId": "EB-UD8270",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081971",
+    "propertyId": "EB-UD8162",
+    "current": "15 abril 2026",
+    "correct": "15 abril 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081970",
+    "propertyId": "EB-UD4907",
+    "current": "15 abril 2026",
+    "correct": "15 abril 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508195a",
+    "propertyId": "EB-UD1536",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508196f",
+    "propertyId": "EB-UB2432",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508190e",
+    "propertyId": "EB-TZ5516",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508190d",
+    "propertyId": "EB-TZ5392",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081959",
+    "propertyId": "EB-TZ2833",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081891",
+    "propertyId": "EB-TZ1812",
+    "current": "15 septiembre 2025",
+    "correct": "15 septiembre 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081958",
+    "propertyId": "EB-TY9845",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818a7",
+    "propertyId": "EB-TY0388",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818a6",
+    "propertyId": "EB-TY0360",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818a5",
+    "propertyId": "EB-TX8030",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818a4",
+    "propertyId": "EB-TX7949",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818a3",
+    "propertyId": "EB-TX7892",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818a2",
+    "propertyId": "EB-TX7703",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081892",
+    "propertyId": "EB-TX5280",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508196e",
+    "propertyId": "EB-TX5075",
+    "current": "15 abril 2026",
+    "correct": "15 abril 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081902",
+    "propertyId": "EB-TV2836",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081901",
+    "propertyId": "EB-TV2795",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818b6",
+    "propertyId": "EB-TU3110",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081900",
+    "propertyId": "EB-TT4204",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ff",
+    "propertyId": "EB-TT2128",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818f7",
+    "propertyId": "EB-TT2108",
+    "current": "1 agosto 2025",
+    "correct": "1 agosto 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818b4",
+    "propertyId": "EB-TS8445",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081993",
+    "propertyId": "EB-TR9098",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081992",
+    "propertyId": "EB-TR9089",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081991",
+    "propertyId": "EB-TR9071",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081990",
+    "propertyId": "EB-TR8979",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508198f",
+    "propertyId": "EB-TR8945",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508198e",
+    "propertyId": "EB-TR8903",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508198d",
+    "propertyId": "EB-TR8873",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508198c",
+    "propertyId": "EB-TR8810",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508198b",
+    "propertyId": "EB-TR8723",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081914",
+    "propertyId": "EB-TR0804",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818fe",
+    "propertyId": "EB-TP1587",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081915",
+    "propertyId": "EB-TO8302",
+    "current": "1 octubre 2025",
+    "correct": "1 octubre 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081913",
+    "propertyId": "EB-TO8250",
+    "current": "1 octubre 2025",
+    "correct": "1 octubre 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081957",
+    "propertyId": "EB-TL2951",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818a1",
+    "propertyId": "EB-TJ2867",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818b3",
+    "propertyId": "EB-TH6123",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081956",
+    "propertyId": "EB-TG7868",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081955",
+    "propertyId": "EB-TG7835",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081954",
+    "propertyId": "EB-TG7780",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818b2",
+    "propertyId": "EB-SZ8743",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818b1",
+    "propertyId": "EB-SZ8740",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081877",
+    "propertyId": "EB-SZ7127",
+    "current": "30 mayo 2025",
+    "correct": "30 mayo 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818fd",
+    "propertyId": "EB-SW5672",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818f6",
+    "propertyId": "EB-SW5580",
+    "current": "15 junio 2025",
+    "correct": "15 junio 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818f5",
+    "propertyId": "EB-SW4040",
+    "current": "15 junio 2025",
+    "correct": "15 junio 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818fc",
+    "propertyId": "EB-SW3647",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818b0",
+    "propertyId": "EB-SW2735",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819b4",
+    "propertyId": "EB-SV7170",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819b9",
+    "propertyId": "EB-SV1951",
+    "current": "4.355 M3/HR",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818af",
+    "propertyId": "EB-SU8651",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818a0",
+    "propertyId": "EB-ST7254",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508189f",
+    "propertyId": "EB-SQ9524",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ec",
+    "propertyId": "EB-SQ5427",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818eb",
+    "propertyId": "EB-SQ5354",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081880",
+    "propertyId": "EB-SP5671",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508187f",
+    "propertyId": "EB-SP5560",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819a9",
+    "propertyId": "EB-SN5213",
+    "current": "4 meses después de la firma",
+    "correct": "4 meses después de la firma",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819a8",
+    "propertyId": "EB-SN5174",
+    "current": "4 meses después de la firma",
+    "correct": "4 meses después de la firma",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819a7",
+    "propertyId": "EB-SN5152",
+    "current": "4 meses después de la firma",
+    "correct": "4 meses después de la firma",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508189e",
+    "propertyId": "EB-SM3188",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081876",
+    "propertyId": "EB-SM0379",
+    "current": "1 julio 2025",
+    "correct": "1 julio 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081926",
+    "propertyId": "EB-SL9847",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508192c",
+    "propertyId": "EB-SJ9392",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081925",
+    "propertyId": "EB-SH9475",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081924",
+    "propertyId": "EB-SH7674",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081923",
+    "propertyId": "EB-SG7046",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818c8",
+    "propertyId": "EB-SE8438",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818c7",
+    "propertyId": "EB-SE8393",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818c6",
+    "propertyId": "EB-SE7304",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081944",
+    "propertyId": "EB-SE6222",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081943",
+    "propertyId": "EB-SE6164",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818c5",
+    "propertyId": "EB-SE1040",
+    "current": "1 diciembre 2026",
+    "correct": "1 diciembre 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818c4",
+    "propertyId": "EB-SE1019",
+    "current": "Inmediata",
+    "correct": "Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818c3",
+    "propertyId": "EB-SE1002",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818f4",
+    "propertyId": "EB-SD3183",
+    "current": "1 noviembre 2025",
+    "correct": "1 noviembre 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818c2",
+    "propertyId": "EB-SB9420",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818c1",
+    "propertyId": "EB-SB9395",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ce",
+    "propertyId": "EB-SB9202",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818c0",
+    "propertyId": "EB-RZ9329",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ed",
+    "propertyId": "EB-RZ8489",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818dc",
+    "propertyId": "EB-RW9528",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081883",
+    "propertyId": "EB-RW2135",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081928",
+    "propertyId": "EB-RT5173",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081927",
+    "propertyId": "EB-RT5115",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081875",
+    "propertyId": "EB-RS1496",
+    "current": "1 agosto 2025",
+    "correct": "1 agosto 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081874",
+    "propertyId": "EB-RS0579",
+    "current": "1 agosto 2025",
+    "correct": "1 agosto 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508187e",
+    "propertyId": "EB-RQ1861",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508187d",
+    "propertyId": "EB-RQ1854",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508190c",
+    "propertyId": "EB-RL9214",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819be",
+    "propertyId": "EB-RL6142",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818d8",
+    "propertyId": "EB-RL5188",
+    "current": "1 marzo 2025",
+    "correct": "1 marzo 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081873",
+    "propertyId": "EB-RL5097",
+    "current": "1 noviembre 2024",
+    "correct": "1 noviembre 2024",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081872",
+    "propertyId": "EB-RL5095",
+    "current": "1 noviembre 2024",
+    "correct": "1 noviembre 2024",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508187c",
+    "propertyId": "EB-RL4050",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081871",
+    "propertyId": "EB-RJ5355",
+    "current": "1 noviembre 2024",
+    "correct": "1 noviembre 2024",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508188b",
+    "propertyId": "EB-RJ2934",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508188a",
+    "propertyId": "EB-RJ2907",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081922",
+    "propertyId": "EB-RG7290",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819ac",
+    "propertyId": "EB-RF2928",
+    "current": "1 septiembre 2025",
+    "correct": "1 septiembre 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081870",
+    "propertyId": "EB-RE0256",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508187b",
+    "propertyId": "EB-RD8602",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818e2",
+    "propertyId": "EB-RD7598",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818d6",
+    "propertyId": "EB-RB4859",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508186f",
+    "propertyId": "EB-RB2104",
+    "current": "Ocupación inmediata REQUISITOS",
+    "correct": "Ocupación inmediata REQUISITOS",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508186e",
+    "propertyId": "EB-RB2085",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819bd",
+    "propertyId": "EB-RA1627",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819bc",
+    "propertyId": "EB-RA1587",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508189d",
+    "propertyId": "EB-QZ3179",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508189c",
+    "propertyId": "EB-QZ3170",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508189b",
+    "propertyId": "EB-QY8930",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508189a",
+    "propertyId": "EB-QY8911",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508186d",
+    "propertyId": "EB-QY4399",
+    "current": "1 enero 2025",
+    "correct": "1 enero 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508186c",
+    "propertyId": "EB-QY4337",
+    "current": "1 enero 2025",
+    "correct": "1 enero 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081905",
+    "propertyId": "EB-QY4179",
+    "current": "1 diciembre 2024",
+    "correct": "1 diciembre 2024",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508187a",
+    "propertyId": "EB-QY4009",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081888",
+    "propertyId": "EB-QY1874",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081885",
+    "propertyId": "EB-QX4544",
+    "current": "1 a 2 meses después de la firma de contrato",
+    "correct": "1 a 2 meses después de la firma de contrato",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818f1",
+    "propertyId": "EB-QX1463",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818f0",
+    "propertyId": "EB-QX1437",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ef",
+    "propertyId": "EB-QW9976",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818ee",
+    "propertyId": "EB-QW9788",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081866",
+    "propertyId": "EB-QW8957",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819a6",
+    "propertyId": "EB-QR5651",
+    "current": "4 meses después de la firma",
+    "correct": "4 meses después de la firma",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819a5",
+    "propertyId": "EB-QR0245",
+    "current": "1 enero 2027",
+    "correct": "1 enero 2027",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818b8",
+    "propertyId": "EB-QM8523",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818d7",
+    "propertyId": "EB-QM3255",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818db",
+    "propertyId": "EB-QM3237",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818da",
+    "propertyId": "EB-QM3110",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818e3",
+    "propertyId": "EB-QK9981",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508186b",
+    "propertyId": "EB-QJ3666",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508186a",
+    "propertyId": "EB-QJ0952",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081920",
+    "propertyId": "EB-QI5867",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818fb",
+    "propertyId": "EB-QH0720",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081879",
+    "propertyId": "EB-QG4141",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081867",
+    "propertyId": "EB-QF3127",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508192b",
+    "propertyId": "EB-QE8190",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818b7",
+    "propertyId": "EB-QC4131",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819bb",
+    "propertyId": "EB-QC3415",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819b6",
+    "propertyId": "EB-QC1912",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081869",
+    "propertyId": "EB-PY1568",
+    "current": "1 julio 2024",
+    "correct": "1 julio 2024",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081868",
+    "propertyId": "EB-PY0678",
+    "current": "1 julio 2024",
+    "correct": "1 julio 2024",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508191e",
+    "propertyId": "EB-PP9451",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818d5",
+    "propertyId": "EB-PM6879",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818bd",
+    "propertyId": "EB-PM6842",
+    "current": "1 junio 2024",
+    "correct": "1 junio 2024",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818bc",
+    "propertyId": "EB-PM5050",
+    "current": "1 junio 2024",
+    "correct": "1 junio 2024",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818d4",
+    "propertyId": "EB-PM4962",
+    "current": "Ocupación Inmediata",
+    "correct": "Ocupación Inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081942",
+    "propertyId": "EB-PI4313",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508188f",
+    "propertyId": "EB-PD8719",
+    "current": "15 días después de la firma",
+    "correct": "15 días después de la firma",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819b8",
+    "propertyId": "EB-NZ2617",
+    "current": "4.355 M3/HR",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819ab",
+    "propertyId": "EB-MR9952",
+    "current": "1 junio 2025",
+    "correct": "1 junio 2025",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081887",
+    "propertyId": "EB-LF3438",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819bf",
+    "propertyId": "EB-JL3736",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550819b7",
+    "propertyId": "EB-IN4670",
+    "current": "Documentos en regla",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508195f",
+    "propertyId": "EB-VM8463",
+    "current": "-",
+    "correct": null,
+    "status": "no-match"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508196d",
+    "propertyId": "EB-VN0842",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081933",
+    "propertyId": "EB-VN0979",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081932",
+    "propertyId": "EB-VN1069",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081931",
+    "propertyId": "EB-VN1114",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508192a",
+    "propertyId": "EB-VN3992",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081878",
+    "propertyId": "EB-VP0690",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508188e",
+    "propertyId": "EB-VP4941",
+    "current": "20 días después de la firma de contrato",
+    "correct": "20 días después de la firma de contrato",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818e9",
+    "propertyId": "EB-VP5924",
+    "current": "1 mayo 2026",
+    "correct": "1 mayo 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081930",
+    "propertyId": "EB-VP7676",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508192f",
+    "propertyId": "EB-VP7824",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508196c",
+    "propertyId": "EB-VP8338",
+    "current": "1 julio 2026",
+    "correct": "1 julio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508196b",
+    "propertyId": "EB-VP8360",
+    "current": "1 julio 2026",
+    "correct": "1 julio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508196a",
+    "propertyId": "EB-VP8674",
+    "current": "1 julio 2026",
+    "correct": "1 julio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081969",
+    "propertyId": "EB-VP8695",
+    "current": "1 julio 2026",
+    "correct": "1 julio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081968",
+    "propertyId": "EB-VP8722",
+    "current": "1 junio 2026",
+    "correct": "1 junio 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a926455081921",
+    "propertyId": "EB-VP9947",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508188d",
+    "propertyId": "EB-VQ0572",
+    "current": "15 abril 2026",
+    "correct": "15 abril 2026",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a92645508198a",
+    "propertyId": "EB-UV4564",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  },
+  {
+    "id": "6a0f66dbbd3a9264550818bf",
+    "propertyId": "EB-VQ6974",
+    "current": "Ocupación inmediata",
+    "correct": "Ocupación inmediata",
+    "status": "already-correct"
+  }
+]

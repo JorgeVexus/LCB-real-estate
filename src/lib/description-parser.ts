@@ -85,7 +85,7 @@ export function parseDescriptionFields(description: string): Record<string, unkn
       // bodega libre: 3,267.27 m2" or "Área de bodega: 80,000 m2" when there's
       // no separate office area. EasyBroker doesn't expose it structurally.
       fieldData["area-de-bodega-libre"] = value;
-    } else if (label.includes("disponible a partir de")) {
+    } else if (label.includes("disponible a partir de") || label.includes("fecha de entrega")) {
       fieldData["disponible-desde"] = value;
     } else if (label.includes("antigüedad") || label.includes("antiguedad")) {
       fieldData["ano-de-construccion"] = value;
