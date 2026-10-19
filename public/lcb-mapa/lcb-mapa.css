@@ -175,71 +175,35 @@ body.lcbm-map-mode .section-cta.propiedades { display: none; }
 .lcbm-map-panel .lcbm-map { position: absolute; inset: 0; width: 100%; height: 100%; }
 .lcbm-map-error { padding: 24px; font: 14px "Work Sans", sans-serif; }
 
-/* Cards tipo "hero" (imagen arriba a todo lo ancho, datos abajo) — igual
- * estructura que la card real de Listado (imagen-grande + info debajo),
- * solo que más compacta. El layout lado-a-lado anterior (imagen fija de
- * 128px) se rompía en breakpoints angostos (tablet ~768px: el texto no
- * cabía y se traslapaba con el precio) y además la imagen se veía
- * diminuta — a todo lo ancho resuelve ambos problemas a la vez: la card
- * ya no depende de un ancho mínimo fijo, y la imagen gana mucha más
- * presencia visual. */
+/* Cards IDÉNTICAS a la card real de Listado — a propósito no se tocan sus
+ * tamaños de texto, colores, botones ni su propio hover (translateY -4px,
+ * ya definido nativamente): solo se ajusta el ancho de la imagen/carrusel
+ * a como de ancha quede la columna angosta junto al mapa, que es lo único
+ * que de verdad depende del layout de Mapa. Todo lo demás es la MISMA
+ * regla de Webflow que usa /propiedades. */
 .lcbm-map-mode .collection-list-propiedades {
   display: flex !important; flex-direction: column; gap: 14px;
   column-count: auto;
 }
-.lcbm-map-mode .lcbm-list .card-propiedades {
-  display: flex; flex-direction: column;
-  height: auto; padding: 0;
-  border: 1px solid var(--lcbm-line); border-radius: 12px; overflow: hidden;
-  background: #fff;
-  transition: border-color 180ms ease, box-shadow 180ms ease;
-  transform: none !important;
-}
-.lcbm-map-mode .lcbm-list .card-propiedades:hover,
-.lcbm-map-mode .lcbm-list .lcbm-card-active .card-propiedades {
-  border-color: var(--lcbm-orange); box-shadow: 0 10px 24px #00000022;
-}
-.lcbm-map-mode .lcbm-list .div-img-propiedades {
-  width: 100%; aspect-ratio: 16 / 10; height: auto; border-radius: 0; flex: none;
-}
+.lcbm-map-mode .lcbm-list .card-propiedades { width: 100%; }
+.lcbm-map-mode .lcbm-list .div-img-propiedades { width: 100%; }
 .lcbm-map-mode .lcbm-list .property-image-wrapper,
 .lcbm-map-mode .lcbm-list .property-slider,
 .lcbm-map-mode .lcbm-list .swiper,
 .lcbm-map-mode .lcbm-list .swiper-wrapper { width: 100%; height: 100%; min-height: 0; }
 .lcbm-map-mode .lcbm-list .swiper-slide { width: 100% !important; height: 100%; }
 .lcbm-map-mode .lcbm-list .swiper-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.lcbm-map-mode .lcbm-list .swiper-button-next,
-.lcbm-map-mode .lcbm-list .swiper-button-prev { display: none; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades {
-  min-width: 0; width: auto; height: auto; margin: 0; padding: 14px 14px 0;
-  display: flex; flex-direction: column; justify-content: flex-start; gap: 7px;
-}
-/* Mismos tamaños/pesos de texto que la card de la vista Listado. */
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { flex-wrap: wrap; width: auto; align-items: baseline; gap: 4px; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { font-size: 18px; line-height: 1.2; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { font-size: 13px; line-height: 1.2; font-weight: 400; color: #777; }
-.lcbm-map-mode .lcbm-list .nombre-propiedad {
-  font-size: 16px; font-weight: 500; line-height: 1.3; color: var(--lcbm-ink);
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-}
-.lcbm-map-mode .lcbm-list .text-medium.prorpiedades {
-  font-size: 13px; line-height: 1.4; color: #333;
-  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
-}
-.lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; row-gap: 4px; column-gap: 6px; margin-top: 2px; }
-.lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 13px; font-weight: 400; color: rgba(0,0,0,.8); white-space: nowrap; }
-.lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 15px; font-weight: 700; color: var(--lcbm-orange); }
-.lcbm-map-mode .lcbm-list .div-block-26 .text-small.bold { font-weight: 700; }
-.lcbm-map-mode .lcbm-list .grid-btn.propiedades {
-  padding: 0 14px 14px; margin-top: 12px;
-  grid-template-columns: 1fr 1fr; column-gap: 8px;
+.lcbm-map-mode .lcbm-list .info-card-propiedades { min-width: 0; }
+/* Única diferencia a propósito: resaltar la card cuyo marcador está
+ * seleccionado en el mapa — es una señal propia del Mapa, no existe en
+ * Listado, así que no hay equivalente "igual" que replicar. */
+.lcbm-map-mode .lcbm-list .lcbm-card-active .card-propiedades {
+  outline: 2px solid var(--lcbm-orange); outline-offset: -2px;
 }
 .lcbm-map-mode .lcbm-list .grid-btn .btn {
-  padding: 10px 6px; font-size: 14px; font-weight: 500; min-height: 0;
   transition: transform 120ms ease, opacity 120ms ease;
 }
 .lcbm-map-mode .lcbm-list .grid-btn .btn:active { transform: scale(0.97); opacity: .9; }
-.lcbm-map-mode .lcbm-list .rich-text-block-2 { display: none; }
 .lcbm-map-mode .pagination-property { margin-top: 12px; }
 
 /* ---------- Autocompletado de ubicación en el buscador (ambas vistas) ---------- */
