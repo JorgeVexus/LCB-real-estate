@@ -258,9 +258,9 @@ body.lcbm-map-mode .footer { display: none; }
  * angosta — con align-items:baseline en fila, el sufijo "/ mes" quedaba
  * anclado a la primera línea y se traslapaba con la segunda. Apilados,
  * no hay forma de que se encimen sin importar qué tan largo sea el precio. */
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { flex-direction: column; align-items: flex-start; width: auto; gap: 0; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { font-size: 16px; line-height: 1.25; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { font-size: 11px; line-height: 1.2; font-weight: 400; color: #777; margin-top: 1px; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { flex-direction: column; align-items: flex-start; width: auto; gap: 2px; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { font-size: 16px; line-height: 1.3; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { font-size: 11px; line-height: 1.2; font-weight: 400; color: #777; }
 /* El título (nombre-propiedad) queda oculto, igual que en la card real
  * de Listado — la dirección ya narra la propiedad y no sobra espacio. */
 .lcbm-map-mode .lcbm-list .nombre-propiedad { display: none; }
