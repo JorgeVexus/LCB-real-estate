@@ -723,11 +723,17 @@
   }
 
   function measureTop() {
-    var nav = document.querySelector('.navbar, .w-nav, nav');
-    var navH = nav ? nav.getBoundingClientRect().height : 0;
-    // El grid (lista + mapa) ocupa exactamente el resto del viewport debajo
-    // del nav (ver CSS) — el nav es lo único que queda fijo arriba.
-    document.documentElement.style.setProperty('--lcbm-nav-h', Math.round(navH) + 'px');
+    // El grid (lista + mapa) debe llenar exactamente el resto del viewport
+    // debajo de todo lo que esté arriba (nav + fila de filtros). No basta
+    // con restar solo el alto del nav: el contenedor del grid casi siempre
+    // trae su propio padding/margen de sección encima, así que se mide
+    // directamente su posición real en pantalla (más robusto que sumar
+    // alturas supuestas de sus hermanos).
+    if (state.view !== 'map') return;
+    var grid = document.querySelector('.grid-propiedades');
+    if (!grid) return;
+    var top = grid.getBoundingClientRect().top;
+    document.documentElement.style.setProperty('--lcbm-grid-top', Math.round(top) + 'px');
   }
 
   // ---------- UI (usa elementos nativos de Webflow si existen) ----------
