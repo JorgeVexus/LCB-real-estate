@@ -115,6 +115,13 @@
       requestedHitsPerPage = body.hitsPerPage || 28;
       body.page = 0;
       body.hitsPerPage = 1000;
+      // El motor del sitio no pide "precioNumerico" en attributesToRetrieve
+      // (solo usa precioDisplay, el string ya formateado) — sin pedirlo,
+      // Algolia nunca lo devuelve y el orden de abajo compara undefined
+      // contra undefined (sin efecto). Se agrega a la petición si falta.
+      if (Array.isArray(body.attributesToRetrieve) && body.attributesToRetrieve.indexOf('precioNumerico') === -1) {
+        body.attributesToRetrieve = body.attributesToRetrieve.concat('precioNumerico');
+      }
       sortApplies = true;
       init = Object.assign({}, init, { body: JSON.stringify(body) });
     } catch (e) { /* query ajena: se deja pasar intacta */ }
