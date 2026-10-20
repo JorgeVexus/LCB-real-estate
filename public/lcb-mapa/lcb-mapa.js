@@ -537,8 +537,13 @@
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
-    placeSearch(view);
+    // placeToggle primero: al volver a Listado, placeSearch reinserta el
+    // buscador justo antes del toggle (su posición original en el header);
+    // si el toggle no ha vuelto todavía, esa referencia es inválida
+    // (insertBefore de un nodo que ya no es hijo del padre) y lanza una
+    // excepción que corta el resto de setView() a la mitad.
     placeToggle(view);
+    placeSearch(view);
     if (view === 'map') {
       // Si se restauró una posición de mapa desde la URL (p. ej. al volver
       // de una ficha), no la pise un fit automático en la primera query.
