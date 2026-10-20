@@ -46,7 +46,7 @@
   var boundaryCache = {};
   var skipNextFit = false;
   var searchHome = null; // { parent, next } — posición original del buscador, fuera del modo Mapa
-  var headerHome = null; // { parent, next } — posición original del header (contador + toggle), fuera del modo Mapa
+  var toggleHome = null; // { parent, next } — posición original del toggle Listado|Mapa, fuera del modo Mapa
 
   // ---------- estado en URL ----------
   // El motor escribe ?operacion= pero no lo lee al cargar; se restaura aquí
@@ -86,6 +86,14 @@
     if (url.indexOf(QUERY_PATH) === -1 || !init || typeof init.body !== 'string') {
       return origFetch(input, init);
     }
+    // El cliente pidió orden descendente por precio por defecto en la lista.
+    // Algolia pagina del lado del servidor por relevancia — ordenar solo la
+    // página de 28 que llega no da un orden global correcto entre páginas.
+    // En vez de eso se pide SIEMPRE el set completo (hasta 1000, igual que
+    // ya hace el mapa), se ordena aquí y se recorta a la página/tamaño que
+    // el motor del sitio pidió originalmente antes de devolverle la
+    // respuesta — para el motor es indistinguible de una respuesta normal.
+    var requestedPage = 0, requestedHitsPerPage = 28, sortApplies = false;
     try {
       var body = JSON.parse(init.body);
       var key = (body.query || '') + '|' + (body.filters || '');
@@ -102,18 +110,33 @@
         body.query = '';
         body.filters = stripCityFilter(body.filters);
         body.insideBoundingBox = [bboxToAlgolia(state.viewport)];
-        init = Object.assign({}, init, { body: JSON.stringify(body) });
       }
+      requestedPage = body.page || 0;
+      requestedHitsPerPage = body.hitsPerPage || 28;
+      body.page = 0;
+      body.hitsPerPage = 1000;
+      sortApplies = true;
+      init = Object.assign({}, init, { body: JSON.stringify(body) });
     } catch (e) { /* query ajena: se deja pasar intacta */ }
     // El motor reescribe la URL justo antes de consultar; se re-agregan vista/zona.
     writeUrlState();
     if (pendingOps.length) setTimeout(restoreOperacion, 0);
     scheduleMapQuery();
     return origFetch(input, init).then(function (res) {
-      res.clone().json().then(function (d) {
+      if (!sortApplies) return res;
+      return res.json().then(function (d) {
         state.total = d.nbHits || 0;
-      }).catch(function () {});
-      return res;
+        var hits = Array.isArray(d.hits) ? d.hits.slice() : [];
+        hits.sort(function (a, b) { return (b.precioNumerico || 0) - (a.precioNumerico || 0); });
+        var start = requestedPage * requestedHitsPerPage;
+        var out = Object.assign({}, d, {
+          hits: hits.slice(start, start + requestedHitsPerPage),
+          page: requestedPage,
+          hitsPerPage: requestedHitsPerPage,
+          nbPages: Math.max(1, Math.ceil((d.nbHits || 0) / requestedHitsPerPage))
+        });
+        return new Response(JSON.stringify(out), { status: res.status, statusText: res.statusText, headers: res.headers });
+      }).catch(function () { return res; });
     });
   };
 
@@ -336,17 +359,42 @@
     });
   }
 
+  // EasyBroker geocodifica muchas naves a nivel de parque industrial, no
+  // por nave individual — es común que varias propiedades compartan
+  // coordenadas exactas. Sin esto, se superponen en un solo punto y
+  // "desaparecen" aunque la lista sí las muestre por separado. Se separan
+  // en un pequeño abanico determinista (mismo slug → siempre el mismo
+  // lugar, sin importar el orden en que llegan de Algolia) de ~12m de
+  // radio por vuelta — a zoom bajo el clustering de MapLibre las sigue
+  // agrupando normalmente; solo se ven como puntos distintos una vez que
+  // el zoom es suficiente para despegarlas del clúster.
   function toGeoJSON() {
-    return {
-      type: 'FeatureCollection',
-      features: state.hits.map(function (h) {
-        return {
+    var groups = {};
+    state.hits.forEach(function (h) {
+      var key = h._geoloc.lat.toFixed(6) + ',' + h._geoloc.lng.toFixed(6);
+      (groups[key] = groups[key] || []).push(h);
+    });
+    var features = [];
+    Object.keys(groups).forEach(function (key) {
+      var group = groups[key];
+      group.sort(function (a, b) { return (a.slug || '').localeCompare(b.slug || ''); });
+      group.forEach(function (h, idx) {
+        var lng = h._geoloc.lng, lat = h._geoloc.lat;
+        if (idx > 0) {
+          var angle = (idx % 8) * (Math.PI / 4);
+          var ring = Math.floor((idx - 1) / 8) + 1;
+          var meters = 12 * ring;
+          lat += (meters * Math.cos(angle)) / 111320;
+          lng += (meters * Math.sin(angle)) / (111320 * Math.cos(lat * Math.PI / 180));
+        }
+        features.push({
           type: 'Feature',
-          geometry: { type: 'Point', coordinates: [h._geoloc.lng, h._geoloc.lat] },
+          geometry: { type: 'Point', coordinates: [lng, lat] },
           properties: { slug: h.slug }
-        };
-      })
-    };
+        });
+      });
+    });
+    return { type: 'FeatureCollection', features: features };
   }
 
   function renderPoints() {
@@ -483,13 +531,14 @@
 
     state.view = view;
     document.body.classList.toggle('lcbm-map-mode', view === 'map');
+    document.documentElement.classList.toggle('lcbm-map-mode', view === 'map');
     els.toggle.querySelectorAll('[data-lcbm-view]').forEach(function (b) {
       var on = b.getAttribute('data-lcbm-view') === view;
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
     placeSearch(view);
-    placeHeader(view);
+    placeToggle(view);
     if (view === 'map') {
       // Si se restauró una posición de mapa desde la URL (p. ej. al volver
       // de una ficha), no la pise un fit automático en la primera query.
@@ -522,27 +571,18 @@
     }
   }
 
-  // El header (contador + toggle Listado|Mapa) vive, en el HTML original,
-  // dentro de una sección "hero" angosta (su contenedor mide justo lo que
-  // mide el header, ni un px más) — totalmente aparte de la sección con el
-  // grid de resultados. `position: sticky` solo puede quedarse pegado
-  // mientras su propio contenedor padre sigue en pantalla; con un padre tan
-  // angosto, el header se despega apenas se hace scroll un poco, aunque la
-  // barra de filtros (que SÍ vive dentro del grid, un contenedor alto) se
-  // quede pegada sin problema. En modo Mapa se mueve el header para que sea
-  // hermano directo del grid, dentro del mismo contenedor alto — así ambos
-  // quedan fijos durante todo el scroll de la lista/mapa, igual que ya
-  // pasa con la barra. Se devuelve a su lugar original al salir de Mapa.
-  function placeHeader(view) {
-    var header = document.querySelector('.div-filtro.propiedades');
-    if (!header) return;
+  // El selector Listado|Mapa vive, en Listado, dentro del header original
+  // (junto al contador oculto). En modo Mapa el cliente pidió UNA sola fila
+  // horizontal con buscador + filtros + selector — se muda el toggle a la
+  // barra de filtros (el header que deja atrás queda vacío y se oculta por
+  // CSS). Se devuelve a su lugar original al salir de Mapa.
+  function placeToggle(view) {
+    if (!els.toggle) return;
     if (view === 'map') {
-      var grid = document.querySelector('.grid-propiedades');
-      if (grid && grid.parentNode && header.nextElementSibling !== grid) {
-        grid.parentNode.insertBefore(header, grid);
-      }
-    } else if (headerHome && !headerHome.parent.contains(header)) {
-      headerHome.parent.insertBefore(header, headerHome.next);
+      var bar = document.querySelector('.filtro-horizontal-fix');
+      if (bar && !bar.contains(els.toggle)) bar.appendChild(els.toggle);
+    } else if (toggleHome && !toggleHome.parent.contains(els.toggle)) {
+      toggleHome.parent.insertBefore(els.toggle, toggleHome.next);
     }
   }
 
@@ -685,10 +725,9 @@
   function measureTop() {
     var nav = document.querySelector('.navbar, .w-nav, nav');
     var navH = nav ? nav.getBoundingClientRect().height : 0;
+    // El grid (lista + mapa) ocupa exactamente el resto del viewport debajo
+    // del nav (ver CSS) — el nav es lo único que queda fijo arriba.
     document.documentElement.style.setProperty('--lcbm-nav-h', Math.round(navH) + 'px');
-    // El mapa (y la lista, a su lado) empiezan justo debajo del nav — es lo
-    // único que queda fijo arriba; header y barra de filtros ya no lo son.
-    document.documentElement.style.setProperty('--lcbm-top', Math.round(navH + 12) + 'px');
   }
 
   // ---------- UI (usa elementos nativos de Webflow si existen) ----------
@@ -722,10 +761,9 @@
     var search = document.querySelector('.select-filter-drow.search');
     if (search) searchHome = { parent: search.parentNode, next: search.nextSibling };
 
-    // Igual para el header (contador + toggle): se guarda su posición
-    // original para devolverlo ahí al salir del modo Mapa.
-    var header = document.querySelector('.div-filtro.propiedades');
-    if (header) headerHome = { parent: header.parentNode, next: header.nextSibling };
+    // Igual para el toggle Listado|Mapa: se guarda su posición original
+    // (dentro del header) para devolverlo ahí al salir del modo Mapa.
+    toggleHome = { parent: els.toggle.parentNode, next: els.toggle.nextSibling };
 
     var grid = document.querySelector('.grid-propiedades');
     var list = grid && grid.querySelector('[fs-cmsfilter-element="list"]');

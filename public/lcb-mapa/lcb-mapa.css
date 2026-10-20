@@ -10,8 +10,20 @@
   --lcbm-ink: #1a1a1a;
   --lcbm-line: #0000001a;
   --lcbm-nav-h: 78px;
-  --lcbm-top: 90px;
-  --lcbm-map-h: calc(100vh - var(--lcbm-top) - 24px);
+}
+
+/* Fase 1 (feedback cliente, 19 oct): la vista Mapa debe ser una pantalla
+ * fija tipo "app" — navbar arriba, UNA fila de filtros debajo, y el
+ * espacio restante dividido entre lista y mapa, SIN scroll de página.
+ * Se bloquea el scroll del documento completo (html+body) mientras se
+ * está en modo Mapa — el viewport.js hace el toggle de esta clase en
+ * ambos. Solo desktop/tablet (≥768px); en mobile no alcanza el alto
+ * para todo sin apilar, así que ahí se conserva el scroll de página. */
+@media (min-width: 768px) {
+  html.lcbm-map-mode, body.lcbm-map-mode {
+    overflow: hidden;
+    height: 100vh;
+  }
 }
 
 /* Transición entre Listado y Mapa: el cambio reacomoda bastante DOM de
@@ -138,36 +150,47 @@
 }
 .lcbm-map-mode .filtro-horizontal-fix .metros-slider-wrap { min-width: 260px; padding: 6px 4px; }
 .lcbm-map-mode .filtro-horizontal-fix > .clear-btn { flex: 0 0 auto; width: auto; padding: 0 18px; align-self: stretch; }
+/* El selector Listado|Mapa vive, en modo Mapa, dentro de esta misma fila
+ * de filtros (placeToggle() en el JS) — a pedido del cliente, una sola
+ * fila horizontal con buscador + filtros + selector, sin encabezado
+ * aparte arriba. */
+.lcbm-map-mode .filtro-horizontal-fix .lcbm-toggle { flex: 0 0 auto; align-self: center; }
+/* En modo Mapa el header original queda vacío (el buscador y el toggle ya
+ * se movieron a la barra) — se oculta en vez de dejar una franja vacía. */
+.lcbm-map-mode .div-filtro.propiedades { display: none; }
 
-/* Header (título + toggle Lista|Mapa) y barra de filtros (Operación/
- * Ubicación/Tipo/Metros/Limpiar): ninguno de los dos queda fijo al hacer
- * scroll — ambos se desplazan con el resto del contenido. */
-
-/* FAQ y CTA siguen ocultos en modo Mapa (contenido largo, ajeno al mapa).
- * El footer sí se deja ver — ahora que el scroll de página ya no queda
- * atrapado dentro del mapa, conviene que haya algo al final en vez de
- * cortar la página justo debajo del mapa. */
+/* FAQ, CTA y footer ocultos en modo Mapa — a pedido del cliente, la vista
+ * Mapa es una pantalla fija autocontenida, no una página larga con
+ * contenido debajo. */
 body.lcbm-map-mode .section-faq,
-body.lcbm-map-mode .section-cta.propiedades { display: none; }
+body.lcbm-map-mode .section-cta.propiedades,
+body.lcbm-map-mode .footer { display: none; }
 
-/* ---------- Modo mapa: 25% resultados · 75% mapa ---------- */
+/* ---------- Modo mapa: 25% resultados · 75% mapa, altura fija al
+ * viewport (desktop/tablet) ---------- */
 .lcbm-map-panel { display: none; position: relative; }
 .lcbm-map-mode .grid-propiedades {
   grid-template-columns: minmax(300px, 25%) minmax(0, 1fr) !important;
+  grid-template-rows: auto 1fr !important;
   column-gap: 16px !important;
   align-items: start;
 }
+@media (min-width: 768px) {
+  .lcbm-map-mode .grid-propiedades {
+    height: calc(100vh - var(--lcbm-nav-h));
+    overflow: hidden;
+  }
+}
 .lcbm-map-mode .grid-propiedades > .lcbm-list {
   grid-column: 1; grid-row: 2;
-  max-height: var(--lcbm-map-h);
+  height: 100%;
   overflow-y: auto; overscroll-behavior: contain;
   padding-right: 6px;
 }
 .lcbm-map-mode .lcbm-map-panel {
   display: block;
   grid-column: 2; grid-row: 2;
-  position: sticky; top: var(--lcbm-top);
-  height: var(--lcbm-map-h);
+  height: 100%;
   border-radius: 12px; overflow: hidden;
   border: 1px solid var(--lcbm-line);
 }
@@ -288,8 +311,15 @@ body.lcbm-map-mode .section-cta.propiedades { display: none; }
   .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown .h6 { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .lcbm-map-mode .filtro-horizontal-fix > .clear-btn { flex-basis: 100%; padding: 12px; }
   .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown-list { position: fixed !important; top: auto; bottom: 0; left: 0; right: 0; width: auto; max-width: none; max-height: 60vh; border-radius: 14px 14px 0 0; }
+  /* El toggle Listado|Mapa se mudó a esta misma barra (ver placeToggle() en
+   * el JS) — a todo lo ancho, como última fila del wrap. */
+  .lcbm-map-mode .filtro-horizontal-fix .lcbm-toggle { flex-basis: 100%; width: 100%; order: 99; }
 
-  .lcbm-map-mode .grid-propiedades { grid-template-columns: minmax(0, 1fr) !important; }
-  .lcbm-map-mode .lcbm-map-panel { grid-column: 1; grid-row: 2; position: relative; top: 0; height: 56vh; }
-  .lcbm-map-mode .grid-propiedades > .lcbm-list { grid-column: 1; grid-row: 3; max-height: none; overflow: visible; padding-right: 0; }
+  .lcbm-map-mode .grid-propiedades {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto auto auto !important;
+    height: auto; overflow: visible;
+  }
+  .lcbm-map-mode .lcbm-map-panel { grid-column: 1; grid-row: 2; height: 56vh; }
+  .lcbm-map-mode .grid-propiedades > .lcbm-list { grid-column: 1; grid-row: 3; height: auto; overflow: visible; padding-right: 0; }
 }
