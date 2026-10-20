@@ -205,35 +205,78 @@ body.lcbm-map-mode .footer { display: none; }
 .lcbm-map-panel .lcbm-map { position: absolute; inset: 0; width: 100%; height: 100%; }
 .lcbm-map-error { padding: 24px; font: 14px "Work Sans", sans-serif; }
 
-/* Cards IDÉNTICAS a la card real de Listado — a propósito no se tocan sus
- * tamaños de texto, colores, botones ni su propio hover (translateY -4px,
- * ya definido nativamente): solo se ajusta el ancho de la imagen/carrusel
- * a como de ancha quede la columna angosta junto al mapa, que es lo único
- * que de verdad depende del layout de Mapa. Todo lo demás es la MISMA
- * regla de Webflow que usa /propiedades. */
+/* Fase 3 (feedback cliente, 19-20 oct): cards HORIZONTALES compactas —
+ * foto a la izquierda, precio/ubicación/características a la derecha,
+ * botones abajo a todo el ancho. El ancho de la imagen es FLUIDO (% de la
+ * card, con un mínimo), no un px fijo: con un ancho fijo (128px) el texto
+ * se quedaba sin espacio y se traslapaba en tablet (~260-290px de
+ * columna) — ya lo habíamos visto romperse así una vez. Con % + mínimo,
+ * el texto siempre conserva la misma proporción del ancho disponible sin
+ * importar el breakpoint. Tamaños de texto más chicos que en Listado a
+ * propósito (una columna angosta junto al mapa no tiene el mismo espacio
+ * que una card a todo lo ancho) pero legibles — se probaron en vivo sin
+ * desbordamientos. */
 .lcbm-map-mode .collection-list-propiedades {
-  display: flex !important; flex-direction: column; gap: 14px;
+  display: flex !important; flex-direction: column; gap: 12px;
   column-count: auto;
 }
-.lcbm-map-mode .lcbm-list .card-propiedades { width: 100%; }
-.lcbm-map-mode .lcbm-list .div-img-propiedades { width: 100%; }
+.lcbm-map-mode .lcbm-list .card-propiedades {
+  display: grid;
+  grid-template-columns: minmax(84px, 38%) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 12px; row-gap: 8px;
+  height: auto; padding: 12px;
+  border: 1px solid var(--lcbm-line); border-radius: 10px;
+  background: #fff;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+  transform: none !important;
+}
+.lcbm-map-mode .lcbm-list .card-propiedades:hover,
+.lcbm-map-mode .lcbm-list .lcbm-card-active .card-propiedades {
+  border-color: var(--lcbm-orange); box-shadow: 0 6px 16px #0000001f;
+}
+.lcbm-map-mode .lcbm-list .div-img-propiedades {
+  grid-column: 1; grid-row: 1;
+  width: 100%; height: 100px;
+  border-radius: 8px; overflow: hidden;
+}
 .lcbm-map-mode .lcbm-list .property-image-wrapper,
 .lcbm-map-mode .lcbm-list .property-slider,
 .lcbm-map-mode .lcbm-list .swiper,
 .lcbm-map-mode .lcbm-list .swiper-wrapper { width: 100%; height: 100%; min-height: 0; }
 .lcbm-map-mode .lcbm-list .swiper-slide { width: 100% !important; height: 100%; }
 .lcbm-map-mode .lcbm-list .swiper-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades { min-width: 0; }
-/* Única diferencia a propósito: resaltar la card cuyo marcador está
- * seleccionado en el mapa — es una señal propia del Mapa, no existe en
- * Listado, así que no hay equivalente "igual" que replicar. */
-.lcbm-map-mode .lcbm-list .lcbm-card-active .card-propiedades {
-  outline: 2px solid var(--lcbm-orange); outline-offset: -2px;
+.lcbm-map-mode .lcbm-list .swiper-button-next,
+.lcbm-map-mode .lcbm-list .swiper-button-prev,
+.lcbm-map-mode .lcbm-list .swiper-pagination { display: none; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades {
+  grid-column: 2; grid-row: 1; min-width: 0; width: auto; height: auto; margin: 0;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 5px;
+}
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { flex-wrap: wrap; width: auto; align-items: baseline; gap: 4px; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { font-size: 16px; line-height: 1.2; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { font-size: 11.5px; line-height: 1.2; font-weight: 400; color: #777; }
+/* El título (nombre-propiedad) queda oculto, igual que en la card real
+ * de Listado — la dirección ya narra la propiedad y no sobra espacio. */
+.lcbm-map-mode .lcbm-list .nombre-propiedad { display: none; }
+.lcbm-map-mode .lcbm-list .text-medium.prorpiedades {
+  font-size: 12.5px; line-height: 1.35; color: #444;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; row-gap: 3px; column-gap: 5px; margin-top: 1px; }
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 12px; font-weight: 400; color: rgba(0,0,0,.75); white-space: nowrap; }
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 14px; font-weight: 700; color: var(--lcbm-orange); }
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small.bold { font-weight: 700; }
+.lcbm-map-mode .lcbm-list .grid-btn.propiedades {
+  grid-column: 1 / -1; grid-row: 2; padding: 0; margin-top: 0;
+  grid-template-columns: 1fr 1fr; column-gap: 8px;
 }
 .lcbm-map-mode .lcbm-list .grid-btn .btn {
+  padding: 8px 6px; font-size: 13px; font-weight: 500; min-height: 0;
   transition: transform 120ms ease, opacity 120ms ease;
 }
 .lcbm-map-mode .lcbm-list .grid-btn .btn:active { transform: scale(0.97); opacity: .9; }
+.lcbm-map-mode .lcbm-list .rich-text-block-2 { display: none; }
 .lcbm-map-mode .pagination-property { margin-top: 12px; }
 
 /* ---------- Autocompletado de ubicación en el buscador (ambas vistas) ---------- */
