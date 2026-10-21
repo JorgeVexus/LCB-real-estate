@@ -257,12 +257,15 @@ body.lcbm-map-mode .footer { display: none; }
   display: flex; flex-direction: column; justify-content: flex-start; gap: 3px;
 }
 /* Precio y "/ mes" en flujo normal (display:block + inline), no flex: en
- * flujo normal, si el precio llega a envolver a 2 líneas (precios largos de
- * terreno en la columna angosta de tablet), el sufijo nunca puede encimarse
- * con la segunda línea — simplemente envuelve como texto normal y sigue
- * después, a diferencia del viejo layout en fila con flex+baseline donde sí
- * se traslapaban. */
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { display: block; width: auto; }
+ * flujo normal, si el precio llega a envolver a 2-3 líneas (precios largos
+ * de terreno en la columna angosta de tablet), el sufijo nunca puede
+ * encimarse con la siguiente línea — simplemente envuelve como texto
+ * normal y sigue después, a diferencia del viejo layout en fila con
+ * flex+baseline donde sí se traslapaban. height:auto explícito porque
+ * Webflow trae .div-price fijo a 30px (pensado para precio en 1 línea) —
+ * sin esto, con 3 líneas el contenido se desborda y se encima con la
+ * ubicación de abajo en vez de empujarla. */
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { display: block; width: auto; height: auto; min-height: 0; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { display: inline; font-size: 19px; line-height: 1.3; font-weight: 700; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { display: inline; font-size: 12px; line-height: 1.2; font-weight: 400; color: #777; margin-left: 4px; }
 /* El título (nombre-propiedad) queda oculto, igual que en la card real
