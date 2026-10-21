@@ -1,4 +1,3 @@
-/* touch: force redeploy 21 oct */
 /* Solo aplica a la página donde lcb-mapa.js agrega body.lcbm-page.
  * Las reglas SIN el prefijo .lcbm-map-mode viven en ambas vistas
  * (Listado/Mapa) — por diseño son pocas: solo el selector Listado|Mapa.
@@ -206,26 +205,29 @@ body.lcbm-map-mode .footer { display: none; }
 .lcbm-map-panel .lcbm-map { position: absolute; inset: 0; width: 100%; height: 100%; }
 .lcbm-map-error { padding: 24px; font: 14px "Work Sans", sans-serif; }
 
-/* Fase 3 (feedback cliente, 19-20 oct): cards compactas, foto arriba a
- * todo el ancho y precio/ubicación/características debajo, botones al
- * final — así se ve en la imagen de referencia que mandó el cliente
- * (21 oct). Antes la foto iba a la izquierda en una columna angosta;
- * se cambió a una sola columna (imagen en la fila 1, info en la fila 2,
- * botones en la fila 3) para que la foto se vea a tamaño completo como
- * en la referencia, en vez de recortada en una franja de ~38% del ancho
- * de la card. Tamaños de texto más chicos que en Listado a propósito
- * (una columna angosta junto al mapa no tiene el mismo espacio que una
- * card a todo lo ancho) pero legibles — se probaron en vivo sin
- * desbordamientos. */
+/* Fase 3 (feedback cliente, 19-20 oct): cards HORIZONTALES compactas —
+ * foto a la izquierda, precio/ubicación/características a la derecha,
+ * botones abajo a todo el ancho. El ancho de la imagen es FLUIDO (% de la
+ * card, con un mínimo), no un px fijo: con un ancho fijo (128px) el texto
+ * se quedaba sin espacio y se traslapaba en tablet (~260-290px de
+ * columna) — ya lo habíamos visto romperse así una vez. Con % + mínimo,
+ * el texto siempre conserva la misma proporción del ancho disponible sin
+ * importar el breakpoint. Imagen más alta (130px, antes 100px) y gaps más
+ * chicos a pedido del cliente (21 oct) — se probó primero poner la imagen
+ * arriba a todo el ancho, pero el cliente pidió mantener este layout
+ * horizontal y solo agrandar la imagen / reducir el espaciado. Tamaños de
+ * texto más chicos que en Listado a propósito (una columna angosta junto
+ * al mapa no tiene el mismo espacio que una card a todo lo ancho) pero
+ * legibles — se probaron en vivo sin desbordamientos. */
 .lcbm-map-mode .collection-list-propiedades {
   display: flex !important; flex-direction: column; gap: 12px;
   column-count: auto;
 }
 .lcbm-map-mode .lcbm-list .card-propiedades {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto auto auto;
-  row-gap: 6px;
+  grid-template-columns: minmax(84px, 38%) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 12px; row-gap: 6px;
   height: auto; padding: 10px;
   border: 1px solid var(--lcbm-line); border-radius: 10px;
   background: #fff;
@@ -238,7 +240,7 @@ body.lcbm-map-mode .footer { display: none; }
 }
 .lcbm-map-mode .lcbm-list .div-img-propiedades {
   grid-column: 1; grid-row: 1;
-  width: 100%; height: 140px;
+  width: 100%; height: 130px;
   border-radius: 8px; overflow: hidden;
 }
 .lcbm-map-mode .lcbm-list .property-image-wrapper,
@@ -251,14 +253,15 @@ body.lcbm-map-mode .footer { display: none; }
 .lcbm-map-mode .lcbm-list .swiper-button-prev,
 .lcbm-map-mode .lcbm-list .swiper-pagination { display: none; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades {
-  grid-column: 1; grid-row: 2; min-width: 0; width: auto; height: auto; margin: 0;
+  grid-column: 2; grid-row: 1; min-width: 0; width: auto; height: auto; margin: 0;
   display: flex; flex-direction: column; justify-content: flex-start; gap: 3px;
 }
-/* Precio y "/ mes" en flujo normal (display:block + inline), no flex: con
- * la card ahora a todo el ancho (imagen arriba) el precio rara vez necesita
- * 2 líneas, y en flujo normal el sufijo nunca puede encimarse con una
- * segunda línea del precio aunque la hubiera — simplemente envuelve como
- * texto normal, a diferencia del viejo layout en columna/fila con flex. */
+/* Precio y "/ mes" en flujo normal (display:block + inline), no flex: en
+ * flujo normal, si el precio llega a envolver a 2 líneas (precios largos de
+ * terreno en la columna angosta de tablet), el sufijo nunca puede encimarse
+ * con la segunda línea — simplemente envuelve como texto normal y sigue
+ * después, a diferencia del viejo layout en fila con flex+baseline donde sí
+ * se traslapaban. */
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { display: block; width: auto; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { display: inline; font-size: 19px; line-height: 1.3; font-weight: 700; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { display: inline; font-size: 12px; line-height: 1.2; font-weight: 400; color: #777; margin-left: 4px; }
@@ -274,7 +277,7 @@ body.lcbm-map-mode .footer { display: none; }
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 14px; font-weight: 700; color: var(--lcbm-orange); }
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small.bold { font-weight: 700; }
 .lcbm-map-mode .lcbm-list .grid-btn.propiedades {
-  grid-column: 1; grid-row: 3; padding: 0; margin-top: 0;
+  grid-column: 1 / -1; grid-row: 2; padding: 0; margin-top: 0;
   grid-template-columns: 1fr 1fr; column-gap: 8px;
 }
 .lcbm-map-mode .lcbm-list .grid-btn .btn {
