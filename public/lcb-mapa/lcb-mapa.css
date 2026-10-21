@@ -1,3 +1,4 @@
+/* touch: force redeploy 21 oct */
 /* Solo aplica a la página donde lcb-mapa.js agrega body.lcbm-page.
  * Las reglas SIN el prefijo .lcbm-map-mode viven en ambas vistas
  * (Listado/Mapa) — por diseño son pocas: solo el selector Listado|Mapa.
