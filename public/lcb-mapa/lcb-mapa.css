@@ -224,7 +224,7 @@ body.lcbm-map-mode .footer { display: none; }
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto auto auto;
-  row-gap: 8px;
+  row-gap: 6px;
   height: auto; padding: 10px;
   border: 1px solid var(--lcbm-line); border-radius: 10px;
   background: #fff;
@@ -251,16 +251,16 @@ body.lcbm-map-mode .footer { display: none; }
 .lcbm-map-mode .lcbm-list .swiper-pagination { display: none; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades {
   grid-column: 1; grid-row: 2; min-width: 0; width: auto; height: auto; margin: 0;
-  display: flex; flex-direction: column; justify-content: flex-start; gap: 5px;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 3px;
 }
-/* Columna (no fila) a propósito: algunos precios de terreno llegan a
- * 10 dígitos ("$276,019,800 MXN") y envuelven a 2 líneas en esta columna
- * angosta — con align-items:baseline en fila, el sufijo "/ mes" quedaba
- * anclado a la primera línea y se traslapaba con la segunda. Apilados,
- * no hay forma de que se encimen sin importar qué tan largo sea el precio. */
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { flex-direction: column; align-items: flex-start; width: auto; gap: 2px; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { font-size: 16px; line-height: 1.3; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { font-size: 11px; line-height: 1.2; font-weight: 400; color: #777; }
+/* Precio y "/ mes" en flujo normal (display:block + inline), no flex: con
+ * la card ahora a todo el ancho (imagen arriba) el precio rara vez necesita
+ * 2 líneas, y en flujo normal el sufijo nunca puede encimarse con una
+ * segunda línea del precio aunque la hubiera — simplemente envuelve como
+ * texto normal, a diferencia del viejo layout en columna/fila con flex. */
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { display: block; width: auto; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { display: inline; font-size: 19px; line-height: 1.3; font-weight: 700; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { display: inline; font-size: 12px; line-height: 1.2; font-weight: 400; color: #777; margin-left: 4px; }
 /* El título (nombre-propiedad) queda oculto, igual que en la card real
  * de Listado — la dirección ya narra la propiedad y no sobra espacio. */
 .lcbm-map-mode .lcbm-list .nombre-propiedad { display: none; }
@@ -268,7 +268,7 @@ body.lcbm-map-mode .footer { display: none; }
   font-size: 12.5px; line-height: 1.35; color: #444;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; row-gap: 3px; column-gap: 5px; margin-top: 1px; }
+.lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; row-gap: 3px; column-gap: 5px; margin-top: 0; }
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 12px; font-weight: 400; color: rgba(0,0,0,.75); white-space: nowrap; }
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 14px; font-weight: 700; color: var(--lcbm-orange); }
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small.bold { font-weight: 700; }
