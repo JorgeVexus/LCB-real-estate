@@ -290,17 +290,24 @@ body.lcbm-map-mode .footer { display: none; }
 }
 /* Chevron ">" junto al precio — inyectado por JS, indica que toda la card
  * es clicable (el link invisible .card-link-hidden ya cubre toda la card;
- * por eso el botón "Ver detalles" se oculta, sobraba). */
+ * por eso el botón "Ver detalles" se oculta, sobraba). Como el resto de los
+ * iconos de la card, es un span con background-image (SVG en data URI), NO
+ * un <svg> real — ver la nota en enhanceCard() del JS sobre por qué. */
 .lcbm-map-mode .lcbm-list .lcbm-chevron {
-  position: absolute; top: 1px; right: 0; color: #bbb;
+  position: absolute; top: 2px; right: 0;
+  width: 16px; height: 16px;
+  background-repeat: no-repeat; background-position: center; background-size: contain;
 }
 .lcbm-map-mode .lcbm-list .grid-btn.propiedades .btn.white { display: none; }
 /* Pin antes de la ubicación, iconos antes de cada característica —
  * inyectados por JS (enhanceCard). */
 .lcbm-map-mode .lcbm-list .lcbm-pin,
 .lcbm-map-mode .lcbm-list .lcbm-spec-icon {
-  display: inline-flex; vertical-align: -2px; color: #999; margin-right: 3px;
+  display: inline-block; vertical-align: -2px; margin-right: 3px;
+  background-repeat: no-repeat; background-position: center; background-size: contain;
 }
+.lcbm-map-mode .lcbm-list .lcbm-pin { width: 13px; height: 13px; }
+.lcbm-map-mode .lcbm-list .lcbm-spec-icon { width: 12px; height: 12px; }
 /* Precio y "/ mes" en flujo normal (display:block + inline), no flex: si el
  * precio llega a envolver a 2-3 líneas (precios largos de terreno en un
  * panel angosto), el sufijo nunca puede encimarse con la siguiente línea —
@@ -331,6 +338,10 @@ body.lcbm-map-mode .footer { display: none; }
 .lcbm-map-mode .lcbm-list .grid-btn.propiedades {
   display: flex; justify-content: flex-end;
   padding: 0; margin-top: 2px;
+}
+.lcbm-map-mode .lcbm-list .lcbm-wa-icon {
+  width: 17px; height: 17px;
+  background-repeat: no-repeat; background-position: center; background-size: contain;
 }
 .lcbm-map-mode .lcbm-list .grid-btn .btn.verde {
   width: 36px; height: 36px; padding: 0; min-height: 0;
