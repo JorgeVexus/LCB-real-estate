@@ -529,6 +529,66 @@
     return a ? (a.getAttribute('href').split('/propiedades/')[1] || '').replace(/\/$/, '') : null;
   }
 
+  // ---------- cards: insignia, chevron, iconos, whatsapp redondo ----------
+  // La card real de Webflow no trae estos elementos (insignia Renta/Venta,
+  // chevron, iconos de pin/m²/tipo/andenes) — se inyectan por JS sobre el
+  // markup existente para igualar la referencia visual del cliente (22 oct),
+  // sin tocar el CMS ni duplicar la lista. Idempotente por nodo
+  // (__lcbmEnhanced): Webflow reconstruye los .w-dyn-item en cada query, así
+  // que cada tarjeta nueva se vuelve a mejorar sola.
+  var ICON_CHEVRON = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="m9 6 6 6-6 6"/></svg>';
+  var ICON_PIN = '<svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M12 2C7.58 2 4 5.58 4 10c0 5.25 7 11.5 7.3 11.76a1 1 0 0 0 1.4 0C13 21.5 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 10.5A2.5 2.5 0 1 1 12 7.5a2.5 2.5 0 0 1 0 5z"/></svg>';
+  var ICON_RULER = '<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8V3h5M16 3h5v5M21 16v5h-5M8 21H3v-5"/></svg>';
+  var ICON_BUILDING = '<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 21V5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v16M4 21h16M12 21v-5h4v5M9 7h.01M9 11h.01M9 15h.01"/></svg>';
+  var ICON_TRUCK = '<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 7h11v9H3zM14 11h4l3 3v2h-7zM6.5 19.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM17.5 19.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>';
+  var ICON_WHATSAPP = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="#fff" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.36A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.07-1.11l-.29-.17-3 .8.8-2.92-.19-.3A8 8 0 1 1 12 20zm4.4-5.6c-.24-.12-1.43-.7-1.65-.78s-.38-.12-.54.12-.62.78-.76.94-.28.18-.52.06a6.6 6.6 0 0 1-1.94-1.2 7.3 7.3 0 0 1-1.34-1.67c-.14-.24 0-.37.1-.49s.24-.28.36-.42a1.6 1.6 0 0 0 .24-.4.44.44 0 0 0 0-.42c-.06-.12-.54-1.3-.74-1.78s-.4-.4-.54-.4h-.46a.9.9 0 0 0-.65.3 2.7 2.7 0 0 0-.85 2 4.7 4.7 0 0 0 1 2.5 10.8 10.8 0 0 0 4.1 3.63c.57.25 1.02.4 1.37.5a3.3 3.3 0 0 0 1.5.1 2.5 2.5 0 0 0 1.63-1.15 2 2 0 0 0 .14-1.15c-.06-.1-.22-.16-.46-.28z"/></svg>';
+
+  function spanWith(cls, html) {
+    var s = document.createElement('span');
+    s.className = cls;
+    s.innerHTML = html;
+    return s;
+  }
+
+  function enhanceCard(item) {
+    if (item.__lcbmEnhanced) return;
+    item.__lcbmEnhanced = true;
+    var img = item.querySelector('.div-img-propiedades');
+    var nombre = item.querySelector('.nombre-propiedad');
+    var price = item.querySelector('.div-price');
+    var loc = item.querySelector('.text-medium.prorpiedades');
+    var specGroups = item.querySelectorAll('.div-block-26 .div-block-36');
+    var whatsapp = item.querySelector('.grid-btn .btn.verde');
+
+    if (img && nombre) {
+      var t = nombre.textContent || '';
+      var op = /venta/i.test(t) ? 'Venta' : (/renta/i.test(t) ? 'Renta' : null);
+      if (op) img.insertBefore(spanWith('lcbm-badge', op), img.firstChild);
+    }
+    if (price) price.appendChild(spanWith('lcbm-chevron', ICON_CHEVRON));
+    if (loc) loc.insertBefore(spanWith('lcbm-pin', ICON_PIN), loc.firstChild);
+    var specIcons = [ICON_RULER, ICON_BUILDING, ICON_TRUCK];
+    specGroups.forEach(function (g, i) {
+      if (specIcons[i]) g.insertBefore(spanWith('lcbm-spec-icon', specIcons[i]), g.firstChild);
+    });
+    if (whatsapp) whatsapp.insertBefore(spanWith('lcbm-wa-icon', ICON_WHATSAPP), whatsapp.firstChild);
+  }
+
+  function enhanceAllCards() {
+    document.querySelectorAll('.lcbm-list .w-dyn-item').forEach(enhanceCard);
+  }
+
+  function watchCards() {
+    var list = document.querySelector('.lcbm-list');
+    if (!list) return;
+    enhanceAllCards();
+    var t;
+    new MutationObserver(function () {
+      clearTimeout(t);
+      t = setTimeout(enhanceAllCards, 30);
+    }).observe(list, { childList: true, subtree: true });
+  }
+
   // ---------- vista ----------
   function setView(view) {
     // Listado↔Mapa reacomoda bastante DOM de golpe (grid, buscador, header,
@@ -872,6 +932,7 @@
 
     window.addEventListener('resize', measureTop);
     initAutocomplete();
+    watchCards();
     setView(state.view);
   }
 

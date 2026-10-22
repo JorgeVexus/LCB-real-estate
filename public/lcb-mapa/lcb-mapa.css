@@ -123,10 +123,15 @@
 }
 /* Anchos mínimos ajustados para que quepan en una sola fila desde laptops
  * de ~1280px (el cliente pidió explícitamente una sola fila horizontal en
- * desktop: buscador + filtros + Limpiar + selector Listado|Mapa). */
-.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow { width: auto; flex: 1 1 112px; min-width: 0; }
+ * desktop: buscador + filtros + Limpiar + selector Listado|Mapa). flex-grow
+ * en 0 a propósito (antes 1): con grow los filtros se estiraban a ocupar
+ * todo el ancho sobrante, pegando el selector Listado|Mapa justo después de
+ * Limpiar filtros — el cliente pidió que los filtros se queden en su ancho
+ * natural y el espacio libre quede como separación real antes del selector
+ * (que ya tiene margin-left:auto más abajo). */
+.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow { width: auto; flex: 0 1 112px; min-width: 0; }
 .lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow.search {
-  flex: 1.2 1 155px; height: auto; min-height: 43px;
+  flex: 0 1 190px; height: auto; min-height: 43px;
   box-shadow: none; border-color: var(--lcbm-line); border-radius: 8px; background: #fff;
 }
 .lcbm-map-mode .filtro-horizontal-fix .text-field.propiedades { background: transparent; }
@@ -238,7 +243,7 @@ body.lcbm-map-mode .footer { display: none; }
  * 1024px (panel más ancho en %, hasta 38%) se mantiene el horizontal
  * compacto ya afinado. */
 .lcbm-map-mode .collection-list-propiedades {
-  display: flex !important; flex-direction: column; gap: 12px;
+  display: flex !important; flex-direction: column; gap: 8px;
   column-count: auto;
 }
 .lcbm-map-mode .lcbm-list .card-propiedades {
@@ -256,8 +261,19 @@ body.lcbm-map-mode .footer { display: none; }
 }
 .lcbm-map-mode .lcbm-list .div-img-propiedades {
   grid-column: 1; grid-row: 1;
-  width: 100%;
+  width: 100%; position: relative;
   border-radius: 8px; overflow: hidden;
+}
+/* Insignia Renta/Venta — inyectada por JS (enhanceCard) sobre la imagen,
+ * leyendo "Renta"/"Venta" del título de la propiedad (no hay un campo
+ * CMS aparte para operación en la card, pero el título siempre lo trae:
+ * "Bodega en Renta Cuautitlán…"). */
+.lcbm-map-mode .lcbm-list .lcbm-badge {
+  position: absolute; top: 8px; left: 8px; z-index: 1;
+  padding: 3px 10px; border-radius: 999px;
+  background: #fff; color: var(--lcbm-ink);
+  font: 600 11px/1.4 "Work Sans", sans-serif;
+  box-shadow: 0 2px 6px #00000026;
 }
 .lcbm-map-mode .lcbm-list .property-image-wrapper,
 .lcbm-map-mode .lcbm-list .property-slider,
@@ -269,8 +285,21 @@ body.lcbm-map-mode .footer { display: none; }
 .lcbm-map-mode .lcbm-list .swiper-button-prev,
 .lcbm-map-mode .lcbm-list .swiper-pagination { display: none; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades {
-  min-width: 0; width: auto; height: auto; margin: 0;
+  min-width: 0; width: auto; height: auto; margin: 0; position: relative;
   display: flex; flex-direction: column; justify-content: flex-start; gap: 3px;
+}
+/* Chevron ">" junto al precio — inyectado por JS, indica que toda la card
+ * es clicable (el link invisible .card-link-hidden ya cubre toda la card;
+ * por eso el botón "Ver detalles" se oculta, sobraba). */
+.lcbm-map-mode .lcbm-list .lcbm-chevron {
+  position: absolute; top: 1px; right: 0; color: #bbb;
+}
+.lcbm-map-mode .lcbm-list .grid-btn.propiedades .btn.white { display: none; }
+/* Pin antes de la ubicación, iconos antes de cada característica —
+ * inyectados por JS (enhanceCard). */
+.lcbm-map-mode .lcbm-list .lcbm-pin,
+.lcbm-map-mode .lcbm-list .lcbm-spec-icon {
+  display: inline-flex; vertical-align: -2px; color: #999; margin-right: 3px;
 }
 /* Precio y "/ mes" en flujo normal (display:block + inline), no flex: si el
  * precio llega a envolver a 2-3 líneas (precios largos de terreno en un
@@ -289,19 +318,28 @@ body.lcbm-map-mode .footer { display: none; }
   font-size: 12.5px; line-height: 1.35; color: #444;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; row-gap: 3px; column-gap: 5px; margin-top: 0; }
+.lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; align-items: center; row-gap: 3px; column-gap: 0; margin-top: 0; }
+.lcbm-map-mode .lcbm-list .div-block-36 { display: inline-flex; align-items: center; margin-right: 10px; }
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 12px; font-weight: 400; color: rgba(0,0,0,.75); white-space: nowrap; }
-.lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 14px; font-weight: 700; color: var(--lcbm-orange); }
-.lcbm-map-mode .lcbm-list .div-block-26 .text-small.bold { font-weight: 700; }
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 13px; font-weight: 700; color: var(--lcbm-ink); }
+/* El separador "|" de texto ya no hace falta — el icono + el margen entre
+ * grupos (.div-block-36) cumplen esa función visualmente. */
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small.bold { display: none; }
+/* Solo queda el botón de WhatsApp (ver detalles se oculta arriba: toda la
+ * card ya es un link) — redondo, solo ícono, pegado a la derecha, como en
+ * la referencia. */
 .lcbm-map-mode .lcbm-list .grid-btn.propiedades {
-  padding: 0; margin-top: 0;
-  grid-template-columns: 1fr 1fr; column-gap: 8px;
+  display: flex; justify-content: flex-end;
+  padding: 0; margin-top: 2px;
 }
-.lcbm-map-mode .lcbm-list .grid-btn .btn {
-  padding: 8px 6px; font-size: 13px; font-weight: 500; min-height: 0;
+.lcbm-map-mode .lcbm-list .grid-btn .btn.verde {
+  width: 36px; height: 36px; padding: 0; min-height: 0;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
   transition: transform 120ms ease, opacity 120ms ease;
 }
-.lcbm-map-mode .lcbm-list .grid-btn .btn:active { transform: scale(0.97); opacity: .9; }
+.lcbm-map-mode .lcbm-list .grid-btn .btn.verde .text-block-5 { display: none; }
+.lcbm-map-mode .lcbm-list .grid-btn .btn:active { transform: scale(0.94); opacity: .9; }
 .lcbm-map-mode .lcbm-list .rich-text-block-2 { display: none; }
 .lcbm-map-mode .pagination-property { margin-top: 12px; }
 
@@ -315,8 +353,11 @@ body.lcbm-map-mode .footer { display: none; }
 
 /* Vertical, imagen arriba a todo el ancho: ≥1024px (panel angosto, 18%) */
 @media (min-width: 1024px) {
-  .lcbm-map-mode .lcbm-list .card-propiedades { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; }
-  .lcbm-map-mode .lcbm-list .div-img-propiedades { height: 120px; }
+  .lcbm-map-mode .lcbm-list .card-propiedades { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; row-gap: 5px; padding: 8px; }
+  /* 100px (antes 120px) + paddings/gaps recortados a propósito: el cliente
+   * pidió que se alcancen a ver 3 cards completas en el panel sin tener
+   * que hacer scroll (antes solo entraban 2). */
+  .lcbm-map-mode .lcbm-list .div-img-propiedades { height: 100px; }
   .lcbm-map-mode .lcbm-list .info-card-propiedades { grid-column: 1; grid-row: 2; }
   .lcbm-map-mode .lcbm-list .grid-btn.propiedades { grid-column: 1; grid-row: 3; }
 }
