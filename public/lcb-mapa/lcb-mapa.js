@@ -47,6 +47,7 @@
   var skipNextFit = false;
   var searchHome = null; // { parent, next } — posición original del buscador, fuera del modo Mapa
   var toggleHome = null; // { parent, next } — posición original del toggle Listado|Mapa, fuera del modo Mapa
+  var counterHome = null; // { parent, next } — posición original del contador "Mostrando X propiedades"
 
   // ---------- estado en URL ----------
   // El motor escribe ?operacion= pero no lo lee al cargar; se restaura aquí
@@ -283,13 +284,13 @@
         container: els.map,
         style: MAP_STYLE,
         bounds: state.viewport ? [[state.viewport[0], state.viewport[1]], [state.viewport[2], state.viewport[3]]] : MX_BOUNDS,
-        attributionControl: { compact: true },
-        // En desktop, un scroll normal sobre el mapa hacía zoom y se comía el
-        // scroll de la página entera (solo se podía bajar con el cursor fuera
-        // del mapa). Con gestos cooperativos, un scroll simple sigue bajando
-        // la página; hace falta Ctrl/Cmd + scroll (o un dedo en touch) para
-        // hacer zoom — el mapa muestra un aviso breve si se intenta sin eso.
-        cooperativeGestures: true
+        attributionControl: { compact: true }
+        // Gestos cooperativos (Ctrl+scroll para zoom) se probaron antes para
+        // no comerse el scroll de la página con un scroll normal — pero la
+        // vista Mapa ya no tiene scroll de página (Fase 1, overflow:hidden),
+        // así que esa protección ya no hace falta y solo estorbaba (pedido
+        // del cliente, 22 oct: el mapa debe moverse/zoomearse con un scroll
+        // normal, sin Ctrl, igual que la referencia de Lovable).
       });
       map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.addControl(new maplibregl.GeolocateControl({ fitBoundsOptions: { maxZoom: 11 } }), 'top-right');
@@ -551,6 +552,7 @@
     // excepción que corta el resto de setView() a la mitad.
     placeToggle(view);
     placeSearch(view);
+    placeCounter(view);
     if (view === 'map') {
       // Si se restauró una posición de mapa desde la URL (p. ej. al volver
       // de una ficha), no la pise un fit automático en la primera query.
@@ -598,6 +600,21 @@
     }
   }
 
+  // El contador "Mostrando X propiedades" vive oculto en Listado (a pedido
+  // del cliente, ya está implícito en los resultados) pero el cliente SÍ lo
+  // quiere visible arriba de la lista en modo Mapa (22 oct) — se muda ahí
+  // (fijo arriba de la lista scrolleable, position:sticky por CSS) y vuelve
+  // a su lugar original al salir de Mapa, igual que buscador/toggle.
+  function placeCounter(view) {
+    if (!els.counter) return;
+    if (view === 'map') {
+      var list = document.querySelector('.lcbm-list');
+      if (list && list.firstChild !== els.counter) list.insertBefore(els.counter, list.firstChild);
+    } else if (counterHome && !counterHome.parent.contains(els.counter)) {
+      counterHome.parent.insertBefore(els.counter, counterHome.next);
+    }
+  }
+
   // ---------- autocompletado de ubicación en el buscador ----------
   // El buscador ya hace full-text contra Algolia (incluye locationFull), así
   // que escribir "Cuautitlán" a mano ya funcionaba — esto solo agrega
@@ -614,11 +631,21 @@
       .normalize('NFD').replace(/[̀-ͯ]/g, ''); // quita acentos
   }
 
+  // Solo se arman sugerencias de zonas REALES delimitables: municipio y
+  // estado (siempre existen como división administrativa real) y, de la
+  // parte más específica de locationFull, solo si es un parque industrial
+  // con nombre propio (un clúster real de naves/bodegas). El resto de esa
+  // parte específica (colonias, fraccionamientos, nombres de plaza/local)
+  // se descarta a propósito — no hay polígono que dibujar para eso y antes
+  // salía mezclado con los resultados reales, confundiendo más que ayudando
+  // (pedido del cliente, 22 oct).
+  var PARQUE_RE = /parque industrial|parque ind\.?|industrial park|parque log[íi]stico/i;
+
   function loadPlacesCorpus() {
     if (placesCorpusPromise) return placesCorpusPromise;
     placesCorpusPromise = (function () {
       try {
-        var cached = sessionStorage.getItem('lcbm-places-corpus');
+        var cached = sessionStorage.getItem('lcbm-places-corpus-v2');
         if (cached) return Promise.resolve(JSON.parse(cached));
       } catch (e) {}
       return origFetch('https://' + APP_ID + '-dsn.algolia.net/1/indexes/' + INDEX + '/query', {
@@ -628,18 +655,26 @@
       }).then(function (r) { return r.json(); }).then(function (d) {
         var seen = {};
         var list = [];
+        function add(label, type, parent) {
+          label = (label || '').trim();
+          if (label.length < 3) return;
+          var key = normalizePlace(label) + '|' + type;
+          if (seen[key]) return;
+          seen[key] = true;
+          list.push({ label: label, type: type, parent: parent || '', norm: normalizePlace(label) });
+        }
         (d.hits || []).forEach(function (h) {
           if (!h.locationFull) return;
-          h.locationFull.split(',').forEach(function (part) {
-            var label = part.trim();
-            if (label.length < 3) return;
-            var key = normalizePlace(label);
-            if (seen[key]) return;
-            seen[key] = true;
-            list.push({ label: label, norm: key });
-          });
+          var parts = h.locationFull.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+          if (!parts.length) return;
+          var estado = parts[parts.length - 1];
+          var municipio = parts.length > 1 ? parts[parts.length - 2] : null;
+          var zona = parts.length > 2 ? parts[0] : null;
+          add(estado, 'Estado');
+          if (municipio) add(municipio, 'Municipio', estado);
+          if (zona && PARQUE_RE.test(zona)) add(zona, 'Parque industrial', municipio || estado);
         });
-        try { sessionStorage.setItem('lcbm-places-corpus', JSON.stringify(list)); } catch (e) {}
+        try { sessionStorage.setItem('lcbm-places-corpus-v2', JSON.stringify(list)); } catch (e) {}
         return list;
       }).catch(function () { return []; });
     })();
@@ -675,12 +710,20 @@
     var activeIndex = -1;
     var items = [];
 
+    var PIN_SVG = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2C7.58 2 4 5.58 4 10c0 5.25 7 11.5 7.3 11.76a1 1 0 0 0 1.4 0C13 21.5 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 10.5A2.5 2.5 0 1 1 12 7.5a2.5 2.5 0 0 1 0 5z"/></svg>';
+
     function render(matches) {
       items = matches;
       activeIndex = -1;
       if (!matches.length) { box.classList.remove('is-open'); box.innerHTML = ''; return; }
       box.innerHTML = matches.map(function (m, i) {
-        return '<div class="lcbm-autocomplete-item" role="option" data-i="' + i + '">' + esc(m.label) + '</div>';
+        var sub = m.parent ? m.type + ' · ' + esc(m.parent) : m.type;
+        return '<div class="lcbm-autocomplete-item" role="option" data-i="' + i + '">' +
+          '<span class="lcbm-autocomplete-pin">' + PIN_SVG + '</span>' +
+          '<span class="lcbm-autocomplete-text">' +
+            '<span class="lcbm-autocomplete-label">' + esc(m.label) + '</span>' +
+            '<span class="lcbm-autocomplete-sub">' + sub + '</span>' +
+          '</span></div>';
       }).join('');
       box.classList.add('is-open');
     }
@@ -783,6 +826,9 @@
     // (dentro del header) para devolverlo ahí al salir del modo Mapa.
     toggleHome = { parent: els.toggle.parentNode, next: els.toggle.nextSibling };
 
+    els.counter = document.getElementById('mostra-propiedades');
+    if (els.counter) counterHome = { parent: els.counter.parentNode, next: els.counter.nextSibling };
+
     var grid = document.querySelector('.grid-propiedades');
     var list = grid && grid.querySelector('[fs-cmsfilter-element="list"]');
     els.panel = document.getElementById('lcbm-map-panel');
@@ -800,7 +846,17 @@
     els.updating = els.panel.querySelector('.lcbm-updating');
 
     var clear = document.querySelector('[fs-cmsfilter-element="clear"]');
-    if (clear) clear.addEventListener('click', function () { state.viewport = null; }, true);
+    if (clear) clear.addEventListener('click', function () {
+      state.viewport = null;
+      // Bug real: limpiar filtros sí vaciaba el listado y la query del mapa,
+      // pero si el usuario había movido el mapa a mano (sin pasar por un
+      // filtro, p. ej. arrastrándolo), nada disparaba un fitBounds — el mapa
+      // se quedaba exactamente donde lo habían dejado. fitToData() solo
+      // recentra cuando detecta un cambio real de filtros/búsqueda; aquí se
+      // fuerza explícitamente de vuelta a México completo, que es lo que
+      // "limpiar" significa para el mapa.
+      if (map) map.fitBounds(MX_BOUNDS, { padding: 24, duration: 500 });
+    }, true);
 
     // Card ↔ marker.
     document.addEventListener('mouseover', function (e) {

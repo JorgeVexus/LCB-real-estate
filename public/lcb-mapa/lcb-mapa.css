@@ -60,10 +60,17 @@
   flex-basis: 100%;
   width: 100%;
 }
-/* Contador "Mostrando X propiedades" — oculto a pedido del cliente (ambas
- * vistas); el motor del sitio lo sigue actualizando por dentro, solo no se
- * muestra. */
+/* Contador "Mostrando X propiedades" — oculto en Listado a pedido del
+ * cliente (el motor del sitio lo sigue actualizando por dentro, solo no se
+ * muestra ahí); en modo Mapa SÍ se muestra, fijo arriba de la lista
+ * scrolleable (placeCounter() en el JS lo muda ahí). */
 .lcbm-page #mostra-propiedades { display: none; }
+.lcbm-map-mode #mostra-propiedades {
+  display: block;
+  position: sticky; top: 0; z-index: 2;
+  background: #fff; padding: 2px 0 10px;
+  font: 600 14px/1.3 "Work Sans", sans-serif; color: var(--lcbm-ink);
+}
 
 .lcbm-toggle { display: inline-flex; gap: 8px; flex: none; }
 .lcbm-toggle-btn {
@@ -157,7 +164,7 @@
  * fila horizontal con buscador + filtros + selector, sin encabezado
  * aparte arriba. Más compacto que en Listado para que quepa junto al
  * resto de los controles. */
-.lcbm-map-mode .filtro-horizontal-fix .lcbm-toggle { flex: 0 0 auto; align-self: center; gap: 4px; }
+.lcbm-map-mode .filtro-horizontal-fix .lcbm-toggle { flex: 0 0 auto; align-self: center; gap: 4px; margin-left: auto; }
 .lcbm-map-mode .filtro-horizontal-fix .lcbm-toggle-btn { height: 36px; padding: 0 9px; font-size: 12.5px; gap: 5px; }
 /* En modo Mapa el header original queda vacío (el buscador y el toggle ya
  * se movieron a la barra) — se oculta en vez de dejar una franja vacía. */
@@ -170,13 +177,28 @@ body.lcbm-map-mode .section-faq,
 body.lcbm-map-mode .section-cta.propiedades,
 body.lcbm-map-mode .footer { display: none; }
 
-/* ---------- Modo mapa: 25% resultados · 75% mapa, altura fija al
- * viewport (desktop/tablet) ---------- */
+/* ---------- Full-bleed en modo Mapa (pedido del cliente, 22 oct, viendo la
+ * referencia de Lovable): el contenedor de Webflow (.container.xl-copy)
+ * trae max-width:95% + 40px de padding a cada lado — pensado para una
+ * página de contenido normal, pero en la vista Mapa dejaba franjas de
+ * espacio en blanco a los lados en vez de que el mapa aprovechara el
+ * ancho real del viewport. Se neutraliza solo en modo Mapa; Listado
+ * conserva el contenedor original del sitio sin tocar. ---------- */
+.lcbm-map-mode .container.xl-copy.propiedades {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* ---------- Modo mapa: panel de resultados angosto · el mapa se lleva el
+ * resto, altura fija al viewport (desktop/tablet). Proporción exacta de la
+ * referencia: 18%/82% en desktop (≥1024px), 38%/62% en tablet. ---------- */
 .lcbm-map-panel { display: none; position: relative; }
 .lcbm-map-mode .grid-propiedades {
-  grid-template-columns: minmax(300px, 25%) minmax(0, 1fr) !important;
+  grid-template-columns: minmax(240px, 38%) minmax(0, 1fr) !important;
   grid-template-rows: auto 1fr !important;
-  column-gap: 16px !important;
+  column-gap: 0 !important;
   align-items: start;
 }
 @media (min-width: 768px) {
@@ -188,45 +210,39 @@ body.lcbm-map-mode .footer { display: none; }
     overflow: hidden;
   }
 }
+@media (min-width: 1024px) {
+  .lcbm-map-mode .grid-propiedades { grid-template-columns: 18% minmax(0, 1fr) !important; }
+}
 .lcbm-map-mode .grid-propiedades > .lcbm-list {
   grid-column: 1; grid-row: 2;
   height: 100%;
   overflow-y: auto; overscroll-behavior: contain;
-  padding-right: 6px;
+  padding: 0 12px;
+  border-right: 1px solid var(--lcbm-line);
 }
 .lcbm-map-mode .lcbm-map-panel {
   display: block;
   grid-column: 2; grid-row: 2;
   height: 100%;
-  border-radius: 12px; overflow: hidden;
-  border: 1px solid var(--lcbm-line);
 }
 /* maplibre-gl.css pone .maplibregl-map { position: relative }. */
 .lcbm-map-panel .lcbm-map { position: absolute; inset: 0; width: 100%; height: 100%; }
 .lcbm-map-error { padding: 24px; font: 14px "Work Sans", sans-serif; }
 
-/* Fase 3 (feedback cliente, 19-20 oct): cards HORIZONTALES compactas —
- * foto a la izquierda, precio/ubicación/características a la derecha,
- * botones abajo a todo el ancho. El ancho de la imagen es FLUIDO (% de la
- * card, con un mínimo), no un px fijo: con un ancho fijo (128px) el texto
- * se quedaba sin espacio y se traslapaba en tablet (~260-290px de
- * columna) — ya lo habíamos visto romperse así una vez. Con % + mínimo,
- * el texto siempre conserva la misma proporción del ancho disponible sin
- * importar el breakpoint. Imagen más alta (130px, antes 100px) y gaps más
- * chicos a pedido del cliente (21 oct) — se probó primero poner la imagen
- * arriba a todo el ancho, pero el cliente pidió mantener este layout
- * horizontal y solo agrandar la imagen / reducir el espaciado. Tamaños de
- * texto más chicos que en Listado a propósito (una columna angosta junto
- * al mapa no tiene el mismo espacio que una card a todo lo ancho) pero
- * legibles — se probaron en vivo sin desbordamientos. */
+/* Fase 3 (19-20 oct) + rediseño 22 oct (referencia Lovable del cliente):
+ * reglas compartidas de la card en ambos layouts. La dirección (imagen
+ * arriba a todo el ancho vs. imagen a la izquierda) cambia por breakpoint
+ * más abajo — mismo corte (1024px) que usa el propio sitio de referencia:
+ * el panel es angosto en % desde ahí (18%), así que una imagen horizontal
+ * angosta se veía chica; a todo el ancho se lee mucho mejor. Por debajo de
+ * 1024px (panel más ancho en %, hasta 38%) se mantiene el horizontal
+ * compacto ya afinado. */
 .lcbm-map-mode .collection-list-propiedades {
   display: flex !important; flex-direction: column; gap: 12px;
   column-count: auto;
 }
 .lcbm-map-mode .lcbm-list .card-propiedades {
   display: grid;
-  grid-template-columns: minmax(84px, 38%) minmax(0, 1fr);
-  grid-template-rows: auto auto;
   column-gap: 12px; row-gap: 6px;
   height: auto; padding: 10px;
   border: 1px solid var(--lcbm-line); border-radius: 10px;
@@ -240,7 +256,7 @@ body.lcbm-map-mode .footer { display: none; }
 }
 .lcbm-map-mode .lcbm-list .div-img-propiedades {
   grid-column: 1; grid-row: 1;
-  width: 100%; height: 130px;
+  width: 100%;
   border-radius: 8px; overflow: hidden;
 }
 .lcbm-map-mode .lcbm-list .property-image-wrapper,
@@ -253,20 +269,18 @@ body.lcbm-map-mode .footer { display: none; }
 .lcbm-map-mode .lcbm-list .swiper-button-prev,
 .lcbm-map-mode .lcbm-list .swiper-pagination { display: none; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades {
-  grid-column: 2; grid-row: 1; min-width: 0; width: auto; height: auto; margin: 0;
+  min-width: 0; width: auto; height: auto; margin: 0;
   display: flex; flex-direction: column; justify-content: flex-start; gap: 3px;
 }
-/* Precio y "/ mes" en flujo normal (display:block + inline), no flex: en
- * flujo normal, si el precio llega a envolver a 2-3 líneas (precios largos
- * de terreno en la columna angosta de tablet), el sufijo nunca puede
- * encimarse con la siguiente línea — simplemente envuelve como texto
- * normal y sigue después, a diferencia del viejo layout en fila con
- * flex+baseline donde sí se traslapaban. height:auto explícito porque
- * Webflow trae .div-price fijo a 30px (pensado para precio en 1 línea) —
- * sin esto, con 3 líneas el contenido se desborda y se encima con la
- * ubicación de abajo en vez de empujarla. */
+/* Precio y "/ mes" en flujo normal (display:block + inline), no flex: si el
+ * precio llega a envolver a 2-3 líneas (precios largos de terreno en un
+ * panel angosto), el sufijo nunca puede encimarse con la siguiente línea —
+ * simplemente envuelve como texto normal y sigue después. height:auto
+ * explícito porque Webflow trae .div-price fijo a 30px (pensado para
+ * precio en 1 línea) — sin esto, con varias líneas el contenido se
+ * desborda y se encima con la ubicación de abajo en vez de empujarla. */
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { display: block; width: auto; height: auto; min-height: 0; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { display: inline; font-size: 19px; line-height: 1.3; font-weight: 700; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { display: inline; font-size: 17px; line-height: 1.3; font-weight: 700; }
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { display: inline; font-size: 12px; line-height: 1.2; font-weight: 400; color: #777; margin-left: 4px; }
 /* El título (nombre-propiedad) queda oculto, igual que en la card real
  * de Listado — la dirección ya narra la propiedad y no sobra espacio. */
@@ -280,7 +294,7 @@ body.lcbm-map-mode .footer { display: none; }
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 14px; font-weight: 700; color: var(--lcbm-orange); }
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small.bold { font-weight: 700; }
 .lcbm-map-mode .lcbm-list .grid-btn.propiedades {
-  grid-column: 1 / -1; grid-row: 2; padding: 0; margin-top: 0;
+  padding: 0; margin-top: 0;
   grid-template-columns: 1fr 1fr; column-gap: 8px;
 }
 .lcbm-map-mode .lcbm-list .grid-btn .btn {
@@ -290,6 +304,22 @@ body.lcbm-map-mode .footer { display: none; }
 .lcbm-map-mode .lcbm-list .grid-btn .btn:active { transform: scale(0.97); opacity: .9; }
 .lcbm-map-mode .lcbm-list .rich-text-block-2 { display: none; }
 .lcbm-map-mode .pagination-property { margin-top: 12px; }
+
+/* Horizontal compacto: <1024px (panel más ancho en %, hasta 38%) */
+@media (max-width: 1023px) {
+  .lcbm-map-mode .lcbm-list .card-propiedades { grid-template-columns: minmax(84px, 38%) minmax(0, 1fr); grid-template-rows: auto auto; }
+  .lcbm-map-mode .lcbm-list .div-img-propiedades { height: 130px; }
+  .lcbm-map-mode .lcbm-list .info-card-propiedades { grid-column: 2; grid-row: 1; }
+  .lcbm-map-mode .lcbm-list .grid-btn.propiedades { grid-column: 1 / -1; grid-row: 2; }
+}
+
+/* Vertical, imagen arriba a todo el ancho: ≥1024px (panel angosto, 18%) */
+@media (min-width: 1024px) {
+  .lcbm-map-mode .lcbm-list .card-propiedades { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; }
+  .lcbm-map-mode .lcbm-list .div-img-propiedades { height: 120px; }
+  .lcbm-map-mode .lcbm-list .info-card-propiedades { grid-column: 1; grid-row: 2; }
+  .lcbm-map-mode .lcbm-list .grid-btn.propiedades { grid-column: 1; grid-row: 3; }
+}
 
 /* ---------- Autocompletado de ubicación en el buscador (ambas vistas) ---------- */
 .lcbm-autocomplete {
@@ -302,11 +332,20 @@ body.lcbm-map-mode .footer { display: none; }
 }
 .lcbm-autocomplete.is-open { display: block; }
 .lcbm-autocomplete-item {
-  padding: 10px 14px; font: 500 14px/1.3 "Work Sans", sans-serif; color: var(--lcbm-ink);
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 14px; font: 500 14px/1.3 "Work Sans", sans-serif; color: var(--lcbm-ink);
   cursor: pointer;
 }
+.lcbm-autocomplete-pin { flex: none; margin-top: 2px; color: #999; }
+.lcbm-autocomplete-text { display: flex; flex-direction: column; min-width: 0; }
+.lcbm-autocomplete-label { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lcbm-autocomplete-sub { font: 400 12px/1.3 "Work Sans", sans-serif; color: #888; }
 .lcbm-autocomplete-item.is-active,
-.lcbm-autocomplete-item:hover { background: var(--lcbm-orange-soft); color: var(--lcbm-orange); }
+.lcbm-autocomplete-item:hover { background: var(--lcbm-orange-soft); }
+.lcbm-autocomplete-item.is-active .lcbm-autocomplete-label,
+.lcbm-autocomplete-item:hover .lcbm-autocomplete-label { color: var(--lcbm-orange); }
+.lcbm-autocomplete-item.is-active .lcbm-autocomplete-pin,
+.lcbm-autocomplete-item:hover .lcbm-autocomplete-pin { color: var(--lcbm-orange); }
 
 /* ---------- Indicador de actualización automática (sin botón manual) ---------- */
 .lcbm-updating {
@@ -354,11 +393,6 @@ body.lcbm-map-mode .footer { display: none; }
 .lcbm-preview-meta { font-size: 12.5px; color: #444; font-weight: 500; }
 .lcbm-preview-loc { font-size: 12px; color: #777; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .lcbm-preview-cta { font-size: 13px; font-weight: 600; color: var(--lcbm-orange); margin-top: 3px; }
-
-/* ---------- Tablet (solo Mapa) ---------- */
-@media (max-width: 991px) {
-  .lcbm-map-mode .grid-propiedades { grid-template-columns: minmax(260px, 38%) minmax(0, 1fr) !important; }
-}
 
 /* ---------- Mobile (solo Mapa): filtros fijos arriba, mapa, lista debajo ---------- */
 @media (max-width: 767px) {
