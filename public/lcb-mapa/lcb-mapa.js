@@ -572,7 +572,9 @@
     var nombre = item.querySelector('.nombre-propiedad');
     var price = item.querySelector('.div-price');
     var loc = item.querySelector('.text-medium.prorpiedades');
+    var specs = item.querySelector('.div-block-26');
     var specGroups = item.querySelectorAll('.div-block-26 .div-block-36');
+    var btnWrap = item.querySelector('.grid-btn.propiedades');
     var whatsapp = item.querySelector('.grid-btn .btn.verde');
 
     if (img && nombre && img.parentElement && !img.parentElement.querySelector(':scope > .lcbm-badge')) {
@@ -595,6 +597,11 @@
       if (specIcons[i] && !g.querySelector(':scope > .lcbm-spec-icon')) g.insertBefore(iconSpan('lcbm-spec-icon', specIcons[i]), g.firstChild);
     });
     if (whatsapp && !whatsapp.querySelector(':scope > .lcbm-wa-icon')) whatsapp.insertBefore(iconSpan('lcbm-wa-icon', ICON_WHATSAPP), whatsapp.firstChild);
+    // El botón de WhatsApp se muda DENTRO de la fila de specs (m²/tipo/
+    // andenes) en vez de quedarse en su propia fila del grid — así fluye
+    // alineado con ese texto (margin-left:auto lo empuja al final de la
+    // fila) en vez de ocupar espacio vertical aparte o flotar encima.
+    if (specs && btnWrap && btnWrap.parentElement !== specs) specs.appendChild(btnWrap);
   }
 
   function enhanceAllCards() {

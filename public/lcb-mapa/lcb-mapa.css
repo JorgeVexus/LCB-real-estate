@@ -352,13 +352,14 @@ body.lcbm-map-mode .footer { display: none; }
  * grupos (.div-block-36) cumplen esa función visualmente. */
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small.bold { display: none; }
 /* Solo queda el botón de WhatsApp (ver detalles se oculta arriba: toda la
- * card ya es un link) — redondo, solo ícono. En vez de ocupar su propia
- * fila del grid (eso agrandaba la card de más: el renglón completo de
- * "andenes" quedaba vacío salvo por el botón), flota con position:absolute
- * alineado con el renglón de características, como en la referencia. */
-.lcbm-map-mode .lcbm-list .grid-btn.propiedades {
-  position: absolute; right: 0; bottom: 0;
-  display: block; padding: 0; margin: 0;
+ * card ya es un link) — redondo, solo ícono. Ni su propia fila del grid
+ * (agrandaba la card de más) ni position:absolute (se encimaba con el
+ * texto: la última línea de specs varía de posición según cuántas líneas
+ * ocupe arriba). enhanceCard() en el JS lo muda DENTRO de .div-block-26 (la
+ * fila de specs) — margin-left:auto lo empuja al final de esa fila, fluye
+ * con el texto en vez de flotar encima. */
+.lcbm-map-mode .lcbm-list .div-block-26 .grid-btn.propiedades {
+  margin-left: auto; padding: 0;
 }
 .lcbm-map-mode .lcbm-list .lcbm-wa-icon {
   width: 15px; height: 15px;
@@ -379,7 +380,7 @@ body.lcbm-map-mode .footer { display: none; }
 @media (max-width: 1023px) {
   .lcbm-map-mode .lcbm-list .card-propiedades { grid-template-columns: minmax(84px, 38%) minmax(0, 1fr); grid-template-rows: auto; }
   .lcbm-map-mode .lcbm-list .div-img-propiedades { height: 130px; }
-  .lcbm-map-mode .lcbm-list .info-card-propiedades { grid-column: 2; grid-row: 1; padding-right: 36px; }
+  .lcbm-map-mode .lcbm-list .info-card-propiedades { grid-column: 2; grid-row: 1; }
 }
 
 /* Vertical, imagen arriba a todo el ancho: ≥1024px (panel angosto, 18%) */
@@ -389,7 +390,7 @@ body.lcbm-map-mode .footer { display: none; }
    * pidió que se alcancen a ver 3 cards completas en el panel sin tener
    * que hacer scroll (antes solo entraban 2). */
   .lcbm-map-mode .lcbm-list .div-img-propiedades { height: 100px; }
-  .lcbm-map-mode .lcbm-list .info-card-propiedades { grid-column: 1; grid-row: 2; padding-right: 36px; }
+  .lcbm-map-mode .lcbm-list .info-card-propiedades { grid-column: 1; grid-row: 2; }
 }
 
 /* ---------- Autocompletado de ubicación en el buscador (ambas vistas) ---------- */
