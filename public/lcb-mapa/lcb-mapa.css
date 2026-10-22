@@ -135,7 +135,15 @@
   box-shadow: none; border-color: var(--lcbm-line); border-radius: 8px; background: #fff;
 }
 .lcbm-map-mode .filtro-horizontal-fix .text-field.propiedades { background: transparent; }
-.lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown { cursor: pointer; }
+.lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown { cursor: pointer; min-width: 0; }
+/* El label del dropdown ("Metros cuadrados", etc.) no se recortaba fuera de
+ * mobile — con flex-grow:0 los filtros ahora pueden quedar más angostos que
+ * su propio texto (a propósito, para dejar hueco real antes del selector
+ * Listado|Mapa), y sin esto el texto se salía de su caja por encima del
+ * siguiente filtro en vez de truncarse con "…". Bug real visto en vivo. */
+.lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown .h6 {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+}
 .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown-list {
   position: absolute !important;
   top: calc(100% + 6px); left: 0;
