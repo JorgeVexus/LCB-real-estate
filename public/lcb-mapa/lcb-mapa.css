@@ -359,7 +359,12 @@ body.lcbm-map-mode .footer { display: none; }
  * fila de specs) — margin-left:auto lo empuja al final de esa fila, fluye
  * con el texto en vez de flotar encima. */
 .lcbm-map-mode .lcbm-list .div-block-26 .grid-btn.propiedades {
-  margin-left: auto; padding: 0;
+  /* display:inline-flex (no grid, el default de Webflow) + width:auto a
+   * propósito: sin esto, el wrapper conservaba el ancho/grid de 2 columnas
+   * original (Ver detalles + Whatsapp) aunque el primer botón esté oculto,
+   * ocupando la fila entera y empujándose a su propia línea en vez de
+   * encogerse al tamaño real del botón redondo. */
+  display: inline-flex; width: auto; margin-left: auto; padding: 0;
 }
 .lcbm-map-mode .lcbm-list .lcbm-wa-icon {
   width: 15px; height: 15px;
