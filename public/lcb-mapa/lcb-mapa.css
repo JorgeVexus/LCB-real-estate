@@ -261,7 +261,7 @@ body.lcbm-map-mode .footer { display: none; }
 }
 .lcbm-map-mode .lcbm-list .div-img-propiedades {
   grid-column: 1; grid-row: 1;
-  width: 100%; position: relative;
+  width: 100%; position: relative; z-index: 1;
   border-radius: 8px; overflow: hidden;
 }
 /* Insignia Renta/Venta — inyectada por JS (enhanceCard) sobre la imagen,

@@ -560,9 +560,14 @@
     return s;
   }
 
+  // Cada inserción se cuida sola (comprueba si ya existe antes de insertar)
+  // en vez de depender de un solo flag en el nodo: con la lista
+  // reconstruyéndose seguido (cada query) el observer puede disparar
+  // enhanceAllCards() más de una vez sobre el mismo item antes de que el
+  // primer paso "cuente" — un solo flag dejaba pasar duplicados cuando eso
+  // pasaba (se vieron 2 insignias en la misma card). Así, sin importar
+  // cuántas veces se llame, cada elemento se inyecta como máximo una vez.
   function enhanceCard(item) {
-    if (item.__lcbmEnhanced) return;
-    item.__lcbmEnhanced = true;
     var img = item.querySelector('.div-img-propiedades');
     var nombre = item.querySelector('.nombre-propiedad');
     var price = item.querySelector('.div-price');
@@ -570,7 +575,7 @@
     var specGroups = item.querySelectorAll('.div-block-26 .div-block-36');
     var whatsapp = item.querySelector('.grid-btn .btn.verde');
 
-    if (img && nombre) {
+    if (img && nombre && !img.querySelector(':scope > .lcbm-badge')) {
       var t = nombre.textContent || '';
       var op = /venta/i.test(t) ? 'Venta' : (/renta/i.test(t) ? 'Renta' : null);
       if (op) {
@@ -580,13 +585,13 @@
         img.insertBefore(badge, img.firstChild);
       }
     }
-    if (price) price.appendChild(iconSpan('lcbm-chevron', ICON_CHEVRON));
-    if (loc) loc.insertBefore(iconSpan('lcbm-pin', ICON_PIN), loc.firstChild);
+    if (price && !price.querySelector(':scope > .lcbm-chevron')) price.appendChild(iconSpan('lcbm-chevron', ICON_CHEVRON));
+    if (loc && !loc.querySelector(':scope > .lcbm-pin')) loc.insertBefore(iconSpan('lcbm-pin', ICON_PIN), loc.firstChild);
     var specIcons = [ICON_RULER, ICON_BUILDING, ICON_TRUCK];
     specGroups.forEach(function (g, i) {
-      if (specIcons[i]) g.insertBefore(iconSpan('lcbm-spec-icon', specIcons[i]), g.firstChild);
+      if (specIcons[i] && !g.querySelector(':scope > .lcbm-spec-icon')) g.insertBefore(iconSpan('lcbm-spec-icon', specIcons[i]), g.firstChild);
     });
-    if (whatsapp) whatsapp.insertBefore(iconSpan('lcbm-wa-icon', ICON_WHATSAPP), whatsapp.firstChild);
+    if (whatsapp && !whatsapp.querySelector(':scope > .lcbm-wa-icon')) whatsapp.insertBefore(iconSpan('lcbm-wa-icon', ICON_WHATSAPP), whatsapp.firstChild);
   }
 
   function enhanceAllCards() {
