@@ -332,9 +332,9 @@ body.lcbm-map-mode .footer { display: none; }
   font-size: 12.5px; line-height: 1.35; color: #444;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; align-items: center; row-gap: 3px; column-gap: 0; margin-top: 0; }
-.lcbm-map-mode .lcbm-list .div-block-36 { display: inline-flex; align-items: center; margin-right: 10px; }
-.lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 12px; font-weight: 400; color: rgba(0,0,0,.75); white-space: nowrap; }
+.lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; align-items: center; row-gap: 2px; column-gap: 0; margin-top: 0; }
+.lcbm-map-mode .lcbm-list .div-block-36 { display: inline-flex; align-items: center; margin-right: 6px; }
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 11.5px; font-weight: 400; color: rgba(0,0,0,.75); white-space: nowrap; }
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 13px; font-weight: 700; color: var(--lcbm-ink); }
 /* El separador "|" de texto ya no hace falta — el icono + el margen entre
  * grupos (.div-block-36) cumplen esa función visualmente. */
@@ -344,14 +344,14 @@ body.lcbm-map-mode .footer { display: none; }
  * la referencia. */
 .lcbm-map-mode .lcbm-list .grid-btn.propiedades {
   display: flex; justify-content: flex-end;
-  padding: 0; margin-top: 2px;
+  padding: 0; margin-top: 0;
 }
 .lcbm-map-mode .lcbm-list .lcbm-wa-icon {
-  width: 17px; height: 17px;
+  width: 15px; height: 15px;
   background-repeat: no-repeat; background-position: center; background-size: contain;
 }
 .lcbm-map-mode .lcbm-list .grid-btn .btn.verde {
-  width: 36px; height: 36px; padding: 0; min-height: 0;
+  width: 30px; height: 30px; padding: 0; min-height: 0;
   border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
   transition: transform 120ms ease, opacity 120ms ease;
@@ -371,7 +371,7 @@ body.lcbm-map-mode .footer { display: none; }
 
 /* Vertical, imagen arriba a todo el ancho: ≥1024px (panel angosto, 18%) */
 @media (min-width: 1024px) {
-  .lcbm-map-mode .lcbm-list .card-propiedades { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; row-gap: 5px; padding: 8px; }
+  .lcbm-map-mode .lcbm-list .card-propiedades { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; row-gap: 4px; padding: 7px; }
   /* 100px (antes 120px) + paddings/gaps recortados a propósito: el cliente
    * pidió que se alcancen a ver 3 cards completas en el panel sin tener
    * que hacer scroll (antes solo entraban 2). */
