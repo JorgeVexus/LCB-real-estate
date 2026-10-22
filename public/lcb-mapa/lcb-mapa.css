@@ -129,7 +129,7 @@
  * Limpiar filtros — el cliente pidió que los filtros se queden en su ancho
  * natural y el espacio libre quede como separación real antes del selector
  * (que ya tiene margin-left:auto más abajo). */
-.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow { width: auto; flex: 0 1 112px; min-width: 0; }
+.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow { width: auto; flex: 0 1 130px; min-width: 0; }
 .lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow.search {
   flex: 0 1 190px; height: auto; min-height: 43px;
   box-shadow: none; border-color: var(--lcbm-line); border-radius: 8px; background: #fff;
@@ -143,6 +143,10 @@
  * siguiente filtro en vez de truncarse con "…". Bug real visto en vivo. */
 .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown .h6 {
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+  /* Webflow trae estos labels a 18px por defecto — nunca se había bajado
+   * fuera de mobile. A 112px de ancho de filtro ni truncando con "…" cabía
+   * nada legible ("O…" en vez de "Operación…"). */
+  font-size: 13.5px;
 }
 .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown-list {
   position: absolute !important;
