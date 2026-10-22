@@ -261,13 +261,20 @@ body.lcbm-map-mode .footer { display: none; }
 }
 .lcbm-map-mode .lcbm-list .div-img-propiedades {
   grid-column: 1; grid-row: 1;
-  width: 100%; position: relative; z-index: 1;
+  width: 100%; position: relative;
   border-radius: 8px; overflow: hidden;
 }
-/* Insignia Renta/Venta — inyectada por JS (enhanceCard) sobre la imagen,
- * leyendo "Renta"/"Venta" del título de la propiedad (no hay un campo
- * CMS aparte para operación en la card, pero el título siempre lo trae:
- * "Bodega en Renta Cuautitlán…"). */
+/* Insignia Renta/Venta — inyectada por JS (enhanceCard) leyendo
+ * "Renta"/"Venta" del título de la propiedad (no hay un campo CMS aparte
+ * para operación en la card, pero el título siempre lo trae: "Bodega en
+ * Renta Cuautitlán…"). Se inserta como HERMANA de .card-link-hidden (el
+ * link invisible que cubre toda la card), no anidada dentro de la imagen:
+ * .div-img-propiedades es un grid item con position:relative pero SIN
+ * z-index propio, así que no forma su propio stacking context — cualquier
+ * z-index puesto a algo anidado adentro queda a merced del orden normal y
+ * perdía contra .card-link-hidden. Como hermana directa dentro de
+ * .card-propiedades (mismo contenedor posicionado para ambas), con
+ * z-index explícito sí le gana de forma consistente. */
 .lcbm-map-mode .lcbm-list .lcbm-badge {
   position: absolute; top: 8px; left: 8px; z-index: 1;
   padding: 3px 10px; border-radius: 999px;

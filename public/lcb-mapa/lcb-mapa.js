@@ -575,14 +575,17 @@
     var specGroups = item.querySelectorAll('.div-block-26 .div-block-36');
     var whatsapp = item.querySelector('.grid-btn .btn.verde');
 
-    if (img && nombre && !img.querySelector(':scope > .lcbm-badge')) {
+    if (img && nombre && img.parentElement && !img.parentElement.querySelector(':scope > .lcbm-badge')) {
       var t = nombre.textContent || '';
       var op = /venta/i.test(t) ? 'Venta' : (/renta/i.test(t) ? 'Renta' : null);
       if (op) {
         var badge = document.createElement('span');
         badge.className = 'lcbm-badge';
         badge.textContent = op;
-        img.insertBefore(badge, img.firstChild);
+        // Hermana de .div-img-propiedades (y de .card-link-hidden), no
+        // anidada adentro — ver la nota en el CSS sobre por qué, si no
+        // quedaba tapada por el link invisible de la card.
+        img.parentElement.insertBefore(badge, img.nextSibling);
       }
     }
     if (price && !price.querySelector(':scope > .lcbm-chevron')) price.appendChild(iconSpan('lcbm-chevron', ICON_CHEVRON));
