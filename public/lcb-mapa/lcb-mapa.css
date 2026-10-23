@@ -135,6 +135,16 @@
  * una pantalla angosta donde de verdad no entran, siguen truncando con
  * "…" (ver overflow en .div-fake-dropdown .h6) en vez de encimarse. */
 .lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow { width: auto; flex: 0 1 185px; min-width: 0; }
+/* "Tipo de propiedad" y "Metros cuadrados" son los labels más largos de la
+ * fila — a 185px seguían truncando ("Tipo de propi…", "Metros cuadr…").
+ * Son, en orden, el 4° y 5° hijo de la barra (buscador, Operación,
+ * Ubicación, Tipo de propiedad, Metros cuadrados) — no tienen una clase
+ * propia que los distinga de Operación/Ubicación, así que se apuntan por
+ * posición. */
+.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow:nth-child(4),
+.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow:nth-child(5) {
+  flex-basis: 230px;
+}
 .lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow.search {
   flex: 0 1 230px; height: auto; min-height: 43px;
   box-shadow: none; border-color: var(--lcbm-line); border-radius: 8px; background: #fff;
