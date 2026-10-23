@@ -122,17 +122,21 @@
   max-width: none !important;
   padding: 10px;
 }
-/* Anchos mínimos ajustados para que quepan en una sola fila desde laptops
- * de ~1280px (el cliente pidió explícitamente una sola fila horizontal en
+/* Anchos ajustados para que quepan en una sola fila desde laptops de
+ * ~1280px (el cliente pidió explícitamente una sola fila horizontal en
  * desktop: buscador + filtros + Limpiar + selector Listado|Mapa). flex-grow
- * en 0 a propósito (antes 1): con grow los filtros se estiraban a ocupar
- * todo el ancho sobrante, pegando el selector Listado|Mapa justo después de
+ * en 0 a propósito (no 1): con grow los filtros se estiraban a ocupar todo
+ * el ancho sobrante, pegando el selector Listado|Mapa justo después de
  * Limpiar filtros — el cliente pidió que los filtros se queden en su ancho
  * natural y el espacio libre quede como separación real antes del selector
- * (que ya tiene margin-left:auto más abajo). */
-.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow { width: auto; flex: 0 1 130px; min-width: 0; }
+ * (que ya tiene margin-left:auto más abajo). 130px (el primer intento)
+ * truncaba labels largos como "Tipo de propiedad"/"Metros cuadrados" a
+ * una o dos letras + "…" — casi ilegible. 185px los muestra completos; en
+ * una pantalla angosta donde de verdad no entran, siguen truncando con
+ * "…" (ver overflow en .div-fake-dropdown .h6) en vez de encimarse. */
+.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow { width: auto; flex: 0 1 185px; min-width: 0; }
 .lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow.search {
-  flex: 0 1 190px; height: auto; min-height: 43px;
+  flex: 0 1 230px; height: auto; min-height: 43px;
   box-shadow: none; border-color: var(--lcbm-line); border-radius: 8px; background: #fff;
 }
 .lcbm-map-mode .filtro-horizontal-fix .text-field.propiedades { background: transparent; }
@@ -146,8 +150,9 @@
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
   /* Webflow trae estos labels a 18px por defecto — nunca se había bajado
    * fuera de mobile. A 112px de ancho de filtro ni truncando con "…" cabía
-   * nada legible ("O…" en vez de "Operación…"). */
-  font-size: 13.5px;
+   * nada legible ("O…" en vez de "Operación…"); con la caja ya ensanchada
+   * a 185px, 14.5px se lee bien y los labels caben completos. */
+  font-size: 14.5px;
 }
 .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown-list {
   position: absolute !important;

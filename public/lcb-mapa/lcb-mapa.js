@@ -823,11 +823,10 @@
     function choose(label) {
       input.value = label;
       close();
+      // Sintético (isTrusted:false) — el propio listener 'input' de abajo ya
+      // lo ignora, así que esto solo corre el buscador del sitio, no
+      // reabre este dropdown.
       input.dispatchEvent(new Event('input', { bubbles: true }));
-      // El dispatch de arriba también corre el listener 'input' de este mismo
-      // módulo (más abajo), que vuelve a programar un render() con el valor
-      // recién elegido y reabre el dropdown solo. Se cancela ese timer justo
-      // después del dispatch (ya corrió síncronamente y lo dejó programado).
       clearTimeout(debounceTimer);
     }
 
@@ -838,7 +837,17 @@
     }
 
     var debounceTimer;
-    input.addEventListener('input', function () {
+    input.addEventListener('input', function (e) {
+      // Bug real reportado por el cliente (22-23 oct): al mover/zoomear el
+      // mapa, rerunListing() dispara un evento 'input' SINTÉTICO sobre este
+      // mismo campo para refrescar el listado del sitio — ese evento
+      // también activaba este autocompletado y lo reabría solo, aunque
+      // nadie hubiera tocado el buscador (con el campo vacío, con una
+      // ubicación ya elegida, da igual). Un evento disparado por código
+      // (`dispatchEvent(new Event(...))`) siempre llega con
+      // `isTrusted:false`; solo lo que teclea la persona trae
+      // `isTrusted:true` — así se distinguen sin tocar rerunListing().
+      if (!e.isTrusted) return;
       clearTimeout(debounceTimer);
       var val = input.value;
       debounceTimer = setTimeout(function () {
