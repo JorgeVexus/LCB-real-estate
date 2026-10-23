@@ -221,10 +221,14 @@ body.lcbm-map-mode .footer { display: none; }
 }
 @media (min-width: 768px) {
   .lcbm-map-mode .grid-propiedades {
-    /* --lcbm-grid-top = posición real del grid medida en JS (measureTop),
-     * más robusto que sumar alturas supuestas de nav+filtros. 16px de
-     * respiro abajo. */
-    height: calc(100vh - var(--lcbm-grid-top, 90px) - 16px);
+    /* --lcbm-grid-height = window.innerHeight - top - 16, calculado en JS
+     * (measureTop). Antes era calc(100vh - top - 16px) en CSS puro: a
+     * ciertos niveles de zoom del navegador, 100vh redondea distinto al
+     * alto real del viewport, dejando una franja en blanco debajo del
+     * mapa — reportado por el cliente (22 oct). window.innerHeight es el
+     * valor exacto que ve el navegador, sin ese desfase. El calc() con
+     * 100vh queda de respaldo únicamente si el JS no llegó a correr. */
+    height: var(--lcbm-grid-height, calc(100vh - var(--lcbm-grid-top, 90px) - 16px));
     overflow: hidden;
   }
 }

@@ -879,6 +879,15 @@
     if (!grid) return;
     var top = grid.getBoundingClientRect().top;
     document.documentElement.style.setProperty('--lcbm-grid-top', Math.round(top) + 'px');
+    // Altura calculada en JS con window.innerHeight (no con la var CSS +
+    // 100vh): a ciertos niveles de zoom del navegador, 100vh en CSS puede
+    // redondear distinto al alto real del viewport que reporta el propio
+    // navegador, dejando una franja en blanco de 1-varios px debajo del
+    // mapa — reportado por el cliente (22 oct). window.innerHeight es el
+    // valor que el navegador usa para su propio layout, sin ese
+    // redondeo/desfase.
+    var h = window.innerHeight - top - 16;
+    document.documentElement.style.setProperty('--lcbm-grid-height', Math.max(0, Math.round(h)) + 'px');
   }
 
   // ---------- UI (usa elementos nativos de Webflow si existen) ----------
