@@ -882,11 +882,12 @@
     // Altura calculada en JS con window.innerHeight (no con la var CSS +
     // 100vh): a ciertos niveles de zoom del navegador, 100vh en CSS puede
     // redondear distinto al alto real del viewport que reporta el propio
-    // navegador, dejando una franja en blanco de 1-varios px debajo del
-    // mapa — reportado por el cliente (22 oct). window.innerHeight es el
-    // valor que el navegador usa para su propio layout, sin ese
-    // redondeo/desfase.
-    var h = window.innerHeight - top - 16;
+    // navegador. Sin margen inferior a propósito (antes "- 16"): el cliente
+    // encontró que ese -16 + los 10px de padding-bottom que Webflow le pone
+    // a .grid-propiedades eran justo la franja en blanco de 26px que
+    // quedaba debajo del mapa (22 oct) — el padding-bottom se anula aparte
+    // en el CSS, así que aquí ya no hace falta reservarle espacio.
+    var h = window.innerHeight - top;
     document.documentElement.style.setProperty('--lcbm-grid-height', Math.max(0, Math.round(h)) + 'px');
   }
 

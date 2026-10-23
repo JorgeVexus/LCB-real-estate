@@ -221,14 +221,18 @@ body.lcbm-map-mode .footer { display: none; }
 }
 @media (min-width: 768px) {
   .lcbm-map-mode .grid-propiedades {
-    /* --lcbm-grid-height = window.innerHeight - top - 16, calculado en JS
-     * (measureTop). Antes era calc(100vh - top - 16px) en CSS puro: a
-     * ciertos niveles de zoom del navegador, 100vh redondea distinto al
-     * alto real del viewport, dejando una franja en blanco debajo del
-     * mapa — reportado por el cliente (22 oct). window.innerHeight es el
-     * valor exacto que ve el navegador, sin ese desfase. El calc() con
-     * 100vh queda de respaldo únicamente si el JS no llegó a correr. */
-    height: var(--lcbm-grid-height, calc(100vh - var(--lcbm-grid-top, 90px) - 16px));
+    /* --lcbm-grid-height = window.innerHeight - top, calculado en JS
+     * (measureTop) — más confiable que 100vh en CSS puro, que puede
+     * redondear distinto al alto real del viewport según el zoom del
+     * navegador. El calc() con 100vh queda de respaldo únicamente si el JS
+     * no llegó a correr. Sin margen inferior reservado a propósito: el
+     * cliente encontró que ese margen + el padding-bottom de Webflow (ver
+     * abajo) eran justo la franja en blanco de 26px que quedaba debajo del
+     * mapa (22 oct). */
+    height: var(--lcbm-grid-height, calc(100vh - var(--lcbm-grid-top, 90px)));
+    /* Webflow le pone 10px de padding-bottom a esta clase por default —
+     * era la otra mitad de esa franja en blanco. */
+    padding-bottom: 0 !important;
     overflow: hidden;
   }
 }
