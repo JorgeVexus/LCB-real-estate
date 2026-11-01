@@ -48,6 +48,16 @@
   var searchHome = null; // { parent, next } — posición original del buscador, fuera del modo Mapa
   var toggleHome = null; // { parent, next } — posición original del toggle Listado|Mapa, fuera del modo Mapa
   var counterHome = null; // { parent, next } — posición original del contador "Mostrando X propiedades"
+  // Bug real del motor del sitio (no es nuestro, existe igual en Listado sin
+  // tocar el mapa para nada — reportado por el cliente, 1 nov): el texto de
+  // ubicación de cada card ("Parque Industrial Derramadero, Saltillo,
+  // Coahuila") queda pegado al de la primera propiedad que se haya
+  // renderizado alguna vez y nunca se actualiza con los resultados reales —
+  // precio, imagen y m² sí se refrescan por query, la ubicación no. El dato
+  // correcto (locationFull) sí viene en cada respuesta de Algolia, solo que
+  // Webflow nunca lo pinta — se guarda aquí por slug y enhanceCard() lo
+  // corrige a mano en el DOM.
+  var locationBySlug = {};
 
   // ---------- estado en URL ----------
   // El motor escribe ?operacion= pero no lo lee al cargar; se restaura aquí
@@ -135,6 +145,7 @@
       return res.json().then(function (d) {
         state.total = d.nbHits || 0;
         var hits = Array.isArray(d.hits) ? d.hits.slice() : [];
+        hits.forEach(function (h) { if (h.slug && h.locationFull) locationBySlug[h.slug] = h.locationFull; });
         hits.sort(function (a, b) { return (b.precioNumerico || 0) - (a.precioNumerico || 0); });
         var start = requestedPage * requestedHitsPerPage;
         var out = Object.assign({}, d, {
@@ -591,6 +602,16 @@
       }
     }
     if (price && !price.querySelector(':scope > .lcbm-chevron')) price.appendChild(iconSpan('lcbm-chevron', ICON_CHEVRON));
+    // Corrige el bug real del motor del sitio (ver nota en locationBySlug,
+    // arriba): reemplaza el texto si no coincide con el dato real de
+    // Algolia para este slug. loc.textContent= borra el pin si ya estaba
+    // puesto — se re-inserta justo después, así que el resultado siempre
+    // queda bien sin importar cuántas veces corra esta función.
+    if (loc) {
+      var cardSlug = slugFromCard(item);
+      var correctLoc = cardSlug && locationBySlug[cardSlug];
+      if (correctLoc && loc.textContent.trim() !== correctLoc) loc.textContent = correctLoc;
+    }
     if (loc && !loc.querySelector(':scope > .lcbm-pin')) loc.insertBefore(iconSpan('lcbm-pin', ICON_PIN), loc.firstChild);
     var specIcons = [ICON_RULER, ICON_BUILDING, ICON_TRUCK];
     specGroups.forEach(function (g, i) {

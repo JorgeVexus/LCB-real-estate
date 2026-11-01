@@ -146,7 +146,9 @@
   flex-basis: 230px;
 }
 .lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow.search {
-  flex: 0 1 230px; height: auto; min-height: 43px;
+  /* El cliente lo pidió más ancho (1 nov) — 230px (igual que los demás
+   * filtros) se veía corto para un buscador de texto libre. */
+  flex: 0 1 340px; height: auto; min-height: 43px;
   box-shadow: none; border-color: var(--lcbm-line); border-radius: 8px; background: #fff;
 }
 .lcbm-map-mode .filtro-horizontal-fix .text-field.propiedades { background: transparent; }
@@ -233,6 +235,9 @@ body.lcbm-map-mode .footer { display: none; }
   grid-template-rows: auto 1fr !important;
   column-gap: 0 !important;
   align-items: start;
+  /* Webflow le pone 20px de margin-top por default — dejaba un hueco entre
+   * el nav y la barra de filtros. El cliente pidió que queden pegados. */
+  margin-top: 0 !important;
 }
 @media (min-width: 768px) {
   .lcbm-map-mode .grid-propiedades {
@@ -297,9 +302,17 @@ body.lcbm-map-mode .footer { display: none; }
    * recortaba lo que se desbordaba en vez de dejar que la card creciera. */
   overflow: visible;
 }
-.lcbm-map-mode .lcbm-list .card-propiedades:hover,
-.lcbm-map-mode .lcbm-list .lcbm-card-active .card-propiedades {
+.lcbm-map-mode .lcbm-list .card-propiedades:hover {
   border-color: var(--lcbm-orange); box-shadow: 0 6px 16px #0000001f;
+}
+/* La card activa (la que se pinea arriba al seleccionar un marcador en el
+ * mapa) se marcaba igual que el simple :hover — casi no se notaba cuál
+ * era. El cliente pidió un contorno más grueso para que resalte de verdad
+ * (1 nov): box-shadow en vez de engrosar el border real — un halo de 2px
+ * por fuera, sin mover el tamaño/posición de la card ni sus vecinas. */
+.lcbm-map-mode .lcbm-list .lcbm-card-active .card-propiedades {
+  border-color: var(--lcbm-orange);
+  box-shadow: 0 0 0 2px var(--lcbm-orange), 0 6px 16px #0000002e;
 }
 .lcbm-map-mode .lcbm-list .div-img-propiedades {
   grid-column: 1; grid-row: 1;
