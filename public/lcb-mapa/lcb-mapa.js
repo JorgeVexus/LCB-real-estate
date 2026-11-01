@@ -578,6 +578,17 @@
   // primer paso "cuente" — un solo flag dejaba pasar duplicados cuando eso
   // pasaba (se vieron 2 insignias en la misma card). Así, sin importar
   // cuántas veces se llame, cada elemento se inyecta como máximo una vez.
+  // Bug real que encontramos el 1 nov (afectaba /propiedades-copy en
+  // Listado, no solo el mapa): este módulo corre en AMBAS vistas
+  // (watchCards() observa .lcbm-list sin importar la vista activa), pero
+  // la insignia/chevron/iconos/el botón de WhatsApp reubicado solo tienen
+  // CSS para el layout vertical del modo Mapa. Sin esta guarda, se
+  // insertaban igual en Listado — la insignia, por ejemplo, se metía como
+  // hijo del flex horizontal de la card SIN la posición absoluta que la
+  // saca del flujo en modo Mapa, robándole ~45px de ancho real a la fila
+  // y apretando el resto (texto/botones envolviendo mal). El fix de
+  // ubicación (más abajo) sigue corriendo en las dos vistas a propósito:
+  // ese bug es del motor del sitio, no depende de qué vista esté activa.
   function enhanceCard(item) {
     var img = item.querySelector('.div-img-propiedades');
     var nombre = item.querySelector('.nombre-propiedad');
@@ -588,30 +599,34 @@
     var btnWrap = item.querySelector('.grid-btn.propiedades');
     var whatsapp = item.querySelector('.grid-btn .btn.verde');
 
-    if (img && nombre && img.parentElement && !img.parentElement.querySelector(':scope > .lcbm-badge')) {
-      var t = nombre.textContent || '';
-      var op = /venta/i.test(t) ? 'Venta' : (/renta/i.test(t) ? 'Renta' : null);
-      if (op) {
-        var badge = document.createElement('span');
-        badge.className = 'lcbm-badge';
-        badge.textContent = op;
-        // Hermana de .div-img-propiedades (y de .card-link-hidden), no
-        // anidada adentro — ver la nota en el CSS sobre por qué, si no
-        // quedaba tapada por el link invisible de la card.
-        img.parentElement.insertBefore(badge, img.nextSibling);
+    if (state.view === 'map') {
+      if (img && nombre && img.parentElement && !img.parentElement.querySelector(':scope > .lcbm-badge')) {
+        var t = nombre.textContent || '';
+        var op = /venta/i.test(t) ? 'Venta' : (/renta/i.test(t) ? 'Renta' : null);
+        if (op) {
+          var badge = document.createElement('span');
+          badge.className = 'lcbm-badge';
+          badge.textContent = op;
+          // Hermana de .div-img-propiedades (y de .card-link-hidden), no
+          // anidada adentro — ver la nota en el CSS sobre por qué, si no
+          // quedaba tapada por el link invisible de la card.
+          img.parentElement.insertBefore(badge, img.nextSibling);
+        }
       }
+      if (price && !price.querySelector(':scope > .lcbm-chevron')) price.appendChild(iconSpan('lcbm-chevron', ICON_CHEVRON));
     }
-    if (price && !price.querySelector(':scope > .lcbm-chevron')) price.appendChild(iconSpan('lcbm-chevron', ICON_CHEVRON));
     // Corrige el bug real del motor del sitio (ver nota en locationBySlug,
     // arriba): reemplaza el texto si no coincide con el dato real de
-    // Algolia para este slug. loc.textContent= borra el pin si ya estaba
-    // puesto — se re-inserta justo después, así que el resultado siempre
-    // queda bien sin importar cuántas veces corra esta función.
+    // Algolia para este slug. Corre en ambas vistas — loc.textContent=
+    // borra el pin si ya estaba puesto, pero el pin se re-inserta justo
+    // después (solo en modo Mapa), así que el resultado siempre queda
+    // bien sin importar cuántas veces corra esta función.
     if (loc) {
       var cardSlug = slugFromCard(item);
       var correctLoc = cardSlug && locationBySlug[cardSlug];
       if (correctLoc && loc.textContent.trim() !== correctLoc) loc.textContent = correctLoc;
     }
+    if (state.view !== 'map') return;
     if (loc && !loc.querySelector(':scope > .lcbm-pin')) loc.insertBefore(iconSpan('lcbm-pin', ICON_PIN), loc.firstChild);
     var specIcons = [ICON_RULER, ICON_BUILDING, ICON_TRUCK];
     specGroups.forEach(function (g, i) {
@@ -623,6 +638,21 @@
     // alineado con ese texto (margin-left:auto lo empuja al final de la
     // fila) en vez de ocupar espacio vertical aparte o flotar encima.
     if (specs && btnWrap && btnWrap.parentElement !== specs) specs.appendChild(btnWrap);
+  }
+
+  // Revierte las inserciones de enhanceCard() al salir del modo Mapa — si
+  // no se limpian, quedan pegadas en el DOM (Webflow no reconstruye las
+  // cards solo por alternar Listado|Mapa) y siguen apretando el layout de
+  // Listado aunque ya no se esté en el mapa.
+  function unenhanceCard(item) {
+    item.querySelectorAll('.lcbm-badge, .lcbm-chevron, .lcbm-pin, .lcbm-spec-icon, .lcbm-wa-icon').forEach(function (el) { el.remove(); });
+    var card = item.querySelector('.card-propiedades');
+    var btnWrap = item.querySelector('.grid-btn.propiedades');
+    if (card && btnWrap && btnWrap.parentElement !== card) card.appendChild(btnWrap);
+  }
+
+  function unenhanceAllCards() {
+    document.querySelectorAll('.lcbm-list .w-dyn-item').forEach(unenhanceCard);
   }
 
   function enhanceAllCards() {
@@ -664,6 +694,10 @@
     placeToggle(view);
     placeSearch(view);
     placeCounter(view);
+    // Las cards no se reconstruyen solas al alternar Listado|Mapa (mismo
+    // DOM, Webflow no vuelve a pedir nada) — hay que agregar/quitar la
+    // insignia y compañía a mano en cada cambio de vista.
+    if (view === 'map') enhanceAllCards(); else unenhanceAllCards();
     if (view === 'map') {
       // Si se restauró una posición de mapa desde la URL (p. ej. al volver
       // de una ficha), no la pise un fit automático en la primera query.
