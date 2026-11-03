@@ -288,6 +288,12 @@ body.lcbm-map-mode .footer { display: none; }
   display: flex !important; flex-direction: column; gap: 3px;
   column-count: auto;
 }
+/* El sitio le pone a .propiedades-link (wrapper de cada card dentro del
+ * w-dyn-item) un margin-bottom:40px por default — es el espaciado del grid
+ * de Listado, pero como los márgenes no colapsan entre flex items, se
+ * sumaba al gap de arriba dejando ~43px de hueco muerto debajo de cada
+ * card en vez de los 3px pedidos. Se neutraliza solo en modo Mapa. */
+.lcbm-map-mode .lcbm-list .propiedades-link { margin-bottom: 0 !important; }
 .lcbm-map-mode .lcbm-list .card-propiedades {
   display: grid;
   column-gap: 12px; row-gap: 6px;
