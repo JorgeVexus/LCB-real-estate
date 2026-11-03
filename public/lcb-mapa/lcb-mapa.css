@@ -134,7 +134,7 @@
  * una o dos letras + "…" — casi ilegible. 185px los muestra completos; en
  * una pantalla angosta donde de verdad no entran, siguen truncando con
  * "…" (ver overflow en .div-fake-dropdown .h6) en vez de encimarse. */
-.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow { width: auto; flex: 0 1 185px; min-width: 0; }
+.lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow { width: auto; flex: 0 1 205px; min-width: 0; }
 /* "Tipo de propiedad" y "Metros cuadrados" son los labels más largos de la
  * fila — a 185px seguían truncando ("Tipo de propi…", "Metros cuadr…").
  * Son, en orden, el 4° y 5° hijo de la barra (buscador, Operación,
@@ -143,7 +143,7 @@
  * posición. */
 .lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow:nth-child(4),
 .lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow:nth-child(5) {
-  flex-basis: 230px;
+  flex-basis: 250px;
 }
 .lcbm-map-mode .filtro-horizontal-fix > .select-filter-drow.search {
   /* El cliente lo pidió más ancho (1 nov) — 230px (igual que los demás
@@ -160,11 +160,10 @@
  * siguiente filtro en vez de truncarse con "…". Bug real visto en vivo. */
 .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown .h6 {
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
-  /* Webflow trae estos labels a 18px por defecto — nunca se había bajado
-   * fuera de mobile. A 112px de ancho de filtro ni truncando con "…" cabía
-   * nada legible ("O…" en vez de "Operación…"); con la caja ya ensanchada
-   * a 185px, 14.5px se lee bien y los labels caben completos. */
-  font-size: 14.5px;
+  /* El cliente pidió (3 nov) que el texto de los filtros quede del mismo
+   * tamaño que en Listado (16px ahí). Las cajas se ensanchan un poco más
+   * abajo para que sigan cabiendo sin truncar. */
+  font-size: 16px;
 }
 .lcbm-map-mode .filtro-horizontal-fix .div-fake-dropdown-list {
   position: absolute !important;
@@ -284,7 +283,9 @@ body.lcbm-map-mode .footer { display: none; }
  * 1024px (panel más ancho en %, hasta 38%) se mantiene el horizontal
  * compacto ya afinado. */
 .lcbm-map-mode .collection-list-propiedades {
-  display: flex !important; flex-direction: column; gap: 8px;
+  /* Espacio entre cards al mínimo a pedido del cliente (3 nov) — el borde
+   * de cada card ya las separa visualmente, no hace falta más gap. */
+  display: flex !important; flex-direction: column; gap: 3px;
   column-count: auto;
 }
 .lcbm-map-mode .lcbm-list .card-propiedades {
@@ -368,8 +369,8 @@ body.lcbm-map-mode .footer { display: none; }
   display: inline-block; vertical-align: -2px; margin-right: 3px;
   background-repeat: no-repeat; background-position: center; background-size: contain;
 }
-.lcbm-map-mode .lcbm-list .lcbm-pin { width: 13px; height: 13px; }
-.lcbm-map-mode .lcbm-list .lcbm-spec-icon { width: 12px; height: 12px; }
+.lcbm-map-mode .lcbm-list .lcbm-pin { width: 14px; height: 14px; }
+.lcbm-map-mode .lcbm-list .lcbm-spec-icon { width: 13px; height: 13px; }
 /* Precio y "/ mes" en flujo normal (display:block + inline), no flex: si el
  * precio llega a envolver a 2-3 líneas (precios largos de terreno en un
  * panel angosto), el sufijo nunca puede encimarse con la siguiente línea —
@@ -378,19 +379,21 @@ body.lcbm-map-mode .footer { display: none; }
  * precio en 1 línea) — sin esto, con varias líneas el contenido se
  * desborda y se encima con la ubicación de abajo en vez de empujarla. */
 .lcbm-map-mode .lcbm-list .info-card-propiedades .div-price { display: block; width: auto; height: auto; min-height: 0; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { display: inline; font-size: 17px; line-height: 1.3; font-weight: 700; }
-.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { display: inline; font-size: 12px; line-height: 1.2; font-weight: 400; color: #777; margin-left: 4px; }
+/* Textos de la card agrandados a pedido del cliente (3 nov) — antes se
+ * veían chicos comparados con Listado. */
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h5 { display: inline; font-size: 19px; line-height: 1.3; font-weight: 700; }
+.lcbm-map-mode .lcbm-list .info-card-propiedades .div-price .h6 { display: inline; font-size: 13px; line-height: 1.2; font-weight: 400; color: #777; margin-left: 4px; }
 /* El título (nombre-propiedad) queda oculto, igual que en la card real
  * de Listado — la dirección ya narra la propiedad y no sobra espacio. */
 .lcbm-map-mode .lcbm-list .nombre-propiedad { display: none; }
 .lcbm-map-mode .lcbm-list .text-medium.prorpiedades {
-  font-size: 12.5px; line-height: 1.35; color: #444;
+  font-size: 13.5px; line-height: 1.35; color: #444;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .lcbm-map-mode .lcbm-list .div-block-26 { flex-wrap: wrap; align-items: center; row-gap: 2px; column-gap: 0; margin-top: 0; height: auto; min-height: 0; }
 .lcbm-map-mode .lcbm-list .div-block-36 { display: inline-flex; align-items: center; margin-right: 6px; }
-.lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 11.5px; font-weight: 400; color: rgba(0,0,0,.75); white-space: nowrap; }
-.lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 13px; font-weight: 700; color: var(--lcbm-ink); }
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small { font-size: 13px; font-weight: 400; color: rgba(0,0,0,.75); white-space: nowrap; }
+.lcbm-map-mode .lcbm-list .div-block-26 .text-small.oragen.large { font-size: 14.5px; font-weight: 700; color: var(--lcbm-ink); }
 /* El separador "|" de texto ya no hace falta — el icono + el margen entre
  * grupos (.div-block-36) cumplen esa función visualmente. */
 .lcbm-map-mode .lcbm-list .div-block-26 .text-small.bold { display: none; }
