@@ -745,11 +745,11 @@
     }
   }
 
-  // El contador "Mostrando X propiedades" vive oculto en Listado (a pedido
-  // del cliente, ya está implícito en los resultados) pero el cliente SÍ lo
-  // quiere visible arriba de la lista en modo Mapa (22 oct) — se muda ahí
-  // (fijo arriba de la lista scrolleable, position:sticky por CSS) y vuelve
-  // a su lugar original al salir de Mapa, igual que buscador/toggle.
+  // El contador "Mostrando X propiedades" es visible en Listado (su lugar
+  // original) y el cliente lo quiere también fijo arriba de la lista en
+  // modo Mapa (22 oct, revertido 3 nov) — se muda ahí (fijo arriba de la
+  // lista scrolleable, position:sticky por CSS) y vuelve a su lugar
+  // original al salir de Mapa, igual que buscador/toggle.
   function placeCounter(view) {
     if (!els.counter) return;
     if (view === 'map') {

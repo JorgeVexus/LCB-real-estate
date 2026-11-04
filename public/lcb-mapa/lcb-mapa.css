@@ -61,11 +61,9 @@
   flex-basis: 100%;
   width: 100%;
 }
-/* Contador "Mostrando X propiedades" — oculto en Listado a pedido del
- * cliente (el motor del sitio lo sigue actualizando por dentro, solo no se
- * muestra ahí); en modo Mapa SÍ se muestra, fijo arriba de la lista
- * scrolleable (placeCounter() en el JS lo muda ahí). */
-.lcbm-page #mostra-propiedades { display: none; }
+/* Contador "Mostrando X propiedades" — visible en Listado (como en el
+ * sitio original). En modo Mapa va fijo arriba de la lista scrolleable
+ * (placeCounter() en el JS lo muda ahí). */
 .lcbm-map-mode #mostra-propiedades {
   display: block;
   position: sticky; top: 0; z-index: 2;
